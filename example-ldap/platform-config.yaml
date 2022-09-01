@@ -1,0 +1,34 @@
+organization:
+  name: default
+  
+clusters:
+  - id: default
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "$KAFKA_BOOTSTRAP_SERVER"
+    properties:
+    schemaRegistry:
+      url: "$SR_SERVER"
+      ignoreUntrustedCertificate: false
+      properties:
+    labels: {}
+
+auth:
+  demo-users:
+    - email: admin@demo.conduktor
+      password: admin
+      groups:
+        - ADMIN
+
+sso:
+  ldap:
+    - name: "default"
+      server: "ldap://www.zflexldap.com:389"
+      managerDn: "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
+      managerPassword: "zflexpass"
+      search-base: "ou=users,ou=guests,dc=zflexsoftware,dc=com"
+      groups-base: "ou=groups,ou=guests,dc=zflexsoftware,dc=com"
+
+
+license: "$LICENSE_KEY"
