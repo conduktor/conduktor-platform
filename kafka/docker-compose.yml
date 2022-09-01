@@ -7,6 +7,7 @@ services:
       - "2181:2181"
     volumes:
       - "zookeeper_data:/data"
+      - "zookeeper_datalog:/datalog"
 
   kafka:
     image: conduktor/kafka:3.2.0
@@ -53,5 +54,6 @@ services:
 
 volumes:
   zookeeper_data: {}
+  zookeeper_datalog: {}
   kafka_data: {}
   conduktor_data: {}
