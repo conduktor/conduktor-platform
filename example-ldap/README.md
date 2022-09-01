@@ -1,8 +1,8 @@
 # Run conduktor platform locally with LDAP
 
-### Requierments 
+### Requirements
 
-See [here](../README.md#requierements)
+See [here](../README.md#requirements-📑)
 
 
 ### Usage

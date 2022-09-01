@@ -4,12 +4,12 @@ We take the complexity out of Kafka. We give you a platform to build, explore, t
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
 
 
-Just want to have a look? our demo environnement is there : https://demo.stg.apps.cdkt.dev/
+Just want to have a look? our demo environment is there : https://demo.stg.apps.cdkt.dev/
 
 
 # First Steps 
 
-## Requierements 📑
+## Requirements 📑
 
 ### Software : 
 - **docker** : See installation instructions [here](https://docs.docker.com/engine/install/)
@@ -37,7 +37,7 @@ To connect to a local kafka cluster accessible on `0.0.0.0:9092`
  docker run --rm \
   --network host \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform
+  conduktor/conduktor-platform:latest
 ```
 
 To get persistance between platform run
@@ -46,7 +46,7 @@ docker run --rm \
  --network host \
  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
  --mount "type=bind,source=$PWD/platform_data,target=/var/conduktor" \
- conduktor/conduktor-platform
+ conduktor/conduktor-platform:latest
 ```
 
 
