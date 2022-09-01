@@ -32,7 +32,7 @@ Once you have a `license`, choose the way that fit you :
 
 > note :  a docker-compose with a kafka cluster is at your disposal [here](./kafka/docker-compose.yml)
 
-To connect to a local kafka cluster accessible on `0.0.0.0:9092`
+Connect to a local kafka cluster accessible on `0.0.0.0:9092`
 ```sh
  docker run --rm \
   --network host \
@@ -40,7 +40,16 @@ To connect to a local kafka cluster accessible on `0.0.0.0:9092`
   conduktor/conduktor-platform:latest
 ```
 
-To get persistance between platform run
+Connect to a local kafka & Schema registry
+```sh
+ docker run --rm \
+  --network host \
+  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
+  -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
+  conduktor/conduktor-platform
+```
+
+Run the platform with persistance between platform run
 ```sh
 docker run --rm \
  --network host \
