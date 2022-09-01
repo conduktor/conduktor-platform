@@ -75,3 +75,82 @@ A complete configuration documentation is available [there](./Configuration.md)
 * Does not support MSK+IAM auth
 
 
+## Platform configuration
+Conduktor platform can be configured using an input yaml file providing configuration for 
+- organization
+- kafka clusters
+- sso (ldap/oauth2)
+- license
+
+To provide a configuration file to the container you can bind a local file as a volume then tell conduktor-platform where is the file located inside
+the container using `CDK_IN_CONF_FILE` environment variable.
+
+For example :
+`./input-config.yml` :
+```yaml
+organization:
+ name: demo
+ 
+clusters:
+  - id: local
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "some-host:9092"
+    properties: |
+      client.id=conduktor
+      default.api.timeout.ms=5000
+      request.timeout.ms=5000
+     
+license: "$LICENSE_KEY"
+```
+
+run with :
+```shell
+ docker run --rm \
+   --mount "type=bind,source=$PWD/input-config.yml,target=/opt/conduktor/platform-config.yaml" \
+   -e CDK_IN_CONF_FILE="/opt/conduktor/platform-config.yaml" \
+   -e LICENSE_KEY="<you license key>" \
+  conduktor/conduktor-platform:latest
+```
+
+If no configuration file is provided, a default one is used containing 
+```yaml
+organization:
+  name: default
+
+clusters:
+  - id: local
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "${KAFKA_BOOTSTRAP_SERVER:-localhost:9092}"
+    properties: |
+      client.id=conduktor
+      default.api.timeout.ms=5000
+      request.timeout.ms=5000
+    schemaRegistry:
+      url: "${SCHEMA_REGISTRY_URL:-http://localhost:8081}"
+      ignoreUntrustedCertificate: false
+      properties: |
+        acks=all
+        client.id=conduktor
+        default.api.timeout.ms=5000
+        request.timeout.ms=5000
+    labels:
+      env: default
+
+envs : []
+
+auth:
+  demo-users: 
+    - email: admin@demo.conduktor
+      password: admin
+      groups:
+        - ADMIN
+
+license: ${LICENSE_KEY:-~} # Fallback to null (~)
+```
+
+> Note : input configuration support shell-like environment variable expansion with support of fallback `${VAR:-default}`.
+> In case of default configuration, env-var `KAFKA_BOOTSTRAP_SERVER`, `SCHEMA_REGISTRY_URL` and `LICENSE_KEY` can be replaced.
