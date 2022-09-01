@@ -28,11 +28,11 @@ Once you have a `license`, choose the way that fit you :
 * [run in local quick start](./example-local/README.md)
 
 
-## Platform Standalone & Advanced settings :  
+## Platform Standalone :  
 
 > note :  a docker-compose with a kafka cluster is at your disposal [here](./kafka/docker-compose.yml)
 
-Connect to a local kafka cluster accessible on `0.0.0.0:9092`
+### Connect to a local kafka cluster accessible on `0.0.0.0:9092`
 ```sh
  docker run --rm \
   --network host \
@@ -40,7 +40,7 @@ Connect to a local kafka cluster accessible on `0.0.0.0:9092`
   conduktor/conduktor-platform:latest
 ```
 
-Connect to a local kafka & Schema registry
+### Connect to a local kafka & Schema registry
 ```sh
  docker run --rm \
   --network host \
@@ -49,7 +49,7 @@ Connect to a local kafka & Schema registry
   conduktor/conduktor-platform
 ```
 
-Run the platform with persistance between platform run
+### Run the platform with persistance between platform run
 ```sh
 docker run --rm \
  --network host \
@@ -59,9 +59,13 @@ docker run --rm \
  conduktor/conduktor-platform:latest
 ```
 
+## Advanced configuration options
+
+A complete configuration documentation is available [there](./Configuration.md)
 
 
-TODO : 
+
+⚠️TODO⚠️ : 
  docker run example SSO / external kafka etc
 
  License
@@ -69,7 +73,7 @@ TODO :
 
 ## Private beta limitation ⚠️ : 
 * All data & settings will be lost at the end of private beta.
-* End of private beta : 1 October.
+* End of private beta : October 1st.
 * Do not run conduktor platform against critical production environments
 * No Windows support yet.
 
