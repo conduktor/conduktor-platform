@@ -1,7 +1,7 @@
 # Run conduktor platform locally with auth0
 
-### Requierments 
+### Requirements
 
-See [here](../README.md#requierements)
+See [here](../README.md#requirements-📑)
 
 ### Usage
