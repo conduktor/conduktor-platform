@@ -54,6 +54,7 @@ Run the platform with persistance between platform run
 docker run --rm \
  --network host \
  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
+ -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
  --mount "type=bind,source=$PWD/platform_data,target=/var/conduktor" \
  conduktor/conduktor-platform:latest
 ```
