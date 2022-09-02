@@ -34,9 +34,9 @@ sso:
 ### Usage
 
 Run conduktor platform :    
-Replace `<your license key>` with the license provided
+Replace `<your-license>` with the license provided
 ```sh
-./run-local.sh "<your license key>"
+./run-local.sh "<your-license>"
 ```
 
 Stop conduktor platform

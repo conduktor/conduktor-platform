@@ -22,7 +22,7 @@ Just want to have a look? our demo environment is there : https://demo.stg.apps.
 
 ## Quick start 🛫
 
-To run conduktor-platform with all feature, contact us ⚠️ TODO : there ⚠️ to get a `private beta license` !
+To run conduktor-platform with all feature,[contact us](https://www.conduktor.io/demo/) to get a `private beta license` !
 
 Once you have a `license`, choose the way that fit you : 
 * [run in local quick start](./example-local/README.md)
@@ -36,6 +36,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
  docker run --rm \
   --network host \
+  -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
 ```
@@ -44,6 +45,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
  docker run --rm \
   --network host \
+  -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
   conduktor/conduktor-platform
@@ -53,6 +55,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
 docker run --rm \
  --network host \
+ -e LICENSE_KEY="<your-license>" \
  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
  -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
  --mount "type=bind,source=$PWD/platform_data,target=/var/conduktor" \
@@ -62,13 +65,6 @@ docker run --rm \
 ## Advanced configuration options
 
 A complete configuration documentation is available [there](./Configuration.md)
-
-
-
-⚠️TODO⚠️ : 
- docker run example SSO / external kafka etc
-
- License
 
 
 ## Private beta limitation ⚠️ : 
