@@ -8,3 +8,8 @@ if [[ "$#" == 0 ]]; then
     exit 1
 fi
 $SCRIPT_DIR/utils-local.sh start "$@"
+
+start_status=`docker-compose ps |grep Exit| awk '{ print $1 }'`
+if [[ x${start_status} != "x" ]]; then
+    echo "${start_status} failed to start.  Check logs with 'docker-compose logs'"
+fi
