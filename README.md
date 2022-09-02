@@ -63,21 +63,8 @@ docker run --rm \
  conduktor/conduktor-platform:latest
 ```
 
-## Advanced configuration options
-
-A complete configuration documentation is available [there](./Configuration.md)
-
-
-## Private beta limitation ⚠️ : 
-* All data & settings will be lost at the end of private beta.
-* End of private beta : October 1st.
-* Do not run conduktor platform against critical production environments
-* No Windows support yet.
-* Does not support MSK+IAM auth
-
-
 ## Platform configuration
-Conduktor platform can be configured using an input yaml file providing configuration for 
+Conduktor platform can be configured using an input yaml file providing configuration for
 - organization
 - kafka clusters
 - sso (ldap/oauth2)
@@ -115,7 +102,7 @@ run with :
   conduktor/conduktor-platform:latest
 ```
 
-If no configuration file is provided, a default one is used containing 
+If no configuration file is provided, a default one is used containing
 ```yaml
 organization:
   name: default
@@ -153,9 +140,18 @@ auth:
 license: ${LICENSE_KEY:-~} # Fallback to null (~)
 ```
 
-> Note : input configuration support shell-like environment variable expansion with support of fallback `${VAR:-default}`.
+> Note : input configuration support shell-like environment variable expansion with support of fallback `${VAR:-default}`.   
 > In case of default configuration, env-var `KAFKA_BOOTSTRAP_SERVER`, `SCHEMA_REGISTRY_URL` and `LICENSE_KEY` can be replaced.
 
-### SSO configuration examples
-- [Oauth2 OpenIdConnect Identity Provider](./example-sso-oauth2/README.md)
-- [LDAP](./example-sso-ldap/README.md)
+### Advanced configuration options
+
+A complete configuration documentation is available [there](./Configuration.md)
+
+## Private beta limitation ⚠️ : 
+* All data & settings will be lost at the end of private beta.
+* End of private beta : October 1st.
+* Do not run conduktor platform against critical production environments
+* No Windows support yet.
+* Does not support MSK+IAM auth
+
+
