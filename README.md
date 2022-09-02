@@ -72,6 +72,6 @@ A complete configuration documentation is available [there](./Configuration.md)
 * End of private beta : October 1st.
 * Do not run conduktor platform against critical production environments
 * No Windows support yet.
-
+* Does not support MSK+IAM auth
 
 
