@@ -9,7 +9,7 @@ start() {
   local license="$1"
   export LICENSE_KEY="${license}"
 
-  $DOCKER_COMPOSE up --pull always -d
+  $DOCKER_COMPOSE up -d
 }
 
 stop() {
