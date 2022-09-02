@@ -70,7 +70,8 @@ Conduktor platform can be configured using an input yaml file providing configur
 - sso (ldap/oauth2)
 - license
 
-To provide a configuration file to the container you can bind a local file as a volume then tell conduktor-platform where is the file located inside
+To provide a configuration file, you can bind a local file to override `/opt/conduktor/default-platform-config.yaml`.
+Or bind local file to another location and then tell conduktor-platform where is the file located inside
 the container using `CDK_IN_CONF_FILE` environment variable.
 
 For example :
@@ -90,15 +91,21 @@ clusters:
       default.api.timeout.ms=5000
       request.timeout.ms=5000
      
-license: "$LICENSE_KEY"
+license: "<you license key>"
 ```
 
 run with :
 ```shell
  docker run --rm \
-   --mount "type=bind,source=$PWD/input-config.yml,target=/opt/conduktor/platform-config.yaml" \
-   -e CDK_IN_CONF_FILE="/opt/conduktor/platform-config.yaml" \
-   -e LICENSE_KEY="<you license key>" \
+   --mount "type=bind,source=$PWD/input-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
+  conduktor/conduktor-platform:latest
+```
+
+OR using `CDK_IN_CONF_FILE` env :
+```shell
+ docker run --rm \
+   --mount "type=bind,source=$PWD/input-config.yml,target=/etc/platform-config.yaml" \
+   -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   conduktor/conduktor-platform:latest
 ```
 
