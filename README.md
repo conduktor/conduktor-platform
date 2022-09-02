@@ -2,21 +2,21 @@
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
-
-<img src="https://staging.conduktor.io/images/hero/explorer1.png" alt="drawing" height="400"/>
-
+<p align="center">
+  <img src="https://staging.conduktor.io/images/hero/explorer1.png" alt="drawing" height="400"/>
+</p>
 # Quickstart
 We offer you 3 simple ways to experience Conduktor Platform.
 
 First, we have an online demo. We're using dedicated Kafka cluster with a few applications running in the background.  
 You will be able to jump straight into the Platform, no configuration required  
-[I want the online demo](#online-demo)
+- [I want the online demo](#online-demo)
 
 Next, we have a simple docker-compose command, with an embedded Kafka, Schema Registry and Kafka Connect.  
-[Take me to the docker-compose](#)
+- [Take me to the docker-compose](#)
 
 If you want to try Conduktor Platform on your own Kafka, we have several documentation pages to help you get started
-[I want to test on my Data](#)
+- [I want to test on my Data](#)
 
 ## Online Demo
 Just want to have a look? our demo environment is there : 
