@@ -36,7 +36,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
  docker run --rm \
   --network host \
-  -e LICENSE_KEY=<your-license> \
+  -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
 ```
@@ -45,7 +45,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
  docker run --rm \
   --network host \
-  -e LICENSE_KEY=<your-license> \
+  -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
   conduktor/conduktor-platform
@@ -55,6 +55,7 @@ Once you have a `license`, choose the way that fit you :
 ```sh
 docker run --rm \
  --network host \
+ -e LICENSE_KEY="<your-license>" \
  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
  -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
  --mount "type=bind,source=$PWD/platform_data,target=/var/conduktor" \
