@@ -19,6 +19,7 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
       KAFKA_BOOTSTRAP_SERVER: kafka:9093
       SR_SERVER: "http://schema-registry:8081"
+      LICENSE_KEY: "${LICENSE_KEY}"
 
   zookeeper:
     image: zookeeper:3.8

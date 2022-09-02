@@ -33,3 +33,4 @@ auth:
       groups:
         - DEV
         - QA
+license: "$LICENSE_KEY"

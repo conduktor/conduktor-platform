@@ -9,7 +9,6 @@ start() {
   local license="$1"
   export LICENSE_KEY="${license}"
 
-  printenv | grep LICENSE
   $DOCKER_COMPOSE up --pull always -d
 }
 
