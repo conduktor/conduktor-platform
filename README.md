@@ -63,7 +63,7 @@ docker run --rm \
  conduktor/conduktor-platform:latest
 ```
 
-## Platform configuration
+## Platform Standalone with custom configuration
 Conduktor platform can be configured using an input yaml file providing configuration for
 - organization
 - kafka clusters
