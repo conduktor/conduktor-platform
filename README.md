@@ -165,4 +165,10 @@ A complete configuration documentation is available [there](./Configuration.md)
 * Open Source Apache Kafka
 * MSK
 
+## Where does Monitoring work?
+* Open source Apache Kafka 
+
+## Where does Monitoring _not_ work yet?
+* Confluent Cloud
+
 
