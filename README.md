@@ -20,7 +20,7 @@ Next, we have a simple docker-compose command, with an embedded Kafka, Schema Re
 
 Finally, if you want to try Conduktor Platform on your own Kafka, 
 we have several documentation pages to help you get started.
-- [I want to configure Conduktor Platform on my Kafka](#)
+- [I want to configure Conduktor Platform on my Kafka](Custom.md)
 
 ## Online Demo
 
