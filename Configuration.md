@@ -171,9 +171,8 @@ Cluster with Kafka Connect configured with Basic Auth
 ```
 
 ## SSO
-Coming soon !
-## LDAP
-Coming soon !
+- [Oauth2 OpenIdConnect Identity Provider](./example-sso-oauth2/README.md)
+- [LDAP](./example-sso-ldap/README.md)
 
 ## OIDC
 ```yml
@@ -186,17 +185,6 @@ sso:
       callback-uri: http://localhost/auth/oauth/callback/auth0
       openid:
         issuer: https://conduktor-staging.eu.auth0.com/
-    - name: "github"
-      default: false
-      client-id: <client_id>
-      client-secret: <client_secret>
-      scopes:
-        - user:email
-        - read:user
-      authorization-url: https://github.com/login/oauth/authorize
-      token:
-        url: "https://github.com/login/oauth/access_token"
-        auth-method: <client_secret_post>
 ```
 
 ## Complete Configuration Example
@@ -246,4 +234,16 @@ clusters:
         username: <username>
         password: <password>
     labels: {}
-    ```
+
+sso:
+  oauth2:
+    - name: "auth0"
+      default: true
+      client-id: <client_id>
+      client-secret: <client_secret>
+      callback-uri: http://localhost/auth/oauth/callback/auth0
+      openid:
+        issuer: https://conduktor-staging.eu.auth0.com/
+
+license: "<license_key>"
+```
