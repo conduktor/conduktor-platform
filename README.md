@@ -26,6 +26,7 @@ To run conduktor-platform with all feature,[contact us](https://www.conduktor.io
 
 Once you have a `license`, choose the way that fit you : 
 * [run in local quick start](./example-local/README.md)
+* [setup SSO with Oauth2 OpenIdConnect Identity Provider](./example-sso-oauth2/README.md)
 
 
 ## Platform Standalone :  
@@ -154,3 +155,7 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 
 > Note : input configuration support shell-like environment variable expansion with support of fallback `${VAR:-default}`.
 > In case of default configuration, env-var `KAFKA_BOOTSTRAP_SERVER`, `SCHEMA_REGISTRY_URL` and `LICENSE_KEY` can be replaced.
+
+### SSO configuration examples
+- [Oauth2 OpenIdConnect Identity Provider](./example-sso-oauth2/README.md)
+- [LDAP](./example-sso-ldap/README.md)
