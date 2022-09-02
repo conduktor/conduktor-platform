@@ -161,4 +161,8 @@ A complete configuration documentation is available [there](./Configuration.md)
 * No Windows support yet.
 * Does not support MSK+IAM auth
 
+## Platforms ACLs are supported on
+* Open Source Apache Kafka
+* MSK
+
 
