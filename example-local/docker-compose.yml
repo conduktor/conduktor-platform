@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+
+  conduktor-platform:
+    image: conduktor/conduktor-platform:latest
+    ports:
+      - 80:80
+    volumes:
+      - conduktor_data:/var/conduktor
+      - type: bind
+        source: ./platform-config.yaml
+        target: /opt/conduktor/platform-config.yaml
+        read_only: true
+    depends_on:
+      - kafka
+      - schema-registry
+    environment:
+      CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+      KAFKA_BOOTSTRAP_SERVER: kafka:9093
+      SR_SERVER: "http://schema-registry:8081"
+      LICENSE_KEY: "${LICENSE_KEY}"
+
+  zookeeper:
+    image: zookeeper:3.8
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/data"
+      - "zookeeper_datalog:/datalog"
+
+  kafka:
+    image: conduktor/kafka:3.2.0
+    hostname: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+      - "9101:9101"
+    volumes:
+      - "kafka_data:/conduktor/kafka"
+      - type: bind
+        source: ./jmx-exporter.yml
+        target: /etc/jmx-exporter.yml
+        read_only: true
+    environment:
+      - KAFKA_CFG_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,DOCKER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092,DOCKER://kafka:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,DOCKER:PLAINTEXT
+      - KAFKA_CFG_AUTHORIZER_CLASS_NAME=kafka.security.authorizer.AclAuthorizer
+      - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND=true
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - JMX_EXPORTER_ENABLE=yes
+      - JMX_EXPORTER_PORT=9101
+      - JMX_EXPORTER_CONFIG=/etc/jmx-exporter.yml
+    depends_on:
+      - zookeeper
+
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.2.1
+    hostname: schema-registry
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9093
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    depends_on:
+      - zookeeper
+      - kafka
+
+volumes:
+  zookeeper_data: {}
+  zookeeper_datalog: {}
+  kafka_data: {}
+  conduktor_data: {}

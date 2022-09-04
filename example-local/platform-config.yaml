@@ -1,0 +1,36 @@
+organization:
+  name: default
+  
+clusters:
+  - id: default
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "$KAFKA_BOOTSTRAP_SERVER"
+    properties:
+    schemaRegistry:
+      url: "$SR_SERVER"
+      ignoreUntrustedCertificate: false
+      properties:
+    labels: {}
+
+auth:
+  demo-users:
+    - email: admin@demo.conduktor
+      password: admin
+      groups:
+        - ADMIN
+    - email: user1
+      password: user1
+      groups:
+        - DEV
+    - email: user2
+      password: user2
+      groups:
+        - QA
+    - email: user3
+      password: user3
+      groups:
+        - DEV
+        - QA
+license: "$LICENSE_KEY"
