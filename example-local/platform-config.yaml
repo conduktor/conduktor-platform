@@ -16,21 +16,12 @@ clusters:
 
 auth:
   demo-users:
-    - email: admin@demo.conduktor
+    - email: admin@conduktor.io
       password: admin
       groups:
         - ADMIN
-    - email: user1
-      password: user1
+    - email: user@conduktor.io
+      password: user
       groups:
         - DEV
-    - email: user2
-      password: user2
-      groups:
-        - QA
-    - email: user3
-      password: user3
-      groups:
-        - DEV
-        - QA
 license: "$LICENSE_KEY"

@@ -26,5 +26,5 @@ If you want to delete all conduktor platform data
 ### Credentials 
 This example use local user that can be used to login on platform. 
 
-**Username** : `admin@demo.conduktor`
+**Username** : `admin@conduktor.io`
 **Password** : `admin` 
