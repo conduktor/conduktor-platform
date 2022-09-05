@@ -2,10 +2,6 @@
 
 This example run conduktor-platform using an LDAP SSO configuration providing users for login.
 
-### Requirements
-
-See [here](../README.md#requirements-📑)
-
 
 ### Configuration 
 
