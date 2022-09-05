@@ -11,10 +11,6 @@ This example run conduktor-platform using an Oauth2 SSO configuration providing 
     * [Keycloak](#keycloak)
 <!-- TOC -->
 
-## Requirements
-
-See [here](../README.md#requirements-📑)
-
 
 ## Configuration
 
@@ -37,7 +33,7 @@ Configure a new Application on Auth0 :
 ![](assets/auth0-app-step4.png)
 
 Platform configuration : 
-Add the following yaml fragment to your input `platform-config.yml` file. See [here](../README.md#platform-configuration) for platform configuration.
+Add the following yaml fragment to your input `platform-config.yml` file. See [here](../doc/Configuration.md) for platform configuration.
 ```yaml
 sso:
   oauth2:
@@ -68,7 +64,7 @@ Configure a new Application on Okta :
 ![](assets/okta-app-step4.png)
 
 Platform configuration :
-Add the following yaml fragment to your input `platform-config.yml` file. See [here](../README.md#platform-configuration) for platform configuration.
+Add the following yaml fragment to your input `platform-config.yml` file. See [here](../doc/Configuration.md) for platform configuration.
 ```yaml
 sso:
   oauth2:
@@ -102,7 +98,7 @@ Configure a new client on Keycloak :
 
 
 Platform configuration : 
-Add the following yaml fragment to your input `platform-config.yml` file. See [here](../README.md#platform-configuration) for platform configuration.
+Add the following yaml fragment to your input `platform-config.yml` file. See [here](../doc/Configuration.md) for platform configuration.
 ```yaml
 sso:
   oauth2:
