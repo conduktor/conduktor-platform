@@ -1,10 +1,5 @@
 # Run conduktor platform locally
 
-### Requirements 
-
-See [here](../README.md#requirements-📑)
-
-
 ### Usage
 
 Run conduktor platform :    
@@ -22,3 +17,14 @@ If you want to delete all conduktor platform data
 ```sh
 ./rm-local.sh
 ```
+
+### Credentials 
+This example use local user that can be used to login on platform. 
+
+**Username** : `admin@conduktor.io`    
+**Password** : `admin` 
+
+or 
+
+**Username** : `user@conduktor.io`    
+**Password** : `user` 

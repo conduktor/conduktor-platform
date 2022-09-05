@@ -16,7 +16,7 @@ clusters:
 
 auth:
   demo-users:
-    - email: admin@demo.conduktor
+    - email: admin@conduktor.io
       password: admin
       groups:
         - ADMIN
