@@ -1,3 +1,98 @@
+# Conduktor Platform configuration
+Conduktor platform can be configured using an input yaml file providing configuration for
+- organization
+- kafka clusters
+- sso (ldap/oauth2)
+- license
+
+To provide a configuration file, you can bind a local file to override `/opt/conduktor/default-platform-config.yaml`.
+Or bind local file to another location and then tell conduktor-platform where is the file located inside
+the container using `CDK_IN_CONF_FILE` environment variable.
+
+For example :
+`./input-config.yml` :
+```yaml
+organization:
+ name: demo
+ 
+clusters:
+  - id: local
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "some-host:9092"
+    properties: |
+      client.id=conduktor
+      default.api.timeout.ms=5000
+      request.timeout.ms=5000
+
+auth:
+  demo-users:
+    - email: admin@demo.dev
+      password: adminpwd
+      groups:
+        - ADMIN
+
+license: "<you license key>"
+```
+
+run with :
+```shell
+ docker run --rm \
+   --mount "type=bind,source=$PWD/input-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
+  conduktor/conduktor-platform:latest
+```
+
+OR using `CDK_IN_CONF_FILE` env :
+```shell
+ docker run --rm \
+   --mount "type=bind,source=$PWD/input-config.yml,target=/etc/platform-config.yaml" \
+   -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
+  conduktor/conduktor-platform:latest
+```
+
+If no configuration file is provided, a default one is used containing
+```yaml
+organization:
+  name: default
+clusters:
+  - id: local
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "${KAFKA_BOOTSTRAP_SERVER:-localhost:9092}"
+    properties: |
+      client.id=conduktor
+      default.api.timeout.ms=5000
+      request.timeout.ms=5000
+    schemaRegistry:
+      url: "${SCHEMA_REGISTRY_URL:-http://localhost:8081}"
+      ignoreUntrustedCertificate: false
+      properties: |
+        acks=all
+        client.id=conduktor
+        default.api.timeout.ms=5000
+        request.timeout.ms=5000
+    labels:
+      env: default
+envs : []
+auth:
+  demo-users: 
+    - email: admin@conduktor.io
+      password: admin
+      groups:
+        - ADMIN
+license: ${LICENSE_KEY:-~} # Fallback to null (~)
+```
+
+> **Note** : input configuration support **shell-like environment variable expansion** with support of fallback `${VAR:-default}`.   
+>
+> In case of default configuration, following environment variables can be replaced.
+> - `KAFKA_BOOTSTRAP_SERVER`
+> - `SCHEMA_REGISTRY_URL` 
+> - `LICENSE_KEY`
+
+
 ## Conduktor platform configuration snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
 
