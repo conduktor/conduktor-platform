@@ -235,12 +235,14 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     labels: {}
 ```
 
-## SSL Certificates Example - Aiven
-Aiven example providing inline CA certificate
+## SSL Certificates Example - Aiven (truststore)
+Keystore and truststore are not supported. But you can directly use the PEM formatted files (.pem or .cer)  
+Aiven example providing inline CA certificate  
+Please make sure the certificate is on one single line  
 ```yml
   - id: aiven-stg
     name: My Aiven Cluster
-    bootstrapServers: "...aivencloud.com:21661"
+    bootstrapServers: "kafka-09ba.aivencloud.com:21661"
     properties: |
       security.protocol=SASL_SSL
       sasl.mechanism=SCRAM-SHA-512
@@ -248,6 +250,27 @@ Aiven example providing inline CA certificate
       ssl.truststore.type=PEM
       ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
 ```
+
+## 2 Way SSL (keystore + truststore)
+You should have 3 files, and generally they are embedded in 2 files:  
+- Your access key (in the keystore.jks file)
+- Your access certificate (in the keystore.jks file)
+- Your CA certificate (in the truststore.jks file)
+Please make sure to have the content is on a single line
+````yaml
+  - id: aiven-ssl
+    name: Aiven SSL
+    bootstrapServers: kafka-09ba.aivencloud.com:21650
+    properties: |
+      security.protocol=SSL
+      ssl.truststore.type=PEM
+      ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
+      ssl.keystore.type=PEM
+      ssl.keystore.key=-----BEGIN PRIVATE KEY----- <YOUR ACCES KEY> -----END PRIVATE KEY-----
+      ssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----
+
+````
+
 ## Kafka Connect
 Cluster with Kafka Connect configured with Basic Auth
  ```yml
