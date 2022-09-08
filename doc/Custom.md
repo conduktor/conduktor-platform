@@ -22,7 +22,7 @@ Once you have your file ready, you can just start the platform using this simple
    --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
   conduktor/conduktor-platform:latest
 ````
-or the following docker compose equivalent `docker compose up -d`
+or the following docker compose equivalent `docker-compose up -d`
 ````yaml
 version: '3.8'
 services:
