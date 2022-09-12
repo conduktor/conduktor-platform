@@ -20,3 +20,5 @@ example :
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
 ```
+### URL
+Conduktor Platform is available on [http://localhost:80](http://localhost:80)
