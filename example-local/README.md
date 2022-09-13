@@ -31,3 +31,6 @@ or
 
 **Username** : `user@conduktor.io`    
 **Password** : `user` 
+
+## Requirements
+* Conduktor platform version `>0.11.1`
