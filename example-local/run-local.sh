@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -eu
-
+echo "First, let's init your organisation : "
 read -p 'Organisation name: ' ORGANISATION_NAME
-read -p 'Admin email: ' ADMIN_EMAIL
-read -p 'Admin password: ' ADMIN_PSW
+echo "done ✅"
+echo "Now, let's create your admin account : "
+read -p 'Admin email 📧: ' ADMIN_EMAIL
+read -p 'Admin password 🔒: ' ADMIN_PSW
+echo "done ✅"
+echo "Conduktor platform is starting..."
 
 
 export ORGANISATION_NAME
