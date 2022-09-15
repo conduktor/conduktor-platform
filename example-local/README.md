@@ -20,6 +20,9 @@ If you want to delete all conduktor platform data
 ### URL
 Conduktor Platform is available on [http://localhost:80](http://localhost:80)
 
+## Platform Url
+[http://localhost:8080/home/](http://localhost:8080/home/)
+
 ### Credentials 
 This example use local user that can be used to login on platform. 
 
@@ -30,3 +33,5 @@ or
 
 **Username** : `user@conduktor.io`    
 **Password** : `user` 
+
+## Requirements

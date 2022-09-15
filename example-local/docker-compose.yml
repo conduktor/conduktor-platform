@@ -5,7 +5,7 @@ services:
   conduktor-platform:
     image: conduktor/conduktor-platform:latest
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - conduktor_data:/var/conduktor
       - type: bind
