@@ -33,4 +33,3 @@ or
 **Password** : `user` 
 
 ## Requirements
-* Conduktor platform version `>0.11.1`
