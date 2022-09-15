@@ -20,6 +20,9 @@ services:
       KAFKA_BOOTSTRAP_SERVER: kafka:9093
       SR_SERVER: "http://schema-registry:8081"
       LICENSE_KEY: "${LICENSE_KEY}"
+      ORGANISATION_NAME: "${ORGANISATION_NAME}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      ADMIN_PSW: "${ADMIN_PSW}"
 
   zookeeper:
     image: zookeeper:3.8

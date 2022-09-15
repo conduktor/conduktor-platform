@@ -1,5 +1,5 @@
 organization:
-  name: default
+  name: "${ORGANISATION_NAME}"
   
 clusters:
   - id: default
@@ -16,12 +16,8 @@ clusters:
 
 auth:
   demo-users:
-    - email: admin@conduktor.io
-      password: admin
+    - email: "${ADMIN_EMAIL}"
+      password: "${ADMIN_PSW}"
       groups:
         - ADMIN
-    - email: user@conduktor.io
-      password: user
-      groups:
-        - DEV
 license: "$LICENSE_KEY"
