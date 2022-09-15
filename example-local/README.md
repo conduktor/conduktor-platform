@@ -24,14 +24,6 @@ Conduktor Platform is available on [http://localhost:80](http://localhost:80)
 [http://localhost:8080/home/](http://localhost:8080/home/)
 
 ### Credentials 
-This example use local user that can be used to login on platform. 
-
-**Username** : `admin@conduktor.io`    
-**Password** : `admin` 
-
-or 
-
-**Username** : `user@conduktor.io`    
-**Password** : `user` 
+use the credential provided to the `./run-local`
 
 ## Requirements
