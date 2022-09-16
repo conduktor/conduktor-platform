@@ -1,7 +1,7 @@
 ### Connect to an unsecured kafka cluster accessible on `0.0.0.0:9092`
 ```sh
  docker run --rm \
-  --network host \
+  -p "8080:80" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
