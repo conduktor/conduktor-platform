@@ -8,7 +8,7 @@
 ```
 
 ### URL
-Conduktor Platform is available on [http://localhost:80](http://localhost:80)
+Conduktor Platform is available on [http://localhost:8080](http://localhost:8080)
 
 
 ### Advanced configuration (SASL_SSL, SSL clusters, registry, connect, ...)
