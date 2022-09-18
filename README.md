@@ -8,15 +8,21 @@ Simplifying the complexity of real-time data streaming, Conduktor Platform enabl
   </a>
 </p>
 
-## Quickstart
+## Get Started
 We offer you 3 simple ways to experience Conduktor Platform.
+
+### Online Demo
 
 First, we have an online demo. We're using dedicated Kafka cluster with a few applications running in the background.  
 You will be able to jump straight into the Platform, no configuration required  
-- [I want to try the online demo](#online-demo)
+- Coming soon !
+
+### Start with built-in Kafka 
 
 Next, we have a simple docker-compose command, with an embedded Kafka, Schema Registry and Kafka Connect.  
 - [Take me to the docker-compose](/example-local)
+
+### Connect to your own Kafka 
 
 Then, if you want to try Conduktor Platform on your own Kafka, 
 we have several documentation pages to help you get started.
@@ -25,9 +31,6 @@ we have several documentation pages to help you get started.
 Finaly, if you want to customise Advanced settings, we have preset define here :
 - [I want to configure Conduktor Platform with advanced settings](./doc/Advanced_settings.md)
 
-## Online Demo
-
-Coming soon !
 
 ## Private beta limitation ⚠️ : 
 * All data & settings will be lost at the end of private beta.
@@ -40,9 +43,14 @@ Coming soon !
 * Open Source Apache Kafka
 * MSK
 
-
 ## Where does Monitoring work?
 * Open source Apache Kafka 
 
 ## Where does Monitoring _not_ work yet?
 * Confluent Cloud
+* MSK
+
+## Get Involved
+* Follow <a href="https://twitter.com/getconduktor">@getconduktor on Twitter</a>
+* Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
+* <a href="https://www.conduktor.io/kafka">Learn</a> Apache Kafka
