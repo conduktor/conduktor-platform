@@ -14,11 +14,11 @@ to configure conduktor platform fo a particular hardware, you can use the enviro
 example : 
 ```sh
  docker run --rm \
-  --network host \
+  -p "8080:80" \
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
 ```
 ### URL
-Conduktor Platform is available on [http://localhost:80](http://localhost:80)
+Conduktor Platform is available on [http://localhost:8080](http://localhost:8080)
