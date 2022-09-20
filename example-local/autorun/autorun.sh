@@ -29,9 +29,15 @@ popd () {
 }
 
 function downloadFiles() {
+    # When you want to develop around this script and use local files, uncomment below lines
+    # cp ../docker-compose.yml ${CACHE_DIR}/
+    # cp ../jmx-exporter.yml ${CACHE_DIR}/
+    # cp ../platform-config.yaml ${CACHE_DIR}/
+    # cp ../platform-config-no-license.yaml ${CACHE_DIR}/
     curl -s -o ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
-    curl -s -o ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-export.yml
+    curl -s -o ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-exporter.yml
     curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
+    curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
 }
 
 function notEmptyOrInput() {
