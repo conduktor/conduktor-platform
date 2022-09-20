@@ -13,9 +13,9 @@ FORCE_CONFIG=${FORCE_CONFIG:-"false"}
 
 # Platform variables
 LICENSE_KEY=${LICENSE_KEY:-}
-ORGANISATION_NAME=${ORGANISATION_NAME:-"Some organisation"}
-ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@admin.com"}
-ADMIN_PSW=${ADMIN_PSW:-"admin"}
+ORGANISATION_NAME=${ORGANISATION_NAME:-}
+ADMIN_EMAIL=${ADMIN_EMAIL:-}
+ADMIN_PSW=${ADMIN_PSW:-}
 
 ###
 # Rewrite commands to prevent useless logs
