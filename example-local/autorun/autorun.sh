@@ -28,16 +28,24 @@ popd () {
     command popd "$@" > /dev/null
 }
 
+function download() {
+    local target_file=$1
+    local url=$2
+    echo "Downloading file from ${url}"
+
+    curl -s -o $target_file $url
+}
+
 function downloadFiles() {
     # When you want to develop around this script and use local files, uncomment below lines
     # cp ../docker-compose.yml ${CACHE_DIR}/
     # cp ../jmx-exporter.yml ${CACHE_DIR}/
     # cp ../platform-config.yaml ${CACHE_DIR}/
     # cp ../platform-config-no-license.yaml ${CACHE_DIR}/
-    curl -s -o ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
-    curl -s -o ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-exporter.yml
-    curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
-    curl -s -o ${CACHE_DIR}/platform-config-no-license.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
+    download ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
+    download ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-exporter.yml
+    download ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
+    download ${CACHE_DIR}/platform-config-no-license.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
 }
 
 function notEmptyOrInput() {
@@ -66,7 +74,7 @@ function trapStop() {
 
 function setup() {
     local _file="${CACHE_DIR}/conduktor-platform.sh"
-    curl -s -o $_file ${CURL_PATH}/example-local/autorun/autorun.sh
+    download $_file ${CURL_PATH}/example-local/autorun/autorun.sh
     chmod u+x $_file
     # The installer is going to want to ask for confirmation by
     # reading stdin.  This script was piped into `sh` though and
