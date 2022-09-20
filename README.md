@@ -20,6 +20,7 @@ You will be able to jump straight into the Platform, no configuration required
 ### Start with built-in Kafka 
 
 Next, we have a simple docker-compose command, with an embedded Kafka, Schema Registry and Kafka Connect.  
+- [Quick start without cloning the repository](/example-local/autorun/README.md)
 - [Take me to the docker-compose](/example-local)
 
 ### Connect to your own Kafka 
