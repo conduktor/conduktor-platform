@@ -18,7 +18,7 @@ If you want to delete all conduktor platform data
 ./rm-local.sh
 ```
 ### URL
-Conduktor Platform is available on [http://localhost:80](http://localhost:80)
+Conduktor Platform is available on [http://localhost:8080](http://localhost:8080)
 
 ## Platform Url
 [http://localhost:8080/home/](http://localhost:8080/home/)
