@@ -1,18 +1,20 @@
-# Consumer
+# Browse Data
 
 The Conduktor Platform enables you to view messages in Kafka Topics.
 
 By default, the most recent 20 messages of a topic are displayed.
 You can refine your search depending on the amount of records in your topic combining the filters at your disposal.
 
-All filters  are saved between sessions.
+All filters are persisted across sessions for each topic.
 
 ## Filtering
 
 - [Max Records](#max-records)
 - [Show From](#show-from)
-- [Quicksearch]()
 - [Partitions](#partitions)
+- [JS Filters](#js-filters)
+- [Quick search](#quick-search)
+
 
 ### Max Records
 This filter restricts the number of record returned to the browser. You can increase that number up to a maximum of 1000.
@@ -29,7 +31,8 @@ Positions the consumer any given point in time, returning up to `max-records` re
   - This is very useful to troubleshoot a stopped application and understand "where" it's stopped.
 
 ### Partitions
-This filter is hidden by default. If you know where to look, this filter can help you reduce the number of records returned to the browser.
+If you know the partition you want to browse, this filter will help you reduce the number of records returned to the browser.  
+This filter is available behind the "More options" button.
 
 ### JS Filters
 JavaScript Filters lets you perform complex search on the json representation of the record, including its metadata.   
@@ -54,4 +57,5 @@ It is best used combined with any previous filtering applied.
 
 By default, we try to identify the Deserializer automatically for both the Key and the Value.  
 
-If the deserialization fails or doesn't represent the data as you expect, you can manually pick which deserializer to use.
+If the deserialization fails or doesn't represent the data as you expect, you can manually pick which deserializer to use.  
+Deserializers are available behind the "More options" button.
