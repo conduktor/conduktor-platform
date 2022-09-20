@@ -1,9 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -eu
 
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
-CACHE_DIR="$HOME/.cache/conduktor-platform"
+CACHE_DIR=$(mktemp -d)
 CONFIG_FILE="${CACHE_DIR}/config.yaml"
+GIT_BRANCH=${GIT_BRANCH:-"main"}
+GIT_SOURCE=${GIT_SOURCE:-"https://raw.githubusercontent.com/conduktor/conduktor-platform"}
+CURL_PATH="${GIT_SOURCE}/${GIT_BRANCH}"
 
 # Force input of variables
 FORCE_CONFIG=${FORCE_CONFIG:-"false"}
@@ -26,9 +29,9 @@ popd () {
 }
 
 function downloadFiles() {
-    curl -s -o ${CACHE_DIR}/docker-compose.yml https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/docker-compose.yml
-    curl -s -o ${CACHE_DIR}/jmx-exporter.yml https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/jmx-export.yml
-    curl -s -o ${CACHE_DIR}/platform-config.yaml https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/platform-config.yaml
+    curl -s -o ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
+    curl -s -o ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-export.yml
+    curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
 }
 
 function notEmptyOrInput() {
@@ -54,23 +57,37 @@ function trapStop() {
     popd
 }
 
-function clean() {
-    echo "-> We are currently cleaning the few files we created..."
-    pushd ${CACHE_DIR}
-    ${DOCKER_COMPOSE} down -v 
-    popd
-    rm -rf ${CACHE_DIR}
+
+function setup() {
+    local _file="${CACHE_DIR}/conduktor-platform.sh"
+    curl -s -o $_file ${CURL_PATH}/example-local/autorun/autorun.sh
+    chmod u+x $_file
+    # The installer is going to want to ask for confirmation by
+    # reading stdin.  This script was piped into `sh` though and
+    # doesn't have stdin to pass to its children. Instead we're going
+    # to explicitly connect /dev/tty to the installer's stdin.
+    "$_file" "run" "$@" < /dev/tty
 }
 
 function run() {
-    echo "-> Launching Conduktor Platform on your machine..."
-    if [ ! -d "${CACHE_DIR}" ]; then
-        echo "-> Downloading files..."
-        mkdir -p  ${CACHE_DIR} || echo "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
-        downloadFiles || echo "Failed to download files, is GitHub online ?" || exit 1
-    fi
+    local composeOpts="--log-level ERROR"
 
-    notEmptyOrInput LICENSE_KEY "Your license key: "
+    echo "-> Launching Conduktor Platform on your machine..."
+    echo "-> Downloading files..."
+    mkdir -p  ${CACHE_DIR} || echo "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
+    downloadFiles || echo "Failed to download files, is GitHub online ?" || exit 1
+
+    notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: "
+
+    if [ -z "${LICENSE_KEY}" ]; then
+        export CONF_NAME=platform-config-no-license
+        sed -i '' "s/^.*LICENSE_KEY.*$//g" ${CACHE_DIR}/docker-compose.yml
+    else 
+      export CONF_NAME=platform-config
+      echo "LICENSE_KEY=${LICENSE_KEY}" > ${CACHE_DIR}/.env
+      composeOpts="${composeOpts} --env-file ${CACHE_DIR}/.env"
+    fi
+    
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
     notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
@@ -78,7 +95,7 @@ function run() {
     pushd ${CACHE_DIR}
     echo "-> In a few seconds, Conduktor Platform should be ready on http://localhost:8080"
     echo "-> Press CTRL+C at anytime to stop the platform"
-    ${DOCKER_COMPOSE} --log-level ERROR up -V \
+    ${DOCKER_COMPOSE} ${composeOpts} up -V \
         --abort-on-container-exit --exit-code-from conduktor-platform > /dev/null \
         || export DOCKER_EXIT_CODE="$?"
     popd
@@ -104,14 +121,14 @@ main() {
       -h|help)
         _print_help
         ;;
+      setup)
+        shift
+        setup "$@"
+        exit 0
+        ;;
       run)
         shift
         run "$@"
-        exit 0
-        ;;
-      clean)
-        shift
-        clean "$@"
         exit 0
         ;;
       *)
@@ -122,5 +139,6 @@ main() {
     esac
   done
 }
+
 
 main "$@"
