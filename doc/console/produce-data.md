@@ -13,7 +13,7 @@ Conduktor supports common Kafka serializers to produce data:
 The Random Data Generator will quickly let you produce a valid sample message for your serializer.   
 Just click the "Generate once" button next to the Serializer dropdown.  
 Random Data Generator supports all Serializers, and is possible for records Key and record Value.  
-![random-generator.png](random-generator.png)
+![random-generator.png](img/random-generator.png)
 
 ### Flow mode
 Using the Flow mode, you can produce multiple event in a row.
@@ -25,4 +25,4 @@ In the following example, the producer is configured like this:
 - Send a batch (of 2 records) every seconds
 - Stop the producer after 60 seconds
 
-![flow-mode.png](flow-mode.png)
+![flow-mode.png](img/flow-mode.png)
