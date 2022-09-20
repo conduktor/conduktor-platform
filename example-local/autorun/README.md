@@ -2,11 +2,11 @@
 
 ### Usage
 
-Run Conduktor Platform without installing any file, replace `<your-license>` by a value:
+Run Conduktor Platform without installing any file, replace `<your-license>` by a value (without license you will only have free version):
 
 ```sh
 curl -sS https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/autorun/autorun.sh | \
- LICENSE_KEY="<your-license>" sh -s run
+ LICENSE_KEY="<your-license>" sh -s setup
 ```
 
 **If you have `yq` on your machine, your config (like your license) will be persisted**

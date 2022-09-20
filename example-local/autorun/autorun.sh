@@ -93,9 +93,9 @@ function run() {
 
     notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: "
 
-    if [ -z "${LICENSE_KEY}" ]; then
+    if [ "${LICENSE_KEY}" == "" ]; then
         export CONF_NAME=platform-config-no-license
-        sed -i '' "s/^.*LICENSE_KEY.*$//g" ${CACHE_DIR}/docker-compose.yml
+        sed "s/^.*LICENSE_KEY.*$//" ./docker-compose.yml | tee ./docker-compose.yml > /dev/null
     else 
       export CONF_NAME=platform-config
       echo "LICENSE_KEY=${LICENSE_KEY}" > ${CACHE_DIR}/.env
