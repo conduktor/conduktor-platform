@@ -37,7 +37,7 @@ function downloadFiles() {
     curl -s -o ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
     curl -s -o ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-exporter.yml
     curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
-    curl -s -o ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
+    curl -s -o ${CACHE_DIR}/platform-config-no-license.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
 }
 
 function notEmptyOrInput() {
@@ -117,6 +117,7 @@ function _print_help()
    commands:
      help                   show this help message and exit
      run                    start platform
+     setup                  force start to be in interactive mode
      clean                  rm platform datas
 HEREDOC
 }
