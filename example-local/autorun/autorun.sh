@@ -10,6 +10,11 @@ CURL_PATH="${GIT_SOURCE}/${GIT_BRANCH}"
 
 # Force input of variables
 FORCE_CONFIG=${FORCE_CONFIG:-"false"}
+# This array of images is needed in order to prune and save
+# some disk usage when shutting down platform. This behavior
+# can be cancelled by injecting NO_PRUNE=true
+COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.2.0"
+NO_PRUNE=${NO_PRUNE:-"false"}
 
 # Platform variables
 LICENSE_KEY=${LICENSE_KEY:-}
@@ -64,13 +69,29 @@ function trapStop() {
     if [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
         echo "-> Platform failed to run, please verify your license key"
         echo "A dump of platform logs is available in file crash.log"
-        docker-compose -f ${CACHE_DIR}/docker-compose.yml logs conduktor-platform > crash.log
+        docker-compose -f ${CACHE_DIR}/docker-compose.yml logs conduktor-platform > crash.log 2>&1 
     fi
     pushd ${CACHE_DIR}
     ${DOCKER_COMPOSE} down -v > /dev/null
     popd
+    
+    prune
 }
 
+function prune() {
+    echo "-> Cleaning up docker images"
+    echo "You can prevent it next time by using variable NO_PRUNE=true"
+
+    if [ "${NO_PRUNE}" == "true" ]; then
+      echo "You decided not to delete conduktor platform images!"
+      return
+    fi
+
+    for image in ${COMPOSE_IMAGES}; do
+      echo "Pruning docker image ${image}..."
+      docker image rm ${image} > /dev/null && echo "✅" || echo "❌ Could not delete image, it has been skipped"
+    done
+}
 
 function setup() {
     local _file="${CACHE_DIR}/conduktor-platform.sh"
@@ -95,7 +116,7 @@ function run() {
 
     if [ "${LICENSE_KEY}" == "" ]; then
         export CONF_NAME=platform-config-no-license
-        sed "s/^.*LICENSE_KEY.*$//" ./docker-compose.yml | tee ./docker-compose.yml > /dev/null
+        sed "s/^.*LICENSE_KEY.*$//" ${CACHE_DIR}/docker-compose.yml | tee -a ${CACHE_DIR}/docker-compose.yml > /dev/null
     else 
       export CONF_NAME=platform-config
       echo "LICENSE_KEY=${LICENSE_KEY}" > ${CACHE_DIR}/.env
@@ -107,7 +128,7 @@ function run() {
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
     
     pushd ${CACHE_DIR}
-    echo "-> In a few seconds, Conduktor Platform should be ready on http://localhost:8080"
+    echo "-> In a few minutes, Conduktor Platform should be ready on http://localhost:8080"
     echo "-> Press CTRL+C at anytime to stop the platform"
     ${DOCKER_COMPOSE} ${composeOpts} up -V \
         --abort-on-container-exit --exit-code-from conduktor-platform > /dev/null \
