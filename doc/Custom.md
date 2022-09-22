@@ -35,7 +35,7 @@ Finally, run the Conduktor Platform using the information you collected
 ```
 #### Kafka on the host
 
-The only to reach the MacOS host way from inside a docker image is to use the alias `host.docker.internal`.  
+The only way to reach the MacOS host from inside a docker image is to use the alias `host.docker.internal`.  
 Unfortunately, Kafka requires you to perform an extra step to modify the advertised listener.  
 [Kafka Listeners – Explained](https://www.confluent.io/blog/kafka-listeners-explained/)  
 Edit the server.properties file and look for the line `advertised.listeners`.
