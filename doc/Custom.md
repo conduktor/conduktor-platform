@@ -1,10 +1,14 @@
 ### URL
 Conduktor Platform is available on [http://localhost:8080](http://localhost:8080)
 
-### Connect to an unsecured kafka cluster accessible on `0.0.0.0:9092`
+Note if you want to reach secure Kafka clusters, you should use the [configuration file](Configuration.md) or add them within the UI at [http://localhost:8080/admin/clusters](http://localhost:8080/admin.clusters).
+
+### Local Kafka on Linux
+
+Connect to an unsecured kafka cluster accessible on `0.0.0.0:9092`
 ```sh
  docker run --rm \
-  -p "8080:80" \
+  --network host \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
   conduktor/conduktor-platform:latest
