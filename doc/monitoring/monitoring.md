@@ -13,7 +13,7 @@ Below details the metrics and graphs that you should expect to see populated dep
 
 ### Agent Setup
 
-- [Learn how to setup the Monitoring Agent](#header-1)
+- [Learn how to setup the Monitoring Agent](agent-setup.md)
 
 
 ***
