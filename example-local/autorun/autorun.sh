@@ -97,7 +97,7 @@ verify_installed()
 {
   local cmd="$1"
   if [[ $(type $cmd 2>&1) =~ "not found" ]]; then
-    echo "❌ This script requires '$cmd'. Please install '$cmd' and run again.\n"
+    echo "❌ This script requires '$cmd'. Please install '$cmd' and run again."
     exit 1
   fi
   return 0
