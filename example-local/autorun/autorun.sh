@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# (C) Conduktor, Inc. 2022-present
+# All rights reserved
+# Conduktor Platform installation script using docker-compose
+#
+# For any request, please contact us: support@conduktor.io
+# Looking for a job? Say hi: https://www.conduktor.io/careers
+#
+
 set -eu
 
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
