@@ -1,6 +1,4 @@
-<img src="https://www.conduktor.io/images/square-logo.png" width="256">
-
-# What is Conduktor Platform ?
+# <img src="https://www.conduktor.io/images/square-logo.png" width="32"> What is Conduktor Platform ?
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
@@ -47,7 +45,7 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 
 ## Private beta limitation ⚠️
 
-| The private beta is not distributed anymore.
+> The private beta is not distributed anymore.
 
 * All data & settings will be lost at the end of private beta.
 * End of private beta : October 1st.
