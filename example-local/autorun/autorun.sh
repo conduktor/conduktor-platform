@@ -90,7 +90,6 @@ useful and we will do our very best to help you solve your problem.\n\n" "${SUPP
 
 
 function trapStop() {
-    echo "exit $DOCKER_EXIT_CODE"
     if [[ ${DOCKER_EXIT_CODE:-0} == 130 ]]; then
         info "-> Conduktor Platform stopped by CTRL+C"
     elif [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
