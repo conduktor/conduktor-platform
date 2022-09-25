@@ -59,4 +59,4 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 * Follow <a href="https://twitter.com/getconduktor">@getconduktor on Twitter</a>
 * Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
 * Looking for a job? <a href="https://www.conduktor.io/careers">careers</a>
-* <a href="https://www.conduktor.io/kafka">Learn</a> Apache Kafka
+* Learning Apache Kafka? We have a whole <a href="https://www.conduktor.io/kafka">learning website</a> dedicated for you!
