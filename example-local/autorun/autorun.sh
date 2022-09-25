@@ -93,7 +93,19 @@ function prune() {
     done
 }
 
+verify_installed()
+{
+  local cmd="$1"
+  if [[ $(type $cmd 2>&1) =~ "not found" ]]; then
+    echo "❌ This script requires '$cmd'. Please install '$cmd' and run again."
+    exit 1
+  fi
+  return 0
+}
+
 function setup() {
+    verify_installed curl
+
     local _file="${CACHE_DIR}/conduktor-platform.sh"
     download $_file ${CURL_PATH}/example-local/autorun/autorun.sh
     chmod u+x $_file
@@ -105,13 +117,18 @@ function setup() {
 }
 
 function run() {
+    verify_installed curl
+
     local composeOpts="--log-level ERROR"
 
     echo "-> Launching Conduktor Platform on your machine..."
     echo "-> Downloading files..."
     mkdir -p  ${CACHE_DIR} || echo "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || echo "Failed to download files, is GitHub online ?" || exit 1
-
+    
+    notEmptyOrInput ORGANISATION_NAME "Organisation name: "
+    notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
+    notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
     notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: "
 
     if [ "${LICENSE_KEY}" == "" ]; then
@@ -122,11 +139,7 @@ function run() {
       echo "LICENSE_KEY=${LICENSE_KEY}" > ${CACHE_DIR}/.env
       composeOpts="${composeOpts} --env-file ${CACHE_DIR}/.env"
     fi
-    
-    notEmptyOrInput ORGANISATION_NAME "Organisation name: "
-    notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
-    notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
-    
+
     pushd ${CACHE_DIR}
     echo "-> In a few minutes, Conduktor Platform should be ready on http://localhost:8080"
     echo "-> Press CTRL+C at anytime to stop the platform"
@@ -156,6 +169,7 @@ main() {
     case $i in
       -h|help)
         _print_help
+        exit 0
         ;;
       setup)
         shift
@@ -174,6 +188,7 @@ main() {
         ;;
     esac
   done
+  _print_help
 }
 
 
