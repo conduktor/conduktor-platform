@@ -17,7 +17,7 @@ FORCE_CONFIG=${FORCE_CONFIG:-"false"}
 # some disk usage when shutting down platform. This behavior
 # can be cancelled by injecting NO_PRUNE=true
 COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.2.0"
-NO_PRUNE=${NO_PRUNE:-"false"}
+NO_PRUNE=${NO_PRUNE:-"true"}
 
 # Platform variables
 LICENSE_KEY=${LICENSE_KEY:-}
@@ -91,7 +91,7 @@ useful and we will do our very best to help you solve your problem.\n\n" "${SUPP
 
 function trapStop() {
     if [[ ${DOCKER_EXIT_CODE:-0} == 130 ]]; then
-        info "-> Conduktor Platform stopped by CTRL+C"
+        info "Conduktor Platform stopped by CTRL+C"
     elif [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
         err "Conduktor Platform failed to start. Please check the logs in $CRASH_LOG_FILE. Here are the last 10 lines:"
         docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > "$CRASH_LOG_FILE" 2>&1 
@@ -110,7 +110,7 @@ function prune() {
       return
     fi
 
-    info "Cleaning up docker images (use NO_PRUNE=true to prevent this)"
+    info "Cleaning up docker images (use NO_PRUNE=false to prevent this)"
     for image in ${COMPOSE_IMAGES}; do
       printf "Pruning docker image %s..." "${image}"
       docker image rm -f "${image}" > /dev/null && echo " OK" || echo "KO. Error pruning, skipping..."
@@ -169,7 +169,7 @@ function run() {
     fi
 
     pushd ${CACHE_DIR}
-    info "Downloading Conduktor Platform docker images..."
+    info "Pulling Conduktor Platform docker images..."
     ${DOCKER_COMPOSE} ${composeOpts} pull
 
     info "Starting Conduktor Platform (press CTRL+C to stop)"
