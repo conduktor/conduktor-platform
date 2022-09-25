@@ -57,8 +57,7 @@ function notEmptyOrInput() {
     local var_name=${1:-}
     local description=${2:-"Your input: "}
     local input=""
-    if [ -z "${!var_name}" ]; then 
-        echo "-> Please enter value for variable ${var_name}"
+    if [ -z "${!var_name}" ]; then
         read -p "${description}" input
         export ${var_name}=${input}
         trap "unset ${var_name}" EXIT
@@ -67,8 +66,8 @@ function notEmptyOrInput() {
 
 function trapStop() {
     if [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
-        echo "-> Platform failed to run, please verify your license key"
-        echo "A dump of platform logs is available in file crash.log"
+        echo "-> Conduktor Platform failed to start. Please check the logs and if your license key is valid."
+        echo "Logs are available in crash.log"
         docker-compose -f ${CACHE_DIR}/docker-compose.yml logs conduktor-platform > crash.log 2>&1 
     fi
     pushd ${CACHE_DIR}
@@ -83,7 +82,6 @@ function prune() {
     echo "You can prevent it next time by using variable NO_PRUNE=true"
 
     if [ "${NO_PRUNE}" == "true" ]; then
-      echo "You decided not to delete conduktor platform images!"
       return
     fi
 
@@ -122,10 +120,11 @@ function run() {
     local composeOpts="--log-level ERROR"
 
     echo "-> Launching Conduktor Platform on your machine..."
-    echo "-> Downloading files..."
+    echo "-> Downloading startup files..."
     mkdir -p  ${CACHE_DIR} || echo "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || echo "Failed to download files, is GitHub online ?" || exit 1
-    
+
+    echo "-> To provide you with the best possible user experience, we need some information:"
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
     notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
@@ -141,8 +140,10 @@ function run() {
     fi
 
     pushd ${CACHE_DIR}
-    echo "-> In a few minutes, Conduktor Platform should be ready on http://localhost:8080"
-    echo "-> Press CTRL+C at anytime to stop the platform"
+    echo "-> Downloading Conduktor Platform docker images..."
+    ${DOCKER_COMPOSE} ${composeOpts} pull
+
+    echo "-> Starting Conduktor Platform on http://localhost:8080 (press CTRL+C to stop)"
     ${DOCKER_COMPOSE} ${composeOpts} up -V \
         --abort-on-container-exit --exit-code-from conduktor-platform > /dev/null \
         || export DOCKER_EXIT_CODE="$?"
