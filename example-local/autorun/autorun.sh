@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -eu
 
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
@@ -38,7 +38,7 @@ function download() {
     local url=$2
     echo "Downloading file from ${url}"
 
-    curl -s -o $target_file $url
+    curl -s -o "$target_file" "$url"
 }
 
 function downloadFiles() {
@@ -47,31 +47,38 @@ function downloadFiles() {
     # cp ../jmx-exporter.yml ${CACHE_DIR}/
     # cp ../platform-config.yaml ${CACHE_DIR}/
     # cp ../platform-config-no-license.yaml ${CACHE_DIR}/
-    download ${CACHE_DIR}/docker-compose.yml ${CURL_PATH}/example-local/docker-compose.yml
-    download ${CACHE_DIR}/jmx-exporter.yml ${CURL_PATH}/example-local/jmx-exporter.yml
-    download ${CACHE_DIR}/platform-config.yaml ${CURL_PATH}/example-local/platform-config.yaml
-    download ${CACHE_DIR}/platform-config-no-license.yaml ${CURL_PATH}/example-local/platform-config-no-license.yaml
+    download "${CACHE_DIR}/docker-compose.yml" "${CURL_PATH}/example-local/docker-compose.yml"
+    download "${CACHE_DIR}/jmx-exporter.yml" "${CURL_PATH}/example-local/jmx-exporter.yml"
+    download "${CACHE_DIR}/platform-config-no-license.yaml" "${CURL_PATH}/example-local/platform-config-no-license.yaml"
+    download "${CACHE_DIR}/platform-config.yaml" "${CURL_PATH}/example-local/platform-config.yaml"
 }
 
 function notEmptyOrInput() {
     local var_name=${1:-}
     local description=${2:-"Your input: "}
     local input=""
-    if [ -z "${!var_name}" ]; then 
-        echo "-> Please enter value for variable ${var_name}"
+    if [ -z "${!var_name}" ]; then
         read -p "${description}" input
         export ${var_name}=${input}
         trap "unset ${var_name}" EXIT
     fi
 }
 
+info() {
+  printf "\033[34m\n* %s\n\033[0m\n" "${@}"
+}
+
+err() {
+  printf "\033[33m\n* %s\n\033[0m\n" "${@}"
+}
+
 function trapStop() {
     if [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
-        echo "-> Platform failed to run, please verify your license key"
-        echo "A dump of platform logs is available in file crash.log"
-        docker-compose -f ${CACHE_DIR}/docker-compose.yml logs conduktor-platform > crash.log 2>&1 
+        err "Conduktor Platform failed to start. Please check the logs and if your license key is valid."
+        err "Logs are available in crash.log"
+        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > crash.log 2>&1 
     fi
-    pushd ${CACHE_DIR}
+    pushd "${CACHE_DIR}"
     ${DOCKER_COMPOSE} down -v > /dev/null
     popd
     
@@ -79,25 +86,22 @@ function trapStop() {
 }
 
 function prune() {
-    echo "-> Cleaning up docker images"
-    echo "You can prevent it next time by using variable NO_PRUNE=true"
-
     if [ "${NO_PRUNE}" == "true" ]; then
-      echo "You decided not to delete conduktor platform images!"
       return
     fi
 
+    info "Cleaning up docker images (use NO_PRUNE=true to prevent this)"
     for image in ${COMPOSE_IMAGES}; do
-      echo "Pruning docker image ${image}..."
-      docker image rm ${image} > /dev/null && echo "✅" || echo "❌ Could not delete image, it has been skipped"
+      printf "Pruning docker image %s..." "${image}"
+      docker image rm "${image}" > /dev/null && echo " OK" || echo "KO. Error pruning, skipping..."
     done
 }
 
 verify_installed()
 {
   local cmd="$1"
-  if [[ $(type $cmd 2>&1) =~ "not found" ]]; then
-    echo "❌ This script requires '$cmd'. Please install '$cmd' and run again."
+  if [[ $(type "$cmd" 2>&1) =~ "not found" ]]; then
+    err "This script requires '$cmd'. Please install '$cmd' and run again."
     exit 1
   fi
   return 0
@@ -107,8 +111,8 @@ function setup() {
     verify_installed curl
 
     local _file="${CACHE_DIR}/conduktor-platform.sh"
-    download $_file ${CURL_PATH}/example-local/autorun/autorun.sh
-    chmod u+x $_file
+    download "$_file" "${CURL_PATH}/example-local/autorun/autorun.sh"
+    chmod u+x "$_file"
     # The installer is going to want to ask for confirmation by
     # reading stdin.  This script was piped into `sh` though and
     # doesn't have stdin to pass to its children. Instead we're going
@@ -121,11 +125,11 @@ function run() {
 
     local composeOpts="--log-level ERROR"
 
-    echo "-> Launching Conduktor Platform on your machine..."
-    echo "-> Downloading files..."
-    mkdir -p  ${CACHE_DIR} || echo "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
-    downloadFiles || echo "Failed to download files, is GitHub online ?" || exit 1
-    
+    info "Launching Conduktor Platform on your machine..."
+    mkdir -p "${CACHE_DIR}" || err "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
+    downloadFiles || err "Failed to download files, is GitHub online ?" || exit 1
+
+    info "To provide you with the best possible user experience, we need some information:"
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
     notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
@@ -133,16 +137,21 @@ function run() {
 
     if [ "${LICENSE_KEY}" == "" ]; then
         export CONF_NAME=platform-config-no-license
-        sed "s/^.*LICENSE_KEY.*$//" ${CACHE_DIR}/docker-compose.yml | tee -a ${CACHE_DIR}/docker-compose.yml > /dev/null
+        sed "s/^.*LICENSE_KEY.*$//" "${CACHE_DIR}/docker-compose.yml" | tee -a "${CACHE_DIR}/docker-compose.yml" > /dev/null
     else 
       export CONF_NAME=platform-config
-      echo "LICENSE_KEY=${LICENSE_KEY}" > ${CACHE_DIR}/.env
+      echo "LICENSE_KEY=${LICENSE_KEY}" > "${CACHE_DIR}/.env"
       composeOpts="${composeOpts} --env-file ${CACHE_DIR}/.env"
     fi
 
     pushd ${CACHE_DIR}
-    echo "-> In a few minutes, Conduktor Platform should be ready on http://localhost:8080"
-    echo "-> Press CTRL+C at anytime to stop the platform"
+    info "Downloading Conduktor Platform docker images..."
+    ${DOCKER_COMPOSE} ${composeOpts} pull
+
+    info "Starting Conduktor Platform (press CTRL+C to stop)"
+    echo "--> Go to http://localhost:8080 <--"
+    echo
+
     ${DOCKER_COMPOSE} ${composeOpts} up -V \
         --abort-on-container-exit --exit-code-from conduktor-platform > /dev/null \
         || export DOCKER_EXIT_CODE="$?"
