@@ -118,7 +118,7 @@ function prune() {
       return
     fi
 
-    info "Cleaning up docker images (use NO_PRUNE=false to prevent this)"
+    info "Cleaning up docker images (use NO_PRUNE=true to prevent this)"
     for image in ${COMPOSE_IMAGES}; do
       printf "Pruning docker image %s..." "${image}"
       docker image rm -f "${image}" > /dev/null && echo " OK" || echo "KO. Error pruning, skipping..."
