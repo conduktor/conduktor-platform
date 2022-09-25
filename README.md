@@ -1,3 +1,5 @@
+<img src="https://www.conduktor.io/images/square-logo.png" width="256">
+
 # What is Conduktor Platform ?
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
@@ -9,36 +11,28 @@ Simplifying the complexity of real-time data streaming, Conduktor Platform enabl
 </p>
 
 ## Get Started
+
 We offer you 3 simple ways to experience Conduktor Platform.
 
-### Online Demo
+### Online Demo: 1-click away!
 
-First, we have an online demo. We're using dedicated Kafka cluster with a few applications running in the background.  
-You will be able to jump straight into the Platform, no configuration required  
-- Coming soon !
+Go to https://demo.conduktor.io to experience Conduktor Platform in 1-click, nothing to setup on you side.
 
-### Start with built-in Kafka 
+A dedicated Kafka cluster is running alongside a few Kafka applications to provide some life and demo everything easily.
 
-Next, we have a simple docker-compose command, with an embedded Kafka, Schema Registry and Kafka Connect.  
+### Start with a built-in Apache Kafka cluster
+
+Start docker-compose on your side, with an embedded Apache Kafka, Schema Registry and Kafka Connect.
+
 - [Quick start without cloning the repository](/example-local/autorun/README.md)
 - [Take me to the docker-compose](/example-local)
 
-### Connect to your own Kafka 
+### Connect to your own Apache Kafka cluster
 
-Then, if you want to try Conduktor Platform on your own Kafka, 
-we have several documentation pages to help you get started.
-- [I want to configure Conduktor Platform on my Kafka](./doc/Custom.md)
-  
-Finaly, if you want to customise Advanced settings, we have preset define here :
-- [I want to configure Conduktor Platform with advanced settings](./doc/Advanced_settings.md)
+You have your own Apache Kafka clusters and you want to connect them to Conduktor Platform?
 
-
-## Private beta limitation ⚠️ : 
-* All data & settings will be lost at the end of private beta.
-* End of private beta : October 1st.
-* Do not run conduktor platform against critical production environments
-* No Windows support yet.
-* Does not support MSK+IAM auth
+- [Connect my clusters to Conduktor Platform](./doc/Custom.md)
+- [I need more advanced settings](./doc/Advanced_settings.md)
 
 ## Platforms ACLs are supported on
 * Open Source Apache Kafka
@@ -51,7 +45,20 @@ Finaly, if you want to customise Advanced settings, we have preset define here :
 * Confluent Cloud
 * MSK
 
+## Private beta limitation ⚠️
+
+| The private beta is not distributed anymore.
+
+* All data & settings will be lost at the end of private beta.
+* End of private beta : October 1st.
+* Do not run Conduktor Platform against critical production environments
+* No Windows support yet.
+* Does not support MSK+IAM auth
+
+
 ## Get Involved
+
 * Follow <a href="https://twitter.com/getconduktor">@getconduktor on Twitter</a>
 * Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
+* Looking for a job? <a href="https://www.conduktor.io/careers">careers</a>
 * <a href="https://www.conduktor.io/kafka">Learn</a> Apache Kafka

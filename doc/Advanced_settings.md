@@ -2,7 +2,7 @@
 
 
 ## Run mode
-to configure conduktor platform fo a particular hardware, you can use the environment variable 
+to configure Conduktor Platform fo a particular hardware, you can use the environment variable 
 `RUN_MODE`
 | ENV     | Available RAM    |      
 |---------|--------------------|

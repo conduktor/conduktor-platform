@@ -1,19 +1,19 @@
-# Run conduktor platform locally
+# Run Conduktor Platform locally
 
 ### Usage
 
-Run conduktor platform :    
+Run Conduktor Platform :    
 Replace `<your-license>` with the license provided
 ```sh
 ./run-local.sh "<your-license>"
 ```
 
-Stop conduktor platform
+Stop Conduktor Platform
 ```sh
 ./stop-local.sh
 ```
 
-If you want to delete all conduktor platform data
+If you want to delete all Conduktor Platform data
 ```sh
 ./rm-local.sh
 ```
