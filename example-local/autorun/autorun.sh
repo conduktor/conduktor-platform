@@ -73,10 +73,12 @@ err() {
 }
 
 function trapStop() {
-    if [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
+    if [[ ${DOCKER_EXIT_CODE:-0} == 130 ]]; then
+        info "-> Conduktor Platform stopped by CTRL+C"
+    elif [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
         err "Conduktor Platform failed to start. Please check the logs and if your license key is valid."
-        err "Logs are available in crash.log"
-        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > crash.log 2>&1 
+        err "Logs are available in conduktor-platform.log"
+        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > conduktor-platform.log 2>&1 
     fi
     pushd "${CACHE_DIR}"
     ${DOCKER_COMPOSE} down -v > /dev/null
@@ -92,8 +94,8 @@ function prune() {
 
     info "Cleaning up docker images (use NO_PRUNE=true to prevent this)"
     for image in ${COMPOSE_IMAGES}; do
-      printf "Pruning docker image %s..." "${image}"
-      docker image rm "${image}" > /dev/null && echo " OK" || echo "KO. Error pruning, skipping..."
+      info "Pruning docker image %s..." "${image}"
+      docker image rm -f "${image}" > /dev/null && echo " OK" || echo "KO. Error pruning, skipping..."
     done
 }
 
