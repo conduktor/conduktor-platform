@@ -170,6 +170,7 @@ main() {
     case $i in
       -h|help)
         _print_help
+        exit 0
         ;;
       setup)
         shift
@@ -188,6 +189,7 @@ main() {
         ;;
     esac
   done
+  _print_help
 }
 
 
