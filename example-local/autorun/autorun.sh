@@ -93,7 +93,19 @@ function prune() {
     done
 }
 
+verify_installed()
+{
+  local cmd="$1"
+  if [[ $(type $cmd 2>&1) =~ "not found" ]]; then
+    echo -e "\nERROR: This script requires '$cmd'. Please install '$cmd' and run again.\n"
+    exit 1
+  fi
+  return 0
+}
+
 function setup() {
+    verify_installed curl
+
     local _file="${CACHE_DIR}/conduktor-platform.sh"
     download $_file ${CURL_PATH}/example-local/autorun/autorun.sh
     chmod u+x $_file
@@ -105,6 +117,8 @@ function setup() {
 }
 
 function run() {
+    verify_installed curl
+
     local composeOpts="--log-level ERROR"
 
     echo "-> Launching Conduktor Platform on your machine..."
