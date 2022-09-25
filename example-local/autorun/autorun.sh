@@ -128,8 +128,12 @@ function run() {
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
     
     pushd ${CACHE_DIR}
-    echo "-> In a few minutes, Conduktor Platform should be ready on http://localhost:8080"
-    echo "-> Press CTRL+C at anytime to stop the platform"
+    echo "-> Configuration ✅, "
+    echo "-> Once ready Conduktor platform will be accessibe on http://localhost:8080
+    echo "---> Press CTRL+C at anytime to stop the platform"
+    echo "-> We are downloading and installing the conduktor platform."
+    echo "--> this may take a few minutes,"
+    echo "---> please wait..."
     ${DOCKER_COMPOSE} ${composeOpts} up -V \
         --abort-on-container-exit --exit-code-from conduktor-platform > /dev/null \
         || export DOCKER_EXIT_CODE="$?"
