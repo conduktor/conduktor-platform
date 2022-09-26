@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# (C) Conduktor, Inc. 2022-present
+# All rights reserved
+# Conduktor Platform installation script using docker-compose
+#
+# For any request, please contact us: support@conduktor.io
+# Looking for a job? Say hi: https://www.conduktor.io/careers
+#
+
 set -eu
 
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
@@ -8,13 +16,16 @@ GIT_BRANCH=${GIT_BRANCH:-"main"}
 GIT_SOURCE=${GIT_SOURCE:-"https://raw.githubusercontent.com/conduktor/conduktor-platform"}
 CURL_PATH="${GIT_SOURCE}/${GIT_BRANCH}"
 
+SUPPORT_EMAIL="support@conduktor.io"
+CRASH_LOG_FILE="conduktor-platform.log"
+
 # Force input of variables
 FORCE_CONFIG=${FORCE_CONFIG:-"false"}
 # This array of images is needed in order to prune and save
 # some disk usage when shutting down platform. This behavior
 # can be cancelled by injecting NO_PRUNE=true
 COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.2.0"
-NO_PRUNE=${NO_PRUNE:-"false"}
+NO_PRUNE=${NO_PRUNE:-"true"}
 
 # Platform variables
 LICENSE_KEY=${LICENSE_KEY:-}
@@ -56,9 +67,14 @@ function downloadFiles() {
 function notEmptyOrInput() {
     local var_name=${1:-}
     local description=${2:-"Your input: "}
+    local optional=${3:-false}
     local input=""
     if [ -z "${!var_name}" ]; then
-        read -p "${description}" input
+        if [ "$optional" == "false" ]; then
+          while read -p "${description}" input && [ -z "$input" ]; do :; done
+        else 
+          read -p "${description}" input
+        fi
         export ${var_name}=${input}
         trap "unset ${var_name}" EXIT
     fi
@@ -72,13 +88,23 @@ err() {
   printf "\033[33m\n* %s\n\033[0m\n" "${@}"
 }
 
+function support_msg() {
+  printf "
+If you are still having problems, please check https://github.com/conduktor/conduktor-platform
+and if your issue persists, please send an email to %s
+with the contents of %s and any information you think would be
+useful and we will do our very best to help you solve your problem.\n\n" "${SUPPORT_EMAIL}" "${CRASH_LOG_FILE}"
+}
+
+
 function trapStop() {
     if [[ ${DOCKER_EXIT_CODE:-0} == 130 ]]; then
-        info "-> Conduktor Platform stopped by CTRL+C"
+        info "Conduktor Platform stopped by CTRL+C"
     elif [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
-        err "Conduktor Platform failed to start. Please check the logs and if your license key is valid."
-        err "Logs are available in conduktor-platform.log"
-        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > conduktor-platform.log 2>&1 
+        err "Conduktor Platform failed to start. Please check the logs in $CRASH_LOG_FILE. Here are the last 10 lines:"
+        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > "$CRASH_LOG_FILE" 2>&1 
+        tail -n 10 "$CRASH_LOG_FILE"
+        support_msg
     fi
     pushd "${CACHE_DIR}"
     ${DOCKER_COMPOSE} down -v > /dev/null
@@ -127,7 +153,11 @@ function run() {
 
     local composeOpts="--log-level ERROR"
 
-    info "Launching Conduktor Platform on your machine..."
+    info "Welcome to Conduktor Platform installation script!
+* Go to https://github.com/conduktor/conduktor-platform if you need any help
+
+* Launching Conduktor Platform on your machine..."
+
     mkdir -p "${CACHE_DIR}" || err "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || err "Failed to download files, is GitHub online ?" || exit 1
 
@@ -135,7 +165,7 @@ function run() {
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
     notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
-    notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: "
+    notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: " true
 
     if [ "${LICENSE_KEY}" == "" ]; then
         export CONF_NAME=platform-config-no-license
@@ -147,7 +177,7 @@ function run() {
     fi
 
     pushd ${CACHE_DIR}
-    info "Downloading Conduktor Platform docker images..."
+    info "Pulling Conduktor Platform docker images..."
     ${DOCKER_COMPOSE} ${composeOpts} pull
 
     info "Starting Conduktor Platform (press CTRL+C to stop)"

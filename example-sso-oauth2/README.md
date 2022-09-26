@@ -1,9 +1,9 @@
-# Run conduktor platform locally with auth0
+# Run Conduktor Platform locally with auth0
 
 This example run conduktor-platform using an Oauth2 SSO configuration providing users for login.
 
 <!-- TOC -->
-* [Run conduktor platform locally with auth0](#run-conduktor-platform-locally-with-auth0)
+* [Run Conduktor Platform locally with auth0](#run-conduktor-platform-locally-with-auth0)
   * [Requirements](#requirements)
   * [Configuration](#configuration)
     * [Auth0](#auth0)
