@@ -24,7 +24,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 - sso (ldap/oauth2)
 - license
 
-[Learn how](doc/Configuration.md) to use the configuration file.
+[Learn how](Configuration.md) to use the configuration file.
 
 ***
 
@@ -35,26 +35,26 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
     - [Filtering data](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/browse-data.md#filtering)
     - [Deserialization](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/browse-data.md#deserialization)
 - Learn about producing data:
-    - [Producer](doc/console/produce-data.md)
+    - [Producer](console/produce-data.md)
     - [Random data generation](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/produce-data.md#random-data-generator)
     - ['Flow' mode](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/produce-data.md#flow-mode)
 
 ***
 
 ### Conduktor Testing
-- [Conduktor Testing Docs](doc/testing/testing.md)
+- [Conduktor Testing Docs](testing/testing.md)
 
 ***
 
 ### Conduktor Monitoring
-- [Conduktor Monitoring Docs](doc/monitoring/monitoring.md)
+- [Conduktor Monitoring Docs](monitoring/monitoring.md)
 
 ***
 
 ### Conduktor Data Masking
 
 Note that Data Masking is only available in Enterprise plans. If you are interested in gaining access to this feature, please [contact us](https://www.conduktor.io/contact).
-- [Learn how to implement Data Masking](doc/data%20masking/data-masking.md)
+- [Learn how to implement Data Masking](data%20masking/data-masking.md)
 
 ***
 
@@ -65,6 +65,6 @@ Note that Data Masking is only available in Enterprise plans. If you are interes
 - Kafka Connect - CRUD Operations
     - _These are currently missing in the platform, but will be available imminently._
 - Monitoring - SSL Clusters 
-    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [configuration](doc/configuration.md)._ 
+    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [configuration](configuration.md)._ 
 
 
