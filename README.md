@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/2573301/192735234-82580f80-ff9d-4b41-8dd7-60fad8212f30.png" width="60"> What is Conduktor Platform ?
+# <img src="https://user-images.githubusercontent.com/2573301/192741305-0e1441a4-308b-4308-947a-656a1dc53577.png" width="25">  What is Conduktor Platform ?
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
