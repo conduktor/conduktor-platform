@@ -1,4 +1,4 @@
-# <img src="https://www.conduktor.io/images/square-logo.png" width="32"> What is Conduktor Platform ?
+# <img src="https://user-images.githubusercontent.com/2573301/192735234-82580f80-ff9d-4b41-8dd7-60fad8212f30.png" width="60"> What is Conduktor Platform ?
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
@@ -32,26 +32,21 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 - [Connect my clusters to Conduktor Platform](./doc/Custom.md)
 - [I need more advanced settings](./doc/Advanced_settings.md)
 
+## Docs
+
+* [See documentation](doc/)
+
 ## Platforms ACLs are supported on
 * Open Source Apache Kafka
 * MSK
 
 ## Where does Monitoring work?
-* Open source Apache Kafka 
 
-## Where does Monitoring _not_ work yet?
-* Confluent Cloud
-* MSK
+Some aspects of Conduktor Monitoring support all flavours of Kafka. Specifically, you will have insight into consumer lag of your applications out-of-the-box.
 
-## Private beta limitation ⚠️
+To use Monitoring at full capacity you must [setup the Monitoring agent](doc/monitoring/monitoring.md). This currently supports open-source Apache Kafka.
 
-> The private beta is not distributed anymore.
-
-* All data & settings will be lost at the end of private beta.
-* End of private beta : October 1st.
-* Do not run Conduktor Platform against critical production environments
-* No Windows support yet.
-* Does not support MSK+IAM auth
+[See documentation](doc/monitoring/monitoring.md).
 
 
 ## Get Involved
