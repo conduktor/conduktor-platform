@@ -47,7 +47,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 ***
 
 ### Conduktor Monitoring
-- [Conduktor Monitoring Docs](doc/monitoring/monitoring.md)
+- [Conduktor Monitoring Docs](monitoring/monitoring.md)
 
 ***
 
