@@ -24,7 +24,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 - sso (ldap/oauth2)
 - license
 
-[Learn how](doc/Configuration.md) to use the configuration file.
+[Learn how](Configuration.md) to use the configuration file.
 
 ***
 
@@ -65,6 +65,6 @@ Note that Data Masking is only available in Enterprise plans. If you are interes
 - Kafka Connect - CRUD Operations
     - _These are currently missing in the platform, but will be available imminently._
 - Monitoring - SSL Clusters 
-    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [configuration](doc/configuration.md)._ 
+    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [Configuration](Configuration.md)._ 
 
 
