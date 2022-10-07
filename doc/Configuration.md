@@ -21,10 +21,6 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "some-host:9092"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
 
 auth:
   demo-users:
@@ -61,18 +57,9 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "${KAFKA_BOOTSTRAP_SERVER:-localhost:9092}"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
     schemaRegistry:
       url: "${SCHEMA_REGISTRY_URL:-http://localhost:8081}"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
-        client.id=conduktor
-        default.api.timeout.ms=5000
-        request.timeout.ms=5000
     labels:
       env: default
 envs : []
@@ -161,10 +148,6 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "localhost:9092"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
 ```
 
 ## Plain Auth With Schema Registry
@@ -176,19 +159,10 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "localhost:9092"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
     schemaRegistry:
       id: Local SR
       url: "http://localhost:8081"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
-        client.id=conduktor
-        default.api.timeout.ms=5000
-        request.timeout.ms=5000
     labels: {}
 ```
 
@@ -202,9 +176,6 @@ clusters:
     ignoreUntrustedCertificate: false
     bootstrapServers: "pkc-lzoyy.eu-central-1.aws.confluent.cloud:9092"
     properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
       security.protocol=SASL_SSL
       sasl.mechanism=PLAIN
       sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
@@ -219,9 +190,6 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     ignoreUntrustedCertificate: false
     bootstrapServers: "pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092"
     properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
       security.protocol=SASL_SSL
       sasl.mechanism=PLAIN
       sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<usernam>" password="<password>";
@@ -317,19 +285,10 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "localhost:9092"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
     schemaRegistry:
       id: Local SR
       url: "http://localhost:8081"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
-        client.id=conduktor
-        default.api.timeout.ms=5000
-        request.timeout.ms=5000
     labels: {}
 
   - id: confluent-pkc
@@ -338,9 +297,6 @@ clusters:
     ignoreUntrustedCertificate: false
     bootstrapServers: "pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092"
     properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
       security.protocol=SASL_SSL
       sasl.mechanism=PLAIN
       sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<usernam>" password="<password>";
