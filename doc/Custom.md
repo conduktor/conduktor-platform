@@ -34,7 +34,7 @@ Finally, run the Conduktor Platform using the information you collected
   -p "8080:80" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=<advertised-host>:<advertised-port> \
-  --network <network-id>
+  --network <network-id> \
   conduktor/conduktor-platform:latest
 ```
 #### Kafka on the host
