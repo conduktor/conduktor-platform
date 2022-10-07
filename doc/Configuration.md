@@ -57,15 +57,9 @@ clusters:
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "${KAFKA_BOOTSTRAP_SERVER:-localhost:9092}"
-    properties: |
-      client.id=conduktor
-      default.api.timeout.ms=5000
-      request.timeout.ms=5000
     schemaRegistry:
       url: "${SCHEMA_REGISTRY_URL:-http://localhost:8081}"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
     labels:
       env: default
 envs : []
@@ -169,8 +163,6 @@ clusters:
       id: Local SR
       url: "http://localhost:8081"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
     labels: {}
 ```
 
@@ -297,8 +289,6 @@ clusters:
       id: Local SR
       url: "http://localhost:8081"
       ignoreUntrustedCertificate: false
-      properties: |
-        acks=all
     labels: {}
 
   - id: confluent-pkc
