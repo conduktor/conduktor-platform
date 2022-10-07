@@ -87,6 +87,7 @@ services:
       - ./platform-config.yaml:/opt/conduktor/platform-config.yaml
     environment:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+
 volumes:
   conduktor_data: {}
 ````
