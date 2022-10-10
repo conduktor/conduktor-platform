@@ -135,10 +135,6 @@ function prune() {
     done
 }
 
-is_command_present() {
-    type "$1" >/dev/null 2>&1
-}
-
 verify_installed()
 {
   local cmd="$1"
