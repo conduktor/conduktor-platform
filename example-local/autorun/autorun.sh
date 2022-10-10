@@ -11,13 +11,17 @@ set -eu
 
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
 CACHE_DIR=$(mktemp -d)
+BINARY_DIR="${CACHE_DIR}/.bin"
 CONFIG_FILE="${CACHE_DIR}/config.yaml"
 GIT_BRANCH=${GIT_BRANCH:-"main"}
 GIT_SOURCE=${GIT_SOURCE:-"https://raw.githubusercontent.com/conduktor/conduktor-platform"}
 CURL_PATH="${GIT_SOURCE}/${GIT_BRANCH}"
+PATH="${PATH}:${BINARY_DIR}"
 
 SUPPORT_EMAIL="support@conduktor.io"
 CRASH_LOG_FILE="conduktor-platform.log"
+
+COMPOSE_MIN_VERSION="1.12.0"
 
 # Force input of variables
 FORCE_CONFIG=${FORCE_CONFIG:-"false"}
@@ -36,11 +40,11 @@ ADMIN_PSW=${ADMIN_PSW:-}
 ###
 # Rewrite commands to prevent useless logs
 ###
-pushd () {
+function pushd () {
     command pushd "$@" > /dev/null
 }
 
-popd () {
+function popd () {
     command popd "$@" > /dev/null
 }
 
@@ -62,6 +66,12 @@ function downloadFiles() {
     download "${CACHE_DIR}/jmx-exporter.yml" "${CURL_PATH}/example-local/jmx-exporter.yml"
     download "${CACHE_DIR}/platform-config-no-license.yaml" "${CURL_PATH}/example-local/platform-config-no-license.yaml"
     download "${CACHE_DIR}/platform-config.yaml" "${CURL_PATH}/example-local/platform-config.yaml"
+    
+    # Binary dependencies
+    mkdir ${BINARY_DIR}
+    download "${BINARY_DIR}/semver" "https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.3.0/src/semver"
+
+    chmod +x "${BINARY_DIR}/semver"
 }
 
 function notEmptyOrInput() {
@@ -102,7 +112,7 @@ function trapStop() {
         info "Conduktor Platform stopped by CTRL+C"
     elif [[ ${DOCKER_EXIT_CODE:-0} != 0 ]]; then
         err "Conduktor Platform failed to start. Please check the logs in $CRASH_LOG_FILE. Here are the last 10 lines:"
-        docker-compose -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > "$CRASH_LOG_FILE" 2>&1 
+        ${DOCKER_COMPOSE} -f "${CACHE_DIR}/docker-compose.yml" logs conduktor-platform > "$CRASH_LOG_FILE" 2>&1 
         tail -n 10 "$CRASH_LOG_FILE"
         support_msg
     fi
@@ -125,6 +135,10 @@ function prune() {
     done
 }
 
+is_command_present() {
+    type "$1" >/dev/null 2>&1
+}
+
 verify_installed()
 {
   local cmd="$1"
@@ -133,6 +147,26 @@ verify_installed()
     exit 1
   fi
   return 0
+}
+
+check_docker_compose_version() {
+  local version=""
+
+  if [ "${DOCKER_COMPOSE}" == "docker-compose" ]; then
+    version=$(${DOCKER_COMPOSE} --version | cut -d" " -f3 | sed "s/,//")
+  else
+    version=$(${DOCKER_COMPOSE} version | cut -d" " -f4)
+  fi
+
+  local compare=$(semver compare "${version}" "${COMPOSE_MIN_VERSION}")
+  if [ "${compare}" == "1" ] || [ "${compare}" == "0" ]; then
+    return 0 
+  else 
+    err "It seems that you are running an unsupported version of docker-compose (<${COMPOSE_MIN_VERSION}), found version: ${version}.
+You can upgrade it from docker website: https://docs.docker.com/compose/install/"
+    support_msg
+    exit 1
+  fi
 }
 
 function setup() {
@@ -150,8 +184,10 @@ function setup() {
 
 function run() {
     verify_installed curl
+    verify_installed docker
+    verify_installed ${DOCKER_COMPOSE}
 
-    local composeOpts="--log-level ERROR"
+    local composeOpts=""
 
     info "Welcome to Conduktor Platform installation script!
 * Go to https://github.com/conduktor/conduktor-platform if you need any help
@@ -160,6 +196,8 @@ function run() {
 
     mkdir -p "${CACHE_DIR}" || err "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || err "Failed to download files, is GitHub online ?" || exit 1
+
+    check_docker_compose_version
 
     info "To provide you with the best possible user experience, we need some information:"
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
