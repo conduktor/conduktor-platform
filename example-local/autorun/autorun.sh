@@ -16,7 +16,7 @@ CONFIG_FILE="${CACHE_DIR}/config.yaml"
 GIT_BRANCH=${GIT_BRANCH:-"main"}
 GIT_SOURCE=${GIT_SOURCE:-"https://raw.githubusercontent.com/conduktor/conduktor-platform"}
 CURL_PATH="${GIT_SOURCE}/${GIT_BRANCH}"
-PATH="${PATH}:${BINARY_DIR}"
+PATH="${BINARY_DIR}:${PATH}"
 
 SUPPORT_EMAIL="support@conduktor.io"
 CRASH_LOG_FILE="conduktor-platform.log"
@@ -149,11 +149,18 @@ check_docker_compose_version() {
   local version=""
 
   if [ "${DOCKER_COMPOSE}" == "docker-compose" ]; then
+    # docker-compose format: docker-compose version X.Y.Z, build 5becea4c
     version=$(${DOCKER_COMPOSE} --version | cut -d" " -f3 | sed "s/,//")
   else
+    # docker compose format: Docker Compose version vX.Y.Z
     version=$(${DOCKER_COMPOSE} version | cut -d" " -f4)
   fi
 
+  # Semver is a tool used to compare two versions following semantic
+  # versioning. Returns 1 if ${version} is above ${COMPOSE_MIN_VERSION},
+  # 0 when equal and -1 when inferior. We use docker-compose arguments
+  # that were added in $COMPOSE_MIN_VERSION, that's the reason of this
+  # piece of code.
   local compare=$(semver compare "${version}" "${COMPOSE_MIN_VERSION}")
   if [ "${compare}" == "1" ] || [ "${compare}" == "0" ]; then
     return 0 
