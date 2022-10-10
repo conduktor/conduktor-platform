@@ -40,11 +40,11 @@ ADMIN_PSW=${ADMIN_PSW:-}
 ###
 # Rewrite commands to prevent useless logs
 ###
-function pushd () {
+function pushd() {
     command pushd "$@" > /dev/null
 }
 
-function popd () {
+function popd() {
     command popd "$@" > /dev/null
 }
 
