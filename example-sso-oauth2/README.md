@@ -9,6 +9,7 @@ This example run conduktor-platform using an Oauth2 SSO configuration providing 
     * [Auth0](#auth0)
     * [Okta](#okta)
     * [Keycloak](#keycloak)
+    * [Azure](#azure)
 <!-- TOC -->
 
 
@@ -109,3 +110,35 @@ sso:
       openid:
         issuer: "http://<host(:port)>/realms/<realm name>" # Could be get from the OpenI Endpoint configuration (.well-known) output on Realm settings page.
 ```
+
+### Azure
+Configure new application on MS Azure
+
+- **Step 1**: Create a new application in `App registrations`
+![](assets/azure-app-step-001.png)
+
+- **Step 2**: Name the application with a relevant name
+![](assets/azure-app-step-002.png)
+
+- **Step 3**: Create a new client secret. Keep these details secret.
+![](assets/azure-app-step-003.png)
+
+- **Step 4**: Define the callback URL. Either use the full domain you will use to host the application, or `localhost`
+![](assets/azure-app-step-004.png)
+
+In your application summary, you can easily find the tenant ID of your organization in MS Azure.
+Replace the `{tenantid}` in the below configuration for `openid`.
+Use the application ID as the `client-id`, and the client secret you created earlier as `client-secret`
+
+```yaml
+sso:
+  oauth2:
+    - name: "azure"
+      default: true
+      client-id: ${AZURE_APPLICATION_ID}
+      client-secret: ${AZURE_CLIENT_SECRET}
+      openid:
+        issuer: https://login.microsoftonline.com/{tenantid}/v2.0
+```
+
+Note: do not use the "Secret ID" of the client secret as the `client-id`. You **must** use the application ID.
