@@ -257,8 +257,8 @@ Cluster with Kafka Connect configured with Basic Auth
 ```
 
 ## SSO
-- [Oauth2 OpenIdConnect Identity Provider](./example-sso-oauth2/README.md)
-- [LDAP](./example-sso-ldap/README.md)
+- [Oauth2 OpenIdConnect Identity Provider](../example-sso-oauth2/README.md)
+- [LDAP](../example-sso-ldap/README.md)
 
 ## OIDC
 ```yml
