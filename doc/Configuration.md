@@ -1,4 +1,21 @@
-# Conduktor Platform configuration
+# Conduktor Platform Configuration
+
+- [Introduction](#introduction)
+- [Cluster Configuration Snippets](#conduktor-platform-configuration-snippets)
+    - [Organisation](#organization)
+    - [Plain Auth Example](#plain-auth-example)
+    - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
+    - [Confluent Cloud Example](#confluent-cloud-example)
+    - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
+    - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
+    - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
+    - [Kafka Connect](#kafka-connect)
+    - [SSO](#sso)
+    - [Complete Configuration Example](#complete-configuration-example)
+- [Cluster Configuration Properties](#cluster-configuration-properties)
+
+## Introduction
+
 Conduktor platform can be configured using an input yaml file providing configuration for
 - organization
 - kafka clusters
@@ -10,7 +27,7 @@ Or bind local file to another location and then tell conduktor-platform where is
 the container using `CDK_IN_CONF_FILE` environment variable.
 
 For example :
-`./input-config.yml` :
+`./platform-config.yml` :
 ```yaml
 organization:
  name: demo
@@ -35,14 +52,14 @@ license: "<you license key>"
 run with :
 ```shell
  docker run --rm \
-   --mount "type=bind,source=$PWD/input-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
+   --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
   conduktor/conduktor-platform:latest
 ```
 
 OR using `CDK_IN_CONF_FILE` env :
 ```shell
  docker run --rm \
-   --mount "type=bind,source=$PWD/input-config.yml,target=/etc/platform-config.yaml" \
+   --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   conduktor/conduktor-platform:latest
 ```
@@ -80,7 +97,7 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 > - `LICENSE_KEY`
 
 
-## Conduktor platform configuration snippets
+## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
 
 
@@ -90,52 +107,6 @@ Below outlines snippets demonstrating fundamental configurations possibility.
 organization:
   name: conduktor // The name of your organization
 ```
-
-## Cluster Configurations
-`clusters` : is a key/value configuration consisting of:
-
-`clusters.id` : string used to uniquely identify your Kafka cluster
-
-`clusters.name` : alias or user-friendly name for your Kafka cluster
-
-`clusters.color` : (optional) attach a color to associate with your cluster in the UI
-
-`clusters.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-`clusters.bootstrapServers` : list of host:port for your Kafka brokers
-
-`clusters.zookeeperServer` : (optional)
-
-`clusters.properties` : any cluster configuration properties. See docs.
-
-`schemaRegistry` (optional)  Configuration parameters if using schema registry
-
-`schemaRegistry.id` : string used to uniquely identify your schema registry
-
-`schemaRegistry.url` : the schema registry URL
-
-`schemaRegistry.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-
-`schemaRegistry.properties` : any schema registry configuration parameters
-
-`schemaRegistry.security` (optional)
-
-`schemaRegistry.security.username` : Basic auth username
-
-`schemaRegistry.security.password` : Basic auth password
-
-`kafkaConnects` : (optional)
-
-`kafkaConnects.id` : string used to uniquely identify your Kafka Connect
-
-`kafkaConnects.url` : the Kafka connect URL
-
-`kafkaConnects.security` : (optional)
-
-`kafkaConnects.security.username` : Basic auth username
-
-`kafkaConnects.security.password` : Basic auth password
-
-`labels` : (optional)
 
 
 ## Plain Auth Example
@@ -203,7 +174,7 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     labels: {}
 ```
 
-## SSL Certificates Example - Aiven (truststore)
+## <a href="#ssl">SSL Certificates Example - Aiven (truststore)</a>
 Keystore and truststore are not supported. But you can directly use the PEM formatted files (.pem or .cer)  
 Aiven example providing inline CA certificate  
 Please make sure the certificate is on one single line  
@@ -321,3 +292,50 @@ sso:
 
 license: "<license_key>"
 ```
+
+
+## Cluster Configuration Properties
+`clusters` : is a key/value configuration consisting of:
+
+`clusters.id` : string used to uniquely identify your Kafka cluster
+
+`clusters.name` : alias or user-friendly name for your Kafka cluster
+
+`clusters.color` : (optional) attach a color to associate with your cluster in the UI
+
+`clusters.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
+`clusters.bootstrapServers` : list of host:port for your Kafka brokers
+
+`clusters.zookeeperServer` : (optional)
+
+`clusters.properties` : any cluster configuration properties. See docs.
+
+`schemaRegistry` (optional)  Configuration parameters if using schema registry
+
+`schemaRegistry.id` : string used to uniquely identify your schema registry
+
+`schemaRegistry.url` : the schema registry URL
+
+`schemaRegistry.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
+
+`schemaRegistry.properties` : any schema registry configuration parameters
+
+`schemaRegistry.security` (optional)
+
+`schemaRegistry.security.username` : Basic auth username
+
+`schemaRegistry.security.password` : Basic auth password
+
+`kafkaConnects` : (optional)
+
+`kafkaConnects.id` : string used to uniquely identify your Kafka Connect
+
+`kafkaConnects.url` : the Kafka connect URL
+
+`kafkaConnects.security` : (optional)
+
+`kafkaConnects.security.username` : Basic auth username
+
+`kafkaConnects.security.password` : Basic auth password
+
+`labels` : (optional)
