@@ -174,7 +174,7 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     labels: {}
 ```
 
-## <a href="#ssl">SSL Certificates Example - Aiven (truststore)</a>
+## SSL Certificates Example - Aiven (truststore)
 Keystore and truststore are not supported. But you can directly use the PEM formatted files (.pem or .cer)  
 Aiven example providing inline CA certificate  
 Please make sure the certificate is on one single line  
