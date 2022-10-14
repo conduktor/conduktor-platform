@@ -42,7 +42,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 ***
 
 ### Conduktor Testing
-- [Conduktor Testing Docs](doc/testing/testing.md)
+- [Conduktor Testing Docs](testing/testing.md)
 
 ***
 
