@@ -2,7 +2,7 @@
 
 - [Introduction](#introduction)
 - [Cluster Configuration Snippets](#conduktor-platform-configuration-snippets)
-    - [Organisation](#organization)
+    - [Organization](#organization)
     - [Plain Auth Example](#plain-auth-example)
     - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
     - [Confluent Cloud Example](#confluent-cloud-example)
