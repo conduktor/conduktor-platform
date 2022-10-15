@@ -200,7 +200,7 @@ function run() {
     mkdir -p "${CACHE_DIR}" || err "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || err "Failed to download files, is GitHub online ?" || exit 1
 
-    check_docker_compose_version
+#    check_docker_compose_version
 
     info "To provide you with the best possible user experience, we need some information:"
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
