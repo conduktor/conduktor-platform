@@ -20,4 +20,3 @@ auth:
       password: "${ADMIN_PSW}"
       groups:
         - ADMIN
-license: "$LICENSE_KEY"

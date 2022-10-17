@@ -1,4 +1,4 @@
-# What is Conduktor Platform ?
+# <img src="https://user-images.githubusercontent.com/2573301/192741305-0e1441a4-308b-4308-947a-656a1dc53577.png" width="25">  What is Conduktor Platform ?
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
@@ -8,41 +8,50 @@ Simplifying the complexity of real-time data streaming, Conduktor Platform enabl
   </a>
 </p>
 
-## Quickstart
+## Get Started
+
 We offer you 3 simple ways to experience Conduktor Platform.
 
-First, we have an online demo. We're using dedicated Kafka cluster with a few applications running in the background.  
-You will be able to jump straight into the Platform, no configuration required  
-- [I want to try the online demo](#online-demo)
+### Online Demo: 1-click away!
 
-Next, we have a simple docker-compose command, with an embedded Kafka, Schema Registry and Kafka Connect.  
+Go to https://demo.conduktor.io to experience Conduktor Platform in 1-click, nothing to setup on you side.
+
+A dedicated Kafka cluster is running alongside a few Kafka applications to provide some life and demo everything easily.
+
+### Start with a built-in Apache Kafka cluster
+
+Start docker-compose on your side, with an embedded Apache Kafka, Schema Registry and Kafka Connect.
+
+- [Quick start without cloning the repository](/example-local/autorun/README.md)
 - [Take me to the docker-compose](/example-local)
 
-Then, if you want to try Conduktor Platform on your own Kafka, 
-we have several documentation pages to help you get started.
-- [I want to configure Conduktor Platform on my Kafka](./doc/Custom.md)
-  
-Finaly, if you want to customise Advanced settings, we have preset define here :
-- [I want to configure Conduktor Platform with advanced settings](./doc/Advanced_settings.md)
+### Connect to your own Apache Kafka cluster
 
-## Online Demo
+You have your own Apache Kafka clusters and you want to connect them to Conduktor Platform?
 
-Coming soon !
+- [Connect my clusters to Conduktor Platform](./doc/Custom.md)
+- [I need more advanced settings](./doc/Advanced_settings.md)
 
-## Private beta limitation ⚠️ : 
-* All data & settings will be lost at the end of private beta.
-* End of private beta : October 1st.
-* Do not run conduktor platform against critical production environments
-* No Windows support yet.
-* Does not support MSK+IAM auth
+## Docs
+
+* [See documentation](doc/)
 
 ## Platforms ACLs are supported on
 * Open Source Apache Kafka
 * MSK
 
-
 ## Where does Monitoring work?
-* Open source Apache Kafka 
 
-## Where does Monitoring _not_ work yet?
-* Confluent Cloud
+Some aspects of Conduktor Monitoring support all flavours of Kafka. Specifically, you will have insight into consumer lag of your applications out-of-the-box.
+
+To use Monitoring at full capacity you must [setup the Monitoring agent](doc/monitoring/monitoring.md). This currently supports open-source Apache Kafka.
+
+[See documentation](doc/monitoring/monitoring.md).
+
+
+## Get Involved
+
+* Follow <a href="https://twitter.com/getconduktor">@getconduktor on Twitter</a>
+* Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
+* Looking for a job? <a href="https://www.conduktor.io/careers">careers</a>
+* Learning Apache Kafka? We have a whole <a href="https://www.conduktor.io/kafka">learning website</a> dedicated for you!
