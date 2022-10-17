@@ -35,14 +35,14 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
     - [Filtering data](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/browse-data.md#filtering)
     - [Deserialization](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/browse-data.md#deserialization)
 - Learn about producing data:
-    - [Producer](doc/console/produce-data.md)
+    - [Producer](console/produce-data.md)
     - [Random data generation](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/produce-data.md#random-data-generator)
     - ['Flow' mode](https://github.com/conduktor/conduktor-platform/blob/main/doc/console/produce-data.md#flow-mode)
 
 ***
 
 ### Conduktor Testing
-- [Conduktor Testing Docs](doc/testing/testing.md)
+- [Conduktor Testing Docs](testing/testing.md)
 
 ***
 
@@ -54,7 +54,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 ### Conduktor Data Masking
 
 Note that Data Masking is only available in Enterprise plans. If you are interested in gaining access to this feature, please [contact us](https://www.conduktor.io/contact).
-- [Learn how to implement Data Masking](doc/data%20masking/data-masking.md)
+- [Learn how to implement Data Masking](data%20masking/data-masking.md)
 
 ***
 
