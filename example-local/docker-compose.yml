@@ -23,6 +23,12 @@ services:
       ORGANISATION_NAME: "${ORGANISATION_NAME}"
       ADMIN_EMAIL: "${ADMIN_EMAIL}"
       ADMIN_PSW: "${ADMIN_PSW}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost/platform/api/modules/health/live"]
+      interval: 30s
+      start_period: 120s # Leave time for the psql init scripts to run
+      timeout: 5s
+      retries: 3
 
   zookeeper:
     image: zookeeper:3.8
