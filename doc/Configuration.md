@@ -5,6 +5,7 @@
     - [Organization](#organization)
     - [Plain Auth Example](#plain-auth-example)
     - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
+    - [Amazon MSK with IAM Authentication Example](#amazon-msk-with-iam-authentication-example)
     - [Confluent Cloud Example](#confluent-cloud-example)
     - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
     - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
@@ -135,6 +136,23 @@ clusters:
       url: "http://localhost:8081"
       ignoreUntrustedCertificate: false
     labels: {}
+```
+
+## Amazon MSK with IAM Authentication Example
+Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secret
+```yml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: "b-3-public.****.kafka.eu-west-1.amazonaws.com:9198"
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
 ```
 
 ## Confluent Cloud Example
