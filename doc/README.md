@@ -24,7 +24,14 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 - sso (ldap/oauth2)
 - license
 
-[Learn how](Configuration.md) to use the configuration file.
+[Learn how](Configuration.md) to use the configuration file and more [advanced](Advanced_settings.md) settings of the platform.
+
+
+#### Using platform public apis
+
+Conduktor platform expose some api that could be used to monitor internal state.
+
+More details on thoses api can be found [here](Public_API.md)
 
 ***
 
