@@ -34,7 +34,7 @@ Finally, run the Conduktor Platform using the information you collected
   -p "8080:80" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=<advertised-host>:<advertised-port> \
-  --network <network-id>
+  --network <network-id> \
   conduktor/conduktor-platform:latest
 ```
 #### Kafka on the host
@@ -81,10 +81,13 @@ services:
   conduktor-platform:
     image: conduktor/conduktor-platform:latest
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - conduktor_data:/var/conduktor
       - ./platform-config.yaml:/opt/conduktor/platform-config.yaml
     environment:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+
+volumes:
+  conduktor_data: {}
 ````

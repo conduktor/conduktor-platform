@@ -65,6 +65,6 @@ Note that Data Masking is only available in Enterprise plans. If you are interes
 - Kafka Connect - CRUD Operations
     - _These are currently missing in the platform, but will be available imminently._
 - Monitoring - SSL Clusters 
-    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [configuration](configuration.md)._ 
+    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [Configuration](Configuration.md)._ 
 
 
