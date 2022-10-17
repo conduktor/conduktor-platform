@@ -1,1 +1,6 @@
 platform_data/
+
+# standard IDE files ignore
+.idea/
+*.iml
+.vscode
