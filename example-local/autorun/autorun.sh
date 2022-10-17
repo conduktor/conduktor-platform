@@ -150,10 +150,10 @@ check_docker_compose_version() {
 
   if [ "${DOCKER_COMPOSE}" == "docker-compose" ]; then
     # docker-compose format: docker-compose version X.Y.Z, build 5becea4c
-    version=$(${DOCKER_COMPOSE} --version | cut -d" " -f3 | sed "s/,//")
+    version=$(${DOCKER_COMPOSE} --version --short)
   else
     # docker compose format: Docker Compose version vX.Y.Z
-    version=$(${DOCKER_COMPOSE} version | cut -d" " -f4)
+    version=$(${DOCKER_COMPOSE} version --short)
   fi
 
   # Semver is a tool used to compare two versions following semantic
@@ -200,7 +200,7 @@ function run() {
     mkdir -p "${CACHE_DIR}" || err "Something went wrong, do you have access to create folder in ${CACHE_DIR} ?" || exit 1
     downloadFiles || err "Failed to download files, is GitHub online ?" || exit 1
 
-#    check_docker_compose_version
+    check_docker_compose_version
 
     info "To provide you with the best possible user experience, we need some information:"
     notEmptyOrInput ORGANISATION_NAME "Organisation name: "
