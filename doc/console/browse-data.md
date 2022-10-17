@@ -42,9 +42,9 @@ A few examples:
 
 ````js
 // Matches Paris, Palermo, Pasadena
-return record.value.City.startsWith("Pa")
+return value.City.startsWith("Pa")
 // Has Header "sender" with value "Conduktor"
-return record.headers.sender == "Conduktor"
+return headers.sender == "Conduktor"
 ````
 
 Check the embedded documentation in Conduktor Platform for more details.
