@@ -80,7 +80,7 @@ This endpoint expose modules version used to build the platform along with platf
 
 Curl example :
 ```shell
-curl -s  http://localhost/platform/api/modules/versions | jq .
+curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 # {
 # "platform": "1.1.2-281af34d06dd83b4551a4f8a75aed8f54285a74c",
 # "devtools": "1.7.1",
