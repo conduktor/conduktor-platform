@@ -107,7 +107,7 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 
 ## Configuration using environment variables 
 
-| ENV | Default value | since version | until version |   | 
+| ENV | since version | until version | Default value |   | 
 |-----|---------------|---------------|---------------|---|
 | `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor`                                                                          | Volume directory where Conduktor platform store data                                                                                                                         |
 | `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location                                                                                                                               |
