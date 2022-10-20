@@ -74,13 +74,14 @@ To use Monitoring at full capacity you must [setup the Monitoring agent](doc/mon
 Features : 
 - Customize Platform Port with [PLATFORM_LISTENING_PORT](./doc/Configuration.md#configuration-using-environment-variables)
 - Support for MSK with IAM auth in Console and Testing -  see [documentation](./doc/Configuration.md#amazon-msk-with-iam-authentication-example)
-- Console: Reset offsets
-- Console: Kafka Connect | Create, Read, Update, Delete Operations
 - Testing: Regenerate Agent token 
   
 ### **1.1.2** (20-10-2022)
 Features : 
 - Support for external PostgreSQL see configuration [documentation](./doc/Configuration.md#external-database-configuration)
+- Console: Consumer Groups | Reset offsets
+- Console: Kafka Connect   | Create, Update, Delete, Pause, Restart Operations
+- Console: Schema Registry | Compare schema versions
 
 ### **1.0.2** (26-09-2022)
 Initial public release 
