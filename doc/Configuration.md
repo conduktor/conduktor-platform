@@ -1,6 +1,7 @@
 # Conduktor Platform Configuration
 
 - [Introduction](#introduction)
+- [Configuration using environment variables ](#configuration-using-environment-variables)
 - [Cluster Configuration Snippets](#conduktor-platform-configuration-snippets)
     - [Organization](#organization)
     - [Plain Auth Example](#plain-auth-example)
@@ -14,11 +15,13 @@
     - [SSO](#sso)
     - [Complete Configuration Example](#complete-configuration-example)
 - [Cluster Configuration Properties](#cluster-configuration-properties)
+- [External PostgreSQL](#external-database-configuration)
 
 ## Introduction
 
 Conduktor platform can be configured using an input yaml file providing configuration for
 - organization
+- external database 
 - kafka clusters
 - sso (ldap/oauth2)
 - license
@@ -32,7 +35,9 @@ For example :
 ```yaml
 organization:
  name: demo
- 
+
+database_url: postgresql://user:password@host:5432/database
+
 clusters:
   - id: local
     name: My Local Kafka Cluster
@@ -54,6 +59,7 @@ run with :
 ```shell
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
+  -e EMBEDDED_POSTGRES="false" \
   conduktor/conduktor-platform:latest
 ```
 
@@ -62,6 +68,7 @@ OR using `CDK_IN_CONF_FILE` env :
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
+  -e EMBEDDED_POSTGRES="false" \
   conduktor/conduktor-platform:latest
 ```
 
@@ -97,6 +104,16 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 > - `SCHEMA_REGISTRY_URL` 
 > - `LICENSE_KEY`
 
+
+## Configuration using environment variables 
+
+| ENV | since version | until version | Default value |   | 
+|-----|---------------|---------------|---------------|---|
+| `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor`                                                                          | Volume directory where Conduktor platform store data                                                                                                                         |
+| `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location                                                                                                                               |
+| `EMBEDDED_POSTGRES` | 1.1.2 | latest | `true`                                                                                    | (since version **1.1.2**) Flag to enabled or disable embedded Postgresql database.  |
+| `PLATFORM_DB_URL`   | 1.1.2 | latest | None                                                                                      | (since version **1.1.2**) External Postgresql configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. Only used if `EMBEDDED_POSTGRES=false` |
+| `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](./Advanced_settings.md#run-mode)
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
@@ -378,3 +395,27 @@ license: "<license_key>"
 `kafkaConnects.security.password` : Basic auth password
 
 `labels` : (optional)
+
+## External database configuration
+For quickstart purpose platform run with an internal embedded database (default).   
+
+For production environmnents platform support (from version [**1.1.2**](../README.md#112-20-10-2022)) external database configuration. 
+
+### Database requirements
+- PostgreSQL 14+
+- Provided connection role should have grant `ALL PRIVILEGES` on configured database. Platform should be able to create/update/delete schema and tables on database.
+
+### Setup
+To disable embedded database use `EMBEDDED_POSTGRES=false` environment variable.
+
+Then database connection url can be defined using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+
+This URL can be passed either with environment variable `PLATFORM_DB_URL` or inside platform yaml configuration file in `database_url`.
+
+Example : 
+```shell
+docker run \
+  -e EMBEDDED_POSTGRES="false" \
+  -e PLATFORM_DB_URL="postgresql://user:password@host:5432/database" \
+  conduktor/conduktor-platform:latest
+```
