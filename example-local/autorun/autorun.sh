@@ -146,15 +146,7 @@ verify_installed()
 }
 
 check_docker_compose_version() {
-  local version=""
-
-  if [ "${DOCKER_COMPOSE}" == "docker-compose" ]; then
-    # docker-compose format: docker-compose version X.Y.Z, build 5becea4c
-    version=$(${DOCKER_COMPOSE} --version --short)
-  else
-    # docker compose format: Docker Compose version vX.Y.Z
-    version=$(${DOCKER_COMPOSE} version --short)
-  fi
+  local version=$(${DOCKER_COMPOSE} version --short)
 
   # Semver is a tool used to compare two versions following semantic
   # versioning. Returns 1 if ${version} is above ${COMPOSE_MIN_VERSION},
