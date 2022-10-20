@@ -42,7 +42,7 @@ This is often `kafka` or `kafka1`
 Finally, run the Conduktor Platform using the information you collected
 ```sh
  docker run --rm \
-  -p "8080:80" \
+  -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=<advertised-host>:<advertised-port> \
   --network <network-id> \
@@ -65,7 +65,7 @@ advertised.listeners=INTERNAL://127.0.0.1:9092,PLAINTEXT://host.docker.internal:
 Restart Kafka and run Conduktor Platform with the following command
 ```sh
  docker run --rm \
-  -p "8080:80" \
+  -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=host.docker.internal:9093 \
   conduktor/conduktor-platform:latest
@@ -93,7 +93,7 @@ services:
   conduktor-platform:
     image: conduktor/conduktor-platform:latest
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
       - conduktor_data:/var/conduktor
       - ./platform-config.yaml:/opt/conduktor/platform-config.yaml

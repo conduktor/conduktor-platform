@@ -14,7 +14,7 @@ to configure Conduktor Platform fo a particular hardware, you can use the enviro
 example : 
 ```sh
  docker run --rm \
-  -p "8080:80" \
+  -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
@@ -40,7 +40,7 @@ Default value :
 Example: disable topic scanner
 ```sh
  docker run --rm \
-  -p "8080:80" \
+  -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   -e SCANNER_ENABLED="false" \

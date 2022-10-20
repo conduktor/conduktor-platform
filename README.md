@@ -70,6 +70,10 @@ To use Monitoring at full capacity you must [setup the Monitoring agent](doc/mon
 
 ## Changelog 
 
+### **1.1.3** (20-10-2022)
+Features : 
+- Customize Platform Port with [PLATFORM_LISTENING_PORT](./doc/Configuration.md#configuration-using-environment-variables)
+  
 ### **1.1.2** (20-10-2022)
 Features : 
 - Support for external PostgreSQL see configuration [documentation](./doc/Configuration.md#external-database-configuration)
