@@ -397,7 +397,7 @@ license: "<license_key>"
 `labels` : (optional)
 
 ## External database configuration
-By default platform run with an internal embedded database.   
+For quickstart purpose platform run with an internal embedded database (default).   
 
 For production environmnents platform support (from version [**1.1.2**](../README.md#112-20-10-2022)) external database configuration. 
 
