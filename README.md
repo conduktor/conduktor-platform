@@ -32,6 +32,17 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 - [Connect my clusters to Conduktor Platform](./doc/Custom.md)
 - [I need more advanced settings](./doc/Advanced_settings.md)
 
+## Hardware reqirements
+Minimal : 
+- 4 CPU cores
+- 8 Go of RAM (`RUN_MODE=nano`)
+- 5 Go of disk space
+
+Recommended : 
+- 4+ CPU cores
+- 16+ Go of RAM (`RUN_MODE=small`)
+- 10+ Go of disk space
+
 ## Docs
 
 * [See documentation](doc/)
@@ -55,3 +66,13 @@ To use Monitoring at full capacity you must [setup the Monitoring agent](doc/mon
 * Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
 * Looking for a job? <a href="https://www.conduktor.io/careers">careers</a>
 * Learning Apache Kafka? We have a whole <a href="https://www.conduktor.io/kafka">learning website</a> dedicated for you!
+
+
+## Changelog 
+
+### **1.1.2** (20-10-2022)
+Features : 
+- Support for external PostgreSQL see configuration [documentation](./doc/Configuration.md#external-database-configuration)
+
+### **1.0.2** (26-09-2022)
+Initial public release 
