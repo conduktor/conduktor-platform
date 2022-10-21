@@ -18,7 +18,7 @@ example :
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-platform:1.1.3
 ```
 ### URL
 Conduktor Platform is available on [http://localhost:8080](http://localhost:8080)
@@ -45,5 +45,5 @@ Example: disable topic scanner
   -e RUN_MODE="small" \
   -e SCANNER_ENABLED="false" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-platform:1.1.3
 ```
