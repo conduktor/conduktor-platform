@@ -64,7 +64,7 @@ run with :
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-platform:1.1.3
 ```
 
 OR using `CDK_IN_CONF_FILE` env :
@@ -73,7 +73,7 @@ OR using `CDK_IN_CONF_FILE` env :
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-platform:1.1.3
 ```
 
 If no configuration file is provided, a default one is used containing
@@ -422,5 +422,5 @@ Example :
 docker run \
   -e EMBEDDED_POSTGRES="false" \
   -e PLATFORM_DB_URL="postgresql://user:password@host:5432/database" \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-platform:1.1.3
 ```
