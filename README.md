@@ -82,6 +82,16 @@ Features :
 - Console: Consumer Groups | Reset offsets
 - Console: Kafka Connect   | Create, Update, Delete, Pause, Restart Operations
 - Console: Schema Registry | Compare schema versions
+- Add new conduktor logo
+- Test connection on Schema Registry
+- Admin: support users with uppercases in the emails
+
+Fix:
+- Group search was using "startWith", now it uses "contains"
+- Admin: clusters sort by date
+
+Improvments:
+- Audit log UX when masking page for members 
 
 ### **1.0.2** (26-09-2022)
 Initial public release 
