@@ -1,21 +1,25 @@
 # Conduktor Platform Configuration
 
-- [Introduction](#introduction)
-- [Configuration using environment variables ](#configuration-using-environment-variables)
-- [Cluster Configuration Snippets](#conduktor-platform-configuration-snippets)
-    - [Organization](#organization)
-    - [Plain Auth Example](#plain-auth-example)
-    - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
-    - [Amazon MSK with IAM Authentication Example](#amazon-msk-with-iam-authentication-example)
-    - [Confluent Cloud Example](#confluent-cloud-example)
-    - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
-    - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
-    - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
-    - [Kafka Connect](#kafka-connect)
-    - [SSO](#sso)
-    - [Complete Configuration Example](#complete-configuration-example)
-- [Cluster Configuration Properties](#cluster-configuration-properties)
-- [External PostgreSQL](#external-database-configuration)
+- [Conduktor Platform Configuration](#conduktor-platform-configuration)
+  - [Introduction](#introduction)
+  - [Configuration using environment variables](#configuration-using-environment-variables)
+  - [Conduktor Platform Configuration Snippets](#conduktor-platform-configuration-snippets)
+  - [Organization](#organization)
+  - [Plain Auth Example](#plain-auth-example)
+  - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
+  - [Amazon MSK with IAM Authentication Example](#amazon-msk-with-iam-authentication-example)
+  - [Confluent Cloud Example](#confluent-cloud-example)
+  - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
+  - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
+  - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
+  - [Kafka Connect](#kafka-connect)
+  - [SSO](#sso)
+  - [OIDC](#oidc)
+  - [Complete Configuration Example](#complete-configuration-example)
+  - [Cluster Configuration Properties](#cluster-configuration-properties)
+  - [External database configuration](#external-database-configuration)
+    - [Database requirements](#database-requirements)
+    - [Setup](#setup)
 
 ## Introduction
 
@@ -109,11 +113,12 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 
 | ENV | since version | until version | Default value |   | 
 |-----|---------------|---------------|---------------|---|
+| `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](./Advanced_settings.md#run-mode)
 | `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor`                                                                          | Volume directory where Conduktor platform store data                                                                                                                         |
 | `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location                                                                                                                               |
 | `EMBEDDED_POSTGRES` | 1.1.2 | latest | `true`                                                                                    | (since version **1.1.2**) Flag to enabled or disable embedded Postgresql database.  |
 | `PLATFORM_DB_URL`   | 1.1.2 | latest | None                                                                                      | (since version **1.1.2**) External Postgresql configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. Only used if `EMBEDDED_POSTGRES=false` |
-| `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](./Advanced_settings.md#run-mode)
+| `PLATFORM_LISTENING_PORT`          | 1.1.3 | latest | 8080 | 
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
