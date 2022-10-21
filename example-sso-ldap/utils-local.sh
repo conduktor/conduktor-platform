@@ -6,8 +6,7 @@ SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
 
 start() {
-  local license="$1"
-  export LICENSE_KEY="${license}"
+  export LICENSE_KEY="${1:-}"
 
   $DOCKER_COMPOSE up --pull always -d
 }
