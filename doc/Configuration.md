@@ -398,6 +398,8 @@ license: "<license_key>"
 `kafkaConnects.security.username` : Basic auth username
 
 `kafkaConnects.security.password` : Basic auth password
+ 
+ `jmxScrapePort` : JMX port used to scrap cluster metrics for monitoring. (optional)
 
 `labels` : (optional)
 
