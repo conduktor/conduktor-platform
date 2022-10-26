@@ -32,7 +32,7 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 - [Connect my clusters to Conduktor Platform](./doc/Custom.md)
 - [I need more advanced settings](./doc/Advanced_settings.md)
 
-## Hardware reqirements
+## Hardware requirements
 Minimal : 
 - 4 CPU cores
 - 8 Go of RAM (`RUN_MODE=nano`)
