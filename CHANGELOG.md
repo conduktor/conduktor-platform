@@ -22,21 +22,19 @@ Fix :
     - Fix help menu items
     - Enable solutions in product switcher to open in new tab
     - Use intercom widget on feedback tab
-- Home / Admin
-    - Fix userId issue in Segment identify event
 - Console
     - Accept certificate chains in Kafka properties
     - Quick search in data tables is now case insensitive
     - Produce - partition selection dropdown was not working
     - Kafka Connect - Improve connector definition validation
 - Testing
-    - Fix certificate chains
+    - Accept certificate chains in Kafka properties
 - Monitoring
     - Lag metrics now work with TLS
     - Clusters are now displayed as within other apps
 - Data masking
     - Fix masking delete policy
-    - Bring policies table in-line with Platform UI standards
+    - Align policies table with Platform UI standards
 
 ## 1.1.3 (2022-10-20)
 
