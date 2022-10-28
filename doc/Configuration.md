@@ -38,13 +38,21 @@ For example :
 `./platform-config.yml` :
 ```yaml
 organization:
- name: demo
+  name: demo
 
-database_url: postgresql://user:password@host:5432/database
+database:
+  url: postgresql://user:password@host:5432/database
+  # OR in a decomposed way
+  # host: "host"
+  # port: 5432
+  # name: "database"
+  # username: "user"
+  # password: "password"
+  # connection_timeout: 30 # in seconds
 
 clusters:
   - id: local
-    name: My Local Kafka Cluster
+    name: "My Local Kafka Cluster"
     color: "#0013E7"
     ignoreUntrustedCertificate: false
     bootstrapServers: "some-host:9092"
@@ -64,7 +72,7 @@ run with :
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.1.3
+  conduktor/conduktor-platform:1.2.0
 ```
 
 OR using `CDK_IN_CONF_FILE` env :
@@ -73,7 +81,7 @@ OR using `CDK_IN_CONF_FILE` env :
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.1.3
+  conduktor/conduktor-platform:1.2.0
 ```
 
 If no configuration file is provided, a default one is used containing
@@ -114,11 +122,30 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 | ENV | since version | until version | Default value |   | 
 |-----|---------------|---------------|---------------|---|
 | `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](./Advanced_settings.md#run-mode)
-| `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor`                                                                          | Volume directory where Conduktor platform store data                                                                                                                         |
-| `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location                                                                                                                               |
-| `EMBEDDED_POSTGRES` | 1.1.2 | latest | `true`                                                                                    | (since version **1.1.2**) Flag to enabled or disable embedded Postgresql database.  |
-| `PLATFORM_DB_URL`   | 1.1.2 | latest | None                                                                                      | (since version **1.1.2**) External Postgresql configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. Only used if `EMBEDDED_POSTGRES=false` |
-| `PLATFORM_LISTENING_PORT`          | 1.1.3 | latest | 8080 | 
+| `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor` | Volume directory where Conduktor platform store data |
+| `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location |
+| `EMBEDDED_POSTGRES` | 1.1.2 | 1.1.3 | `true` | Flag to enabled or disable embedded Postgresql database. (Deprecated since **1.2.0**. Now if no external database is configured embedded database is used) |
+| `PLATFORM_DB_URL`   | 1.1.2 | latest | None | Deprecated, use `CDK_DATABASE_URL` or decomposed external database configuration. |
+| `CDK_DATABASE_URL` | 1.2.0 | latest | None | External Postgresql configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. |
+| `CDK_DATABASE_HOST` | 1.2.0 | latest | None | External Postgresql server hostname |
+| `CDK_DATABASE_PORT` | 1.2.0 | latest | 5432 | External Postgresql server port |
+| `CDK_DATABASE_NAME` | 1.2.0 | latest | None | External Postgresql database name |
+| `CDK_DATABASE_USERNAME` | 1.2.0 | latest | None | External Postgresql login role |
+| `CDK_DATABASE_PASSWORD` | 1.2.0 | latest | None | External Postgresql login password |
+| `CDK_DATABASE_CONNECTIONTIMEOUT` | 1.2.0 | latest | None | External Postgresql connection timeout in seconds. |
+| `PLATFORM_LISTENING_PORT` | 1.1.3 | 1.2.0 | 8080 | Deprecated, use `CDK_LISTENING_PORT` |
+| `CDK_LISTENING_PORT` | 1.2.0 | latest | 8080 | Platform listening port |
+
+### Environment override 
+Starting conduktor-platform **1.2.0** input configuration fields can be provided using environement variables.   
+
+All oeverride environment variables are prefixed with `CDK_` and are derived from yaml field path where `.` are replaced with `_` and index `[idx].` into with `_idx_`. 
+
+E.g. configuration field => environment variable :
+- `license` => `CDK_LICENSE`
+- `organization.name` => `CDK_ORGANIZATION_NAME` 
+- `clusters[0].bootstrapServers` => `CDK_CLUSTERS_1_BOOTSTRAPSERVERS`
+- `clusters[2].kafkaConnects[0].security.password` => `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_PASSWORD`
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
@@ -356,75 +383,84 @@ license: "<license_key>"
 
 
 ## Cluster Configuration Properties
-`clusters` : is a key/value configuration consisting of:
 
-`clusters.id` : string used to uniquely identify your Kafka cluster
-
-`clusters.name` : alias or user-friendly name for your Kafka cluster
-
-`clusters.color` : (optional) attach a color to associate with your cluster in the UI
-
-`clusters.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-`clusters.bootstrapServers` : list of host:port for your Kafka brokers
-
-`clusters.zookeeperServer` : (optional)
-
-`clusters.properties` : any cluster configuration properties. See docs.
-
-`schemaRegistry` (optional)  Configuration parameters if using schema registry
-
-`schemaRegistry.id` : string used to uniquely identify your schema registry
-
-`schemaRegistry.url` : the schema registry URL
-
-`schemaRegistry.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-
-`schemaRegistry.properties` : any schema registry configuration parameters
-
-`schemaRegistry.security` (optional)
-
-`schemaRegistry.security.username` : Basic auth username
-
-`schemaRegistry.security.password` : Basic auth password
-
-`kafkaConnects` : (optional)
-
-`kafkaConnects.id` : string used to uniquely identify your Kafka Connect
-
-`kafkaConnects.url` : the Kafka connect URL
-
-`kafkaConnects.security` : (optional)
-
-`kafkaConnects.security.username` : Basic auth username
-
-`kafkaConnects.security.password` : Basic auth password
- 
-`jmxScrapePort` : JMX-exporter port used to scrap cluster metrics for monitoring. (optional, `9101` by default)
-
-`nodeScrapePort` : node-exporter port used to scrap cluster metrics for monitoring. (optional, `9100` by default)
-
-`labels` : (optional)
+- `clusters` : is a key/value configuration consisting of:
+- `clusters.id` : string used to uniquely identify your Kafka cluster
+- `clusters.name` : alias or user-friendly name for your Kafka cluster
+- `clusters.color` : (optional) attach a color to associate with your cluster in the UI
+- `clusters.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
+- `clusters.bootstrapServers` : list of host:port for your Kafka brokers
+- `clusters.zookeeperServer` : (optional)
+- `clusters.properties` : any cluster configuration properties. See docs.
+- `schemaRegistry` (optional)  Configuration parameters if using schema registry
+- `schemaRegistry.id` : string used to uniquely identify your schema registry
+- `schemaRegistry.url` : the schema registry URL
+- `schemaRegistry.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
+- `schemaRegistry.properties` : any schema registry configuration parameters
+- `schemaRegistry.security` (optional)
+- `schemaRegistry.security.username` : Basic auth username
+- `schemaRegistry.security.password` : Basic auth password
+- `kafkaConnects` : (optional)
+- `kafkaConnects.id` : string used to uniquely identify your Kafka Connect
+- `kafkaConnects.url` : the Kafka connect URL
+- `kafkaConnects.security` : (optional)
+- `kafkaConnects.security.username` : Basic auth username
+- `kafkaConnects.security.password` : Basic auth password 
+- `jmxScrapePort` : JMX-exporter port used to scrape kafka broker metrics for monitoring. (optional, `9101` by default)
+- `nodeScrapePort` : node-exporter port used to scrape kafka host metrics for monitoring. (optional, `9100` by default)
+- `labels` : (optional)
 
 ## External database configuration
 For quickstart purpose platform run with an internal embedded database (default).   
 
-For production environmnents platform support (from version [**1.1.2**](../README.md#112-20-10-2022)) external database configuration. 
+For production environmnents conduktor-platform support (from version [**1.1.2**](../README.md#112-20-10-2022)) external database configuration. 
 
 ### Database requirements
 - PostgreSQL 14+
 - Provided connection role should have grant `ALL PRIVILEGES` on configured database. Platform should be able to create/update/delete schema and tables on database.
 
+
+### Database Configuration Properties
+
+- `database` : is a key/value configuration consisting of:  
+- `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`    
+- `database.host` : Postgresql server host name   
+- `database.port` : Postgresql server port   
+- `database.name` : Database name    
+- `database.username` : Database login role   
+- `database.password` : Database login password   
+- `database.connection_timeout` : Connection timeout option in seconds   
+
 ### Setup
-To disable embedded database use `EMBEDDED_POSTGRES=false` environment variable.
 
-Then database connection url can be defined using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+There is several possibility to configure external database: 
 
-This URL can be passed either with environment variable `PLATFORM_DB_URL` or inside platform yaml configuration file in `database_url`.
+1. From a single connection url
+   - With `CDK_DATABASE_URL` environment variable.  
+   - With `database.url` configuration field.
+In either cases, this connection url is using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+
+2. From decomposed configuration fields
+   - With `CDK_DATABASE_*` env vars. (see [environment variables list](#configuration-using-environment-variables))
+   - With `database.*` on configuration file. 
+```yaml
+database: 
+  host: "host"
+  port: 5432
+  name: "database"
+  username: "user"
+  password: "password"
+  connection_timeout: 30 # in seconds
+```
 
 Example : 
 ```shell
 docker run \
-  -e EMBEDDED_POSTGRES="false" \
-  -e PLATFORM_DB_URL="postgresql://user:password@host:5432/database" \
-  conduktor/conduktor-platform:1.1.3
+  -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
+  conduktor/conduktor-platform:1.2.0
 ```
+> **Note 1** : If all connection url **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
+
+> **Note 2** : If an invalid connection url or some mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with meaningful error message.
+
+> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured either from url or decompose fields, platform will start using embedded database.

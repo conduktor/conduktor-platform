@@ -6,6 +6,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.2.0 (2022-10-28)
+Features : 
+- Platform :
+    - Platform configurations can be overridden from environment variables (see [configuration documentation](./doc/Configuration.md#environment-override))
+- Home
+    - Remove beta tag from Monitoring + Data Masking
+- Testing
+    - Simplify source selection in checks
+    - Add support of S3 in LoadCSV
+    - Add Comparison data node
+
+Fix :
+- Platform 
+    - Fix help menu items
+    - Enable solutions in product switcher to open in new tab
+    - Use intercom widget on feedback tab
+- Console
+    - Accept certificate chains in Kafka properties
+    - Quick search in data tables is now case insensitive
+    - Produce - partition selection dropdown was not working
+    - Kafka Connect - Improve connector definition validation
+- Testing
+    - Accept certificate chains in Kafka properties
+- Monitoring
+    - Lag metrics now work with TLS
+    - Clusters are now displayed as within other apps
+- Data masking
+    - Fix masking delete policy
+    - Align policies table with Platform UI standards
+
 ## 1.1.3 (2022-10-20)
 
 Features :
