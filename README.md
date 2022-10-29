@@ -50,7 +50,7 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 
 * [Our Platform Changelog](CHANGELOG.md)
 * [Our Platform Documentation](doc/)
-* [Contact us for anything else](support@conduktor.io)
+* Contact us for anything else: support@conduktor.io
 
 ---
 
