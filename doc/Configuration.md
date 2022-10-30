@@ -2,7 +2,7 @@
 
 - [Conduktor Platform Configuration](#conduktor-platform-configuration)
   - [Introduction](#introduction)
-  - [Configuration using environment variables](#configuration-using-environment-variables)
+  - [Configuration Using Environment Variables](#configuration-using-environment-variables)
   - [Conduktor Platform Configuration Snippets](#conduktor-platform-configuration-snippets)
   - [Organization](#organization)
   - [Plain Auth Example](#plain-auth-example)
@@ -16,7 +16,6 @@
   - [SSO](#sso)
   - [OIDC](#oidc)
   - [Complete Configuration Example](#complete-configuration-example)
-  - [Cluster Configuration Properties](#cluster-configuration-properties)
   - [External database configuration](#external-database-configuration)
     - [Database requirements](#database-requirements)
     - [Setup](#setup)
@@ -146,6 +145,8 @@ E.g. configuration field => environment variable :
 - `organization.name` => `CDK_ORGANIZATION_NAME` 
 - `clusters[0].bootstrapServers` => `CDK_CLUSTERS_1_BOOTSTRAPSERVERS`
 - `clusters[2].kafkaConnects[0].security.password` => `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_PASSWORD`
+
+For the full list of override environment variables, see [environment override](./Environment_Override.md)
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
@@ -381,34 +382,6 @@ sso:
 license: "<license_key>"
 ```
 
-
-## Cluster Configuration Properties
-
-- `clusters` : is a key/value configuration consisting of:
-- `clusters.id` : string used to uniquely identify your Kafka cluster
-- `clusters.name` : alias or user-friendly name for your Kafka cluster
-- `clusters.color` : (optional) attach a color to associate with your cluster in the UI
-- `clusters.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-- `clusters.bootstrapServers` : list of host:port for your Kafka brokers
-- `clusters.zookeeperServer` : (optional)
-- `clusters.properties` : any cluster configuration properties. See docs.
-- `schemaRegistry` (optional)  Configuration parameters if using schema registry
-- `schemaRegistry.id` : string used to uniquely identify your schema registry
-- `schemaRegistry.url` : the schema registry URL
-- `schemaRegistry.ignoreUntrustedCertificate` : (optional) skip SSL certificate validation
-- `schemaRegistry.properties` : any schema registry configuration parameters
-- `schemaRegistry.security` (optional)
-- `schemaRegistry.security.username` : Basic auth username
-- `schemaRegistry.security.password` : Basic auth password
-- `kafkaConnects` : (optional)
-- `kafkaConnects.id` : string used to uniquely identify your Kafka Connect
-- `kafkaConnects.url` : the Kafka connect URL
-- `kafkaConnects.security` : (optional)
-- `kafkaConnects.security.username` : Basic auth username
-- `kafkaConnects.security.password` : Basic auth password 
-- `jmxScrapePort` : JMX-exporter port used to scrape kafka broker metrics for monitoring. (optional, `9101` by default)
-- `nodeScrapePort` : node-exporter port used to scrape kafka host metrics for monitoring. (optional, `9100` by default)
-- `labels` : (optional)
 
 ## External database configuration
 For quickstart purpose platform run with an internal embedded database (default).   
