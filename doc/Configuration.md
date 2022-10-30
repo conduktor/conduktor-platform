@@ -137,9 +137,9 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 | `CDK_LISTENING_PORT` | 1.2.0 | latest | 8080 | Platform listening port |
 
 ### Environment override 
-Starting conduktor-platform **1.2.0** input configuration fields can be provided using environement variables.   
+Starting conduktor-platform **1.2.0** input configuration fields can be provided using environment variables.   
 
-All oeverride environment variables are prefixed with `CDK_` and are derived from yaml field path where `.` are replaced with `_` and index `[idx].` into with `_idx_`. 
+All override environment variables are prefixed with `CDK_` and are derived from yaml field path where `.` are replaced with `_` and index `[idx].` into with `_idx_`. 
 
 E.g. configuration field => environment variable :
 - `license` => `CDK_LICENSE`
