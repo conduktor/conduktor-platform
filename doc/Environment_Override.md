@@ -46,12 +46,12 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - `clusters.ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
 - `clusters.bootstrapServers` : List of host:port for your Kafka brokers
 - `clusters.zookeeperServer` : (optional)
-- `clusters.properties` : Any cluster configuration properties. See [configuration snippets](./Configuration.md)
+- `clusters.properties` : Any cluster configuration properties. See [configuration snippets](./Configuration.md#confluent-cloud-example)
 - `schemaRegistry` (optional)  Configuration parameters if using schema registry
 - `schemaRegistry.id` : String used to uniquely identify your schema registry
 - `schemaRegistry.url` : The schema registry URL
 - `schemaRegistry.ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
-- `schemaRegistry.properties` : Any schema registry configuration parameters See [configuration snippets](./Configuration.md)
+- `schemaRegistry.properties` : Any schema registry configuration parameters See [configuration snippets](./Configuration.md#confluent-cloud-example)
 - `schemaRegistry.security` (optional)
 - `schemaRegistry.security.username` : Basic auth username
 - `schemaRegistry.security.password` : Basic auth password
