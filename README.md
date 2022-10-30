@@ -65,13 +65,13 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 
 Minimal : 
 - 4 CPU cores
-- 8 Go of RAM (`RUN_MODE=nano`)
-- 5 Go of disk space
+- 8 GB of RAM (`RUN_MODE=nano`)
+- 5 GB of disk space
 
 Recommended : 
 - 4+ CPU cores
-- 16+ Go of RAM (`RUN_MODE=small`)
-- 10+ Go of disk space
+- 16+ GB of RAM (`RUN_MODE=small`)
+- 10+ GB of disk space
 
 ## Platforms ACLs are supported on
 
