@@ -3,6 +3,7 @@
 - [Conduktor Platform Configuration](#conduktor-platform-configuration)
   - [Introduction](#introduction)
   - [Configuration Using Environment Variables](#configuration-using-environment-variables)
+  - [Override Environment Variables](#environment-override)
 - [Conduktor Platform Configuration Snippets](#conduktor-platform-configuration-snippets)
   - [Organization](#organization)
   - [Plain Auth Example](#plain-auth-example)
@@ -135,8 +136,10 @@ license: ${LICENSE_KEY:-~} # Fallback to null (~)
 | `PLATFORM_LISTENING_PORT` | 1.1.3 | 1.2.0 | 8080 | Deprecated, use `CDK_LISTENING_PORT` |
 | `CDK_LISTENING_PORT` | 1.2.0 | latest | 8080 | Platform listening port |
 
-### Environment override 
-Starting conduktor-platform **1.2.0** input configuration fields can be provided using environment variables.   
+## Environment override 
+For the full list of override environment variables, see [environment override](./Environment_Override.md).
+
+Starting from conduktor-platform **1.2.0** input configuration fields can be provided using environment variables.  
 
 All override environment variables are prefixed with `CDK_` and are derived from yaml field path where `.` are replaced with `_` and index `[idx].` into with `_idx_`. 
 
@@ -145,8 +148,6 @@ E.g. configuration field => environment variable :
 - `organization.name` => `CDK_ORGANIZATION_NAME` 
 - `clusters[0].bootstrapServers` => `CDK_CLUSTERS_1_BOOTSTRAPSERVERS`
 - `clusters[2].kafkaConnects[0].security.password` => `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_PASSWORD`
-
-For the full list of override environment variables, see [environment override](./Environment_Override.md)
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
