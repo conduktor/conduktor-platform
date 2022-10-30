@@ -3,7 +3,7 @@
 - [Conduktor Platform Configuration](#conduktor-platform-configuration)
   - [Introduction](#introduction)
   - [Configuration Using Environment Variables](#configuration-using-environment-variables)
-  - [Conduktor Platform Configuration Snippets](#conduktor-platform-configuration-snippets)
+- [Conduktor Platform Configuration Snippets](#conduktor-platform-configuration-snippets)
   - [Organization](#organization)
   - [Plain Auth Example](#plain-auth-example)
   - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
@@ -16,7 +16,7 @@
   - [SSO](#sso)
   - [OIDC](#oidc)
   - [Complete Configuration Example](#complete-configuration-example)
-  - [External database configuration](#external-database-configuration)
+- [External Database Configuration](#external-database-configuration)
     - [Database requirements](#database-requirements)
     - [Setup](#setup)
 
