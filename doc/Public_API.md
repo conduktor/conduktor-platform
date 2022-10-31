@@ -16,7 +16,7 @@ Could be used to setup probes on kubernetes or docker-compose.
 #### docker-compose probe setup
 ```yaml
 healthcheck:
-    test: ["CMD-SHELL", "curl --fail http://localhost/platform/api/modules/health/live"]
+    test: ["CMD-SHELL", "curl --fail http://localhost:${PLATFORM_LISTENING_PORT:-8080}/platform/api/modules/health/live"]
     interval: 10s
     start_period: 120s # Leave time for the psql init scripts to run
     timeout: 5s
@@ -28,7 +28,7 @@ healthcheck:
 livenessProbe:
     httpGet:
         path: /platform/api/modules/health/live
-        port: http
+        port: http # Adapt based on PLATFORM_LISTENING_PORT
     initialDelaySeconds: 5
     periodSeconds: 10
     timeoutSeconds: 5
@@ -66,7 +66,7 @@ $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 startupProbe:
     httpGet:
         path: /platform/api/modules/health/ready
-        port: http
+        port: http # Adapt based on PLATFORM_LISTENING_PORT
     initialDelaySeconds: 30
     periodSeconds: 10
     timeoutSeconds: 5
