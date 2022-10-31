@@ -24,7 +24,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -sq --fail http://localhost/platform/api/modules/health/live"
+          "curl -sq --fail http://localhost:${PLATFORM_LISTENING_PORT:-8080}/platform/api/modules/health/live"
         ]
       interval: 30s
       start_period: 120s # Leave time for the psql init scripts to run
