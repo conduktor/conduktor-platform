@@ -25,10 +25,10 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 | `clusters[0].schemaRegistry.properties`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_PROPERTIES`  | 
 | `clusters[0].schemaRegistry.security.username`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_SECURITY_USERNAME`  | 
 | `clusters[0].schemaRegistry.security.password`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_SECURITY_PASSWORD`  | 
-| `clusters[0].kafkaConnects.id`    | `CDK_CLUSTERS_1_KAFKACONNECTS_ID`  | 
-| `clusters[0].kafkaConnects.url`    | `CDK_CLUSTERS_1_KAFKACONNECTS_URL`  | 
-| `clusters[0].kafkaConnects.security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_USERNAME`  | 
-| `clusters[0].kafkaConnects.security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_PASSWORD`  |
+| `clusters[0].kafkaConnects[0].id`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_ID`  | 
+| `clusters[0].kafkaConnects[0].url`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_URL`  | 
+| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_USERNAME`  | 
+| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_PASSWORD`  |
 | `database.url`    | `CDK_DATABASE_URL`  | 
 | `database.host`    | `CDK_DATABASE_HOST`  |
 | `database.port`    | `CDK_DATABASE_PORT`  |
@@ -55,7 +55,7 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - `schemaRegistry.security` (optional)
 - `schemaRegistry.security.username` : Basic auth username
 - `schemaRegistry.security.password` : Basic auth password
-- `kafkaConnects` : (optional)
+- `kafkaConnects` : (optional) List of KafkaConnects servers
 - `kafkaConnects.id` : String used to uniquely identify your Kafka Connect
 - `kafkaConnects.url` : The Kafka connect URL
 - `kafkaConnects.security` : (optional)
