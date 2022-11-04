@@ -14,9 +14,11 @@ $ curl -s  http://localhost:8080/platform/api/modules/health/live | jq .
 Could be used to setup probes on kubernetes or docker-compose. 
 
 #### docker-compose probe setup
+
+
 ```yaml
 healthcheck:
-    test: ["CMD-SHELL", "curl --fail http://localhost/platform/api/modules/health/live"]
+    test: ["CMD-SHELL", "curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/platform/api/modules/health/live"]
     interval: 10s
     start_period: 120s # Leave time for the psql init scripts to run
     timeout: 5s
@@ -24,11 +26,22 @@ healthcheck:
 ```
 
 #### Kubernetes liveness probe
+
+Port configuration
+
+```yaml
+ports:
+  - containerPort: 8080
+    protocol: TCP
+    name: httpprobe 
+```
+Probe configuration
+
 ```yaml
 livenessProbe:
     httpGet:
         path: /platform/api/modules/health/live
-        port: http
+        port: httpprobe
     initialDelaySeconds: 5
     periodSeconds: 10
     timeoutSeconds: 5
@@ -62,11 +75,20 @@ $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 ```
 
 #### Kubernetes startup probe
+
+Port configuration
+
+```yaml
+ports:
+  - containerPort: 8080
+    protocol: TCP
+    name: httpprobe 
+
 ```yaml
 startupProbe:
     httpGet:
         path: /platform/api/modules/health/ready
-        port: http
+        port: httpprobe
     initialDelaySeconds: 30
     periodSeconds: 10
     timeoutSeconds: 5
