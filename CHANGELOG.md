@@ -6,6 +6,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.3.1 (2022-11-03)
+
+ - **Platform**
+   - Support ignoreUntrustedCertificate for SSO
+ - **Console**
+   - Improve error messages displayed to the user on Kafka errors
+   - Consume: The Bytes deserializer now uses the Kafka BytesDeserializer instead of returning a base64 version of the raw bytes
+   - Consumer Groups - Reset Offsets:
+     - It's now possible to choose which Topic and which partition to reset
+     - New "shift by" option
+   - Consumer Group: You can now delete a Consumer Group
+   - Kafka Connect - Create new connector: It's now possible to select on which Kafka Connect instance the connector will be created
+   - Kafka Connect - It's now possible to select on which Kafka Connect instance the connector will be paused/resumed/restarted/deleted
+   - Fix: Kafka Connect - The connectors data table is now refreshed when an action is performed on a connector
+ - **Testing**
+   - Improve agent version tracking and related warnings
+   - Improve dark mode support
+   - Fix: Screen/Modals freezing on some actions
+   - Fix: Can't connect multiple edges to some nodes
+   - Fix: Reading large CSV files
+   - Fix:  Text4Shell CVE from org.apache.commons.commons-text-1.9
+ - **Monitoring**
+   - fix cluster discovery that failed in some cases
+ - **Data Masking**
+   - Fix: Number fields are not masked
+   - Implement scope filtering in datamasking
+   - UI improvements
+- **Admin**
+  - Fix: Missing auth events in Audit log
+  - New sidebar design
+  - Clusters have a human friendly "technical id" to ease url sharing
+
 ## 1.2.0 (2022-10-28)
 Features : 
 - Platform :

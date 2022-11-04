@@ -72,7 +72,7 @@ run with :
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:1.3.1
 ```
 
 OR using `CDK_IN_CONF_FILE` env :
@@ -81,7 +81,7 @@ OR using `CDK_IN_CONF_FILE` env :
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:1.3.1
 ```
 
 If no configuration file is provided, a default one is used containing
@@ -333,6 +333,26 @@ sso:
       openid:
         issuer: https://conduktor-staging.eu.auth0.com/
 ```
+
+### SSO Configuration Properties
+- `sso` : is a key/value configuration consisting of:  
+- `sso.ignoreUntrustedCertificate` : Disable SSL checks
+- `sso.ldap.name`:  Ldap connection name
+- `sso.ldap.server` : Ldap server host and port 
+- `sso.ldap.managerDn` : Sets the manager DN
+- `sso.ldap.managerPassword` : Sets the manager password
+- `sso.ldap.search-base` : Sets the base DN to search.
+- `sso.ldap.groups-base`: Sets the base DN to search from.
+- `sso.oauth2.name` : Oauth2 connection name
+- `sso.oauth2.default` : Use as default (true/false)
+- `sso.oauth2.client-id` : Oauth2 client id 
+- `sso.oauth2.client-secret` : Oauth2 client secret 
+- `sso.oauth2.openid.issuer` : Issuer to check on token
+- `sso.oauth2.scopes` : Scope to be requested in the client credentials request. 
+- `sso.oauth2.authorization-url` : Authorization endpoint URL
+- `sso.oauth2.token.url` :  Get token endpoint URL
+- `sso.oauth2.token.auth-method` : Authentication Method one of : "CLIENT_SECRET_BASIC", "CLIENT_SECRET_JWT", "CLIENT_SECRET_POST", "NONE", "PRIVATE_KEY_JWT", "TLS_CLIENT_AUTH" 
+
 
 ## Complete Configuration Example
 
