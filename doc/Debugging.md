@@ -15,14 +15,18 @@ example-local-zookeeper-1            "/docker-entrypoint.…"   zookeeper       
 
 If you are using an external Kafka installation you will only need to verify that the "conduktor-platform" container is showing "healthy" as the STATUS.
 
-If anything is not showing or showing "exited" as the status, a good first step is to check the `docker logs` output with `docker logs ${CONDUTKOR_PLATFORM_CONTAINER_NAME}`, for example in the example-local docker it would be `docker logs example-local-conduktor-platform-1`.  These logs can be saved to a file with `docker logs example-local-conduktor-platform-1 >& docker-logs-output.txt`.
+
+If anything is not showing or showing "exited" as the status, a good first step is to check the `docker logs` output with `docker logs ${CONDUKTOR_PLATFORM_CONTAINER_NAME}`, for example in the example-local docker it would be `docker logs example-local-conduktor-platform-1`.  These logs can be saved to a file with `docker logs example-local-conduktor-platform-1 >& docker-logs-output.txt`.
+
 
 ## Check services within the Conduktor-platform container
 First we will need to invoke a shell within the Conduktor-platform container.  This is a short cut to do this:
 ```sh
 docker exec -it `docker ps |grep conduktor-platform|awk '{ print $1 }'` /bin/bash
 ```
-The other option is to `docker exec -it ${CONTIANER_ID} /bin/bash`
+
+The other option is to `docker exec -it ${CONTAINER_ID} /bin/bash`
+
 
 From within the container the first step should be verify that all expected services are started.  Conduktor platform uses supervisord inside of the container to ensure various services are started:
 ```sh
@@ -57,8 +61,11 @@ For example
 There is a `stdout` & and a `stderr` file for each services (APIs)
 the last part `-supervisor-gm63c0c8` is just a random run ID.
 
+
 If you prefer to simply bring all the logs to your local machine, you can also run `docker-compose cp conduktor-platform:/var/conduktor/log .` 
 This will bring all the Conduktor logs to your $PWD in a directory call log.
+
+
 
 This log should contain the information necessary to work with support@conduktor.io or self trouble shoot the issue.
 
