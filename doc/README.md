@@ -63,11 +63,4 @@ More details on thoses api can be found [here](Public_API.md)
 Note that Data Masking is only available in Enterprise plans. If you are interested in gaining access to this feature, please [contact us](https://www.conduktor.io/contact).
 - [Learn how to implement Data Masking](data%20masking/data-masking.md)
 
-***
-
-## Known Issues
-
-- Monitoring - SSL Clusters 
-    - _There is a known issue inside Monitoring pertaining to clusters whereby certificates (keystore/truststore) have been specified in the platform [Configuration](Configuration.md)._ 
-
 
