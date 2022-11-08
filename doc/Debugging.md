@@ -15,7 +15,7 @@ example-local-zookeeper-1            "/docker-entrypoint.…"   zookeeper       
 
 If you are using an external Kafka installation you will only need to verify that the "conduktor-platform" container is showing "healthy" as the STATUS.
 
-If anything is not showing or showing "exited" as the status, a good first step is to check the `docker logs` output with `docker logs ${CONDUTKOR_PLATFORM_CONTAINER_NAME}`, for example in the example-local docker it would be `docker logs example-local-conduktor-platform-1`.  These logs can be saved to a file with `docker logs example-local-conduktor-platform-1 >& docker-logs-output.txt`.
+If anything is not showing or showing "exited" as the status, a good first step is to check the `docker logs` output with `docker logs ${CONDUKTOR_PLATFORM_CONTAINER_NAME}`, for example in the example-local docker it would be `docker logs example-local-conduktor-platform-1`.  These logs can be saved to a file with `docker logs example-local-conduktor-platform-1 >& docker-logs-output.txt`.
 
 ## Check services within the Conduktor-platform container
 First we will need to invoke a shell within the Conduktor-platform container.  This is a short cut to do this:
