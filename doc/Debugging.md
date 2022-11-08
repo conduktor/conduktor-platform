@@ -57,5 +57,8 @@ For example
 There is a `stdout` & and a `stderr` file for each services (APIs)
 the last part `-supervisor-gm63c0c8` is just a random run ID.
 
+If you prefer to simply bring all the logs to your local machine, you can also run `docker-compose cp conduktor-platform:/var/conduktor/log .` 
+This will bring all the Conduktor logs to your $PWD in a directory call log.
+
 This log should contain the information necessary to work with support@conduktor.io or self trouble shoot the issue.
 
