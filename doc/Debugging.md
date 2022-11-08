@@ -22,7 +22,7 @@ First we will need to invoke a shell within the Conduktor-platform container.  T
 ```sh
 docker exec -it `docker ps |grep conduktor-platform|awk '{ print $1 }'` /bin/bash
 ```
-The other option is to `docker exec -it ${CONTIANER_ID} /bin/bash`
+The other option is to `docker exec -it ${CONTAINER_ID} /bin/bash`
 
 From within the container the first step should be verify that all expected services are started.  Conduktor platform uses supervisord inside of the container to ensure various services are started:
 ```sh
