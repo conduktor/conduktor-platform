@@ -38,10 +38,13 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 | `database.username`    | `CDK_DATABASE_USERNAME`  |
 | `database.password`    | `CDK_DATABASE_PASSWORD`  |
 | `database.connection_timeout`    | `CDK_DATABASE_CONNECTIONTIMEOUT`  |
-
+| `auth.demo_users[0].email` | `CDK_AUTH_DEMOUSERS_0_email` | 
+| `auth.demo_users[0].password` | `CDK_AUTH_DEMOUSERS_0_password` |
+| `auth.demo_users[0].groups[0]` | `CDK_AUTH_DEMOUSERS_0_groups_0` |
 
 ## Property Definitions
 
+- `organization.name` : Organization name
 - `clusters[].id` : String used to uniquely identify your Kafka cluster
 - `clusters[].name` : Alias or user-friendly name for your Kafka cluster
 - `clusters[].color` : (optional) Attach a color to associate with your cluster in the UI
@@ -74,3 +77,7 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - `database.username` : Database login role   
 - `database.password` : Database login password   
 - `database.connection_timeout` : Connection timeout option in seconds 
+- `auth.demo_users` : List of local platform users 
+- `auth.demo_users[].email` : User login
+- `auth.demo_users[].password` : User password
+- `auth.demo_users[].groups[]` : User groups list (optional)
