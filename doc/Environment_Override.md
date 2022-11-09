@@ -29,6 +29,8 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 | `clusters[0].kafkaConnects[0].url`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_URL`  | 
 | `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_USERNAME`  | 
 | `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_PASSWORD`  |
+| `clusters[0].jmxScrapePort`    | `CDK_CLUSTERS_1_JMXSCRAPEPORT`  |
+| `clusters[0].nodeScrapePort`   | `CDK_CLUSTERS_1_NODECRAPEPORT`  |
 | `database.url`    | `CDK_DATABASE_URL`  | 
 | `database.host`    | `CDK_DATABASE_HOST`  |
 | `database.port`    | `CDK_DATABASE_PORT`  |
@@ -36,34 +38,37 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 | `database.username`    | `CDK_DATABASE_USERNAME`  |
 | `database.password`    | `CDK_DATABASE_PASSWORD`  |
 | `database.connection_timeout`    | `CDK_DATABASE_CONNECTIONTIMEOUT`  |
-
+| `auth.demo_users[0].email` | `CDK_AUTH_DEMOUSERS_0_email` | 
+| `auth.demo_users[0].password` | `CDK_AUTH_DEMOUSERS_0_password` |
+| `auth.demo_users[0].groups[0]` | `CDK_AUTH_DEMOUSERS_0_groups_0` |
 
 ## Property Definitions
 
-- `clusters.id` : String used to uniquely identify your Kafka cluster
-- `clusters.name` : Alias or user-friendly name for your Kafka cluster
-- `clusters.color` : (optional) Attach a color to associate with your cluster in the UI
-- `clusters.ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
-- `clusters.bootstrapServers` : List of host:port for your Kafka brokers
-- `clusters.zookeeperServer` : (optional)
-- `clusters.properties` : Any cluster configuration properties. See [configuration snippets](./Configuration.md#confluent-cloud-example)
-- `schemaRegistry` (optional)  Configuration parameters if using schema registry
-- `schemaRegistry.id` : String used to uniquely identify your schema registry
-- `schemaRegistry.url` : The schema registry URL
-- `schemaRegistry.ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
-- `schemaRegistry.properties` : Any schema registry configuration parameters See [configuration snippets](./Configuration.md#confluent-cloud-example)
-- `schemaRegistry.security` (optional)
-- `schemaRegistry.security.username` : Basic auth username
-- `schemaRegistry.security.password` : Basic auth password
-- `kafkaConnects` : (optional) List of KafkaConnects servers
-- `kafkaConnects.id` : String used to uniquely identify your Kafka Connect
-- `kafkaConnects.url` : The Kafka connect URL
-- `kafkaConnects.security` : (optional)
-- `kafkaConnects.security.username` : Basic auth username
-- `kafkaConnects.security.password` : Basic auth password 
-- `jmxScrapePort` : JMX-exporter port used to scrape kafka broker metrics for monitoring. (optional, `9101` by default)
-- `nodeScrapePort` : Node-exporter port used to scrape kafka host metrics for monitoring. (optional, `9100` by default)
-- `labels` : (optional)
+- `organization.name` : Organization name
+- `clusters[].id` : String used to uniquely identify your Kafka cluster
+- `clusters[].name` : Alias or user-friendly name for your Kafka cluster
+- `clusters[].color` : (optional) Attach a color to associate with your cluster in the UI
+- `clusters[].ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
+- `clusters[].bootstrapServers` : List of host:port for your Kafka brokers
+- `clusters[].zookeeperServer` : (optional)
+- `clusters[].properties` : Any cluster configuration properties. See [configuration snippets](./Configuration.md#confluent-cloud-example)
+- `clusters[].schemaRegistry` (optional)  Configuration parameters if using schema registry
+- `clusters[].schemaRegistry.id` : String used to uniquely identify your schema registry
+- `clusters[].schemaRegistry.url` : The schema registry URL
+- `clusters[].schemaRegistry.ignoreUntrustedCertificate` : (optional) Skip SSL certificate validation
+- `clusters[].schemaRegistry.properties` : Any schema registry configuration parameters See [configuration snippets](./Configuration.md#confluent-cloud-example)
+- `clusters[].schemaRegistry.security` (optional)
+- `clusters[].schemaRegistry.security.username` : Basic auth username
+- `clusters[].schemaRegistry.security.password` : Basic auth password
+- `clusters[].kafkaConnects` : (optional) List of KafkaConnects servers
+- `clusters[].kafkaConnects[].id` : String used to uniquely identify your Kafka Connect
+- `clusters[].kafkaConnects[].url` : The Kafka connect URL
+- `clusters[].kafkaConnects[].security` : (optional)
+- `clusters[].kafkaConnects[].security.username` : Basic auth username
+- `clusters[].kafkaConnects[].security.password` : Basic auth password 
+- `clusters[].jmxScrapePort` : JMX-exporter port used to scrape kafka broker metrics for monitoring. (optional, `9101` by default)
+- `clusters[].nodeScrapePort` : Node-exporter port used to scrape kafka host metrics for monitoring. (optional, `9100` by default)
+- `clusters[].labels` : (optional)
 - `database` : is a key/value configuration consisting of:  
 - `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`    
 - `database.host` : Postgresql server host name   
@@ -72,3 +77,7 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - `database.username` : Database login role   
 - `database.password` : Database login password   
 - `database.connection_timeout` : Connection timeout option in seconds 
+- `auth.demo_users` : List of local platform users 
+- `auth.demo_users[].email` : User login
+- `auth.demo_users[].password` : User password
+- `auth.demo_users[].groups[]` : User groups list (optional)
