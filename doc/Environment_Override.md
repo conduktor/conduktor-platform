@@ -7,6 +7,8 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - [Configuration Field Mapping](#configuration-field-mapping)
 - [Property Definitions](#property-definitions)
 
+You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to convert configuration yaml to environment variables list.
+
 ## Configuration Field Mapping
 
 | Configuration Field     | Environment Variable    |
