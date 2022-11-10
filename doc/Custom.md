@@ -11,7 +11,7 @@ Connect to an unsecured kafka cluster accessible on `0.0.0.0:9092`
   --network host \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform:1.3.1
+  conduktor/conduktor-platform:1.4.0
 ```
 
 ### Connect to an unsecured kafka cluster and keep platform state
@@ -22,7 +22,7 @@ docker run --rm \
  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
  -e SCHEMA_REGISTRY_URL=http://0.0.0.0:8081 \
  --mount "type=bind,source=$PWD/platform_data,target=/var/conduktor" \
- conduktor/conduktor-platform:1.3.1
+ conduktor/conduktor-platform:1.4.0
 ```
 
 ### Local Kafka on MacOS
@@ -46,7 +46,7 @@ Finally, run the Conduktor Platform using the information you collected
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=<advertised-host>:<advertised-port> \
   --network <network-id> \
-  conduktor/conduktor-platform:1.3.1
+  conduktor/conduktor-platform:1.4.0
 ```
 #### Kafka on the host
 
@@ -68,7 +68,7 @@ Restart Kafka and run Conduktor Platform with the following command
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e KAFKA_BOOTSTRAP_SERVER=host.docker.internal:9093 \
-  conduktor/conduktor-platform:1.3.1
+  conduktor/conduktor-platform:1.4.0
 ```
 
 ### Advanced configuration (SASL_SSL, SSL clusters, registry, connect, ...)
@@ -84,14 +84,14 @@ Once you have your file ready, you can just start the platform using this simple
 ````
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
-  conduktor/conduktor-platform:1.3.1
+  conduktor/conduktor-platform:1.4.0
 ````
 or the following docker compose equivalent `docker-compose up -d`
 ````yaml
 version: '3.8'
 services:
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.3.1
+    image: conduktor/conduktor-platform:1.4.0
     ports:
       - 8080:8080
     volumes:
