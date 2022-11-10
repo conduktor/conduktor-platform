@@ -14,7 +14,7 @@ version: '3.8'
 
 services:
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.3.1
+    image: conduktor/conduktor-platform:1.4.0
     ports:
       - 8080:8080
     volumes:
