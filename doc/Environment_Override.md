@@ -7,30 +7,32 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - [Configuration Field Mapping](#configuration-field-mapping)
 - [Property Definitions](#property-definitions)
 
+You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to convert configuration yaml to environment variables list.
+
 ## Configuration Field Mapping
 
 | Configuration Field     | Environment Variable    |
 |-----|-----|
 | `organization.name`    | `CDK_ORGANIZATION_NAME`  |
-| `clusters[0].id`    | `CDK_CLUSTERS_1_ID`  |
-| `clusters[0].name`    | `CDK_CLUSTERS_1_NAME`  |
-| `clusters[0].color`    | `CDK_CLUSTERS_1_COLOR`  |
-| `clusters[0].ignoreUntrustedCertificate`    | `CDK_CLUSTERS_1_IGNOREUNTRUSTEDCERTIFICATE`  |
-| `clusters[0].bootstrapServers`    | `CDK_CLUSTERS_1_BOOTSTRAPSERVERS`  | 
-| `clusters[0].zookeeperServer`    | `CDK_CLUSTERS_1_ZOOKEEPERSERVER`  | 
-| `clusters[0].properties`    | `CDK_CLUSTERS_1_PROPERTIES`  | 
-| `clusters[0].schemaRegistry.id`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_ID`  | 
-| `clusters[0].schemaRegistry.url`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_URL`  | 
-| `clusters[0].schemaRegistry.ignoreUntrustedCertificate`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE`  | 
-| `clusters[0].schemaRegistry.properties`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_PROPERTIES`  | 
-| `clusters[0].schemaRegistry.security.username`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_SECURITY_USERNAME`  | 
-| `clusters[0].schemaRegistry.security.password`    | `CDK_CLUSTERS_1_SCHEMAREGISTRY_SECURITY_PASSWORD`  | 
-| `clusters[0].kafkaConnects[0].id`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_ID`  | 
-| `clusters[0].kafkaConnects[0].url`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_URL`  | 
-| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_USERNAME`  | 
-| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_1_KAFKACONNECTS_1_SECURITY_PASSWORD`  |
-| `clusters[0].jmxScrapePort`    | `CDK_CLUSTERS_1_JMXSCRAPEPORT`  |
-| `clusters[0].nodeScrapePort`   | `CDK_CLUSTERS_1_NODECRAPEPORT`  |
+| `clusters[0].id`    | `CDK_CLUSTERS_0_ID`  |
+| `clusters[0].name`    | `CDK_CLUSTERS_0_NAME`  |
+| `clusters[0].color`    | `CDK_CLUSTERS_0_COLOR`  |
+| `clusters[0].ignoreUntrustedCertificate`    | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE`  |
+| `clusters[0].bootstrapServers`    | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS`  | 
+| `clusters[0].zookeeperServer`    | `CDK_CLUSTERS_0_ZOOKEEPERSERVER`  | 
+| `clusters[0].properties`    | `CDK_CLUSTERS_0_PROPERTIES`  | 
+| `clusters[0].schemaRegistry.id`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_ID`  | 
+| `clusters[0].schemaRegistry.url`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`  | 
+| `clusters[0].schemaRegistry.ignoreUntrustedCertificate`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE`  | 
+| `clusters[0].schemaRegistry.properties`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`  | 
+| `clusters[0].schemaRegistry.security.username`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`  | 
+| `clusters[0].schemaRegistry.security.password`    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`  | 
+| `clusters[0].kafkaConnects[0].id`    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`  | 
+| `clusters[0].kafkaConnects[0].url`    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`  | 
+| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`  | 
+| `clusters[0].kafkaConnects[0].security.username`    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`  |
+| `clusters[0].jmxScrapePort`    | `CDK_CLUSTERS_0_JMXSCRAPEPORT`  |
+| `clusters[0].nodeScrapePort`   | `CDK_CLUSTERS_0_NODECRAPEPORT`  |
 | `database.url`    | `CDK_DATABASE_URL`  | 
 | `database.host`    | `CDK_DATABASE_HOST`  |
 | `database.port`    | `CDK_DATABASE_PORT`  |
@@ -41,6 +43,8 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 | `auth.demo_users[0].email` | `CDK_AUTH_DEMOUSERS_0_email` | 
 | `auth.demo_users[0].password` | `CDK_AUTH_DEMOUSERS_0_password` |
 | `auth.demo_users[0].groups[0]` | `CDK_AUTH_DEMOUSERS_0_groups_0` |
+
+> **Note** : In environment variables, lists start at index 0 and are provided using `_idx_` syntax. 
 
 ## Property Definitions
 
@@ -81,3 +85,4 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
 - `auth.demo_users[].email` : User login
 - `auth.demo_users[].password` : User password
 - `auth.demo_users[].groups[]` : User groups list (optional)
+
