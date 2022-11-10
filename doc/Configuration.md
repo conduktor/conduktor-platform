@@ -143,11 +143,13 @@ Starting from conduktor-platform **1.2.0** input configuration fields can be pro
 
 All override environment variables are prefixed with `CDK_` and are derived from yaml field path where `.` are replaced with `_` and index `[idx].` into with `_idx_`. 
 
+> **Note** : In environment variables, lists start at index 0 and are provided using `_idx_` syntax. 
+
 E.g. configuration field => environment variable :
 - `license` => `CDK_LICENSE`
 - `organization.name` => `CDK_ORGANIZATION_NAME` 
-- `clusters[0].bootstrapServers` => `CDK_CLUSTERS_1_BOOTSTRAPSERVERS`
-- `clusters[2].kafkaConnects[0].security.password` => `CDK_CLUSTERS_1_KAFKACONNECTS_SECURITY_PASSWORD`
+- `clusters[0].bootstrapServers` => `CDK_CLUSTERS_0_BOOTSTRAPSERVERS`
+- `clusters[2].kafkaConnects[0].security.password` => `CDK_CLUSTERS_2_KAFKACONNECTS_0_SECURITY_PASSWORD`
 
 ## Conduktor Platform Configuration Snippets
 Below outlines snippets demonstrating fundamental configurations possibility.
