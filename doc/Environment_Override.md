@@ -81,7 +81,7 @@ You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to c
 - `database.username` : Database login role   
 - `database.password` : Database login password   
 - `database.connection_timeout` : Connection timeout option in seconds 
-- `auth.demo-users` : Deprecated list of local platform users since 1.4.0. See `auth.local-users` instead.
+- `auth.demo-users` : Deprecated list of local platform users since `1.4.0`. See `auth.local-users` instead.
 - `auth.local-users` : List of local platform users
 - `auth.local-users[].email` : User login
 - `auth.local-users[].password` : User password
