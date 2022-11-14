@@ -35,6 +35,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Admin**
   - Fix the cluster creation capacity for enterprise license
 
+### **Deprecated**
+- **Platform**
+  - `auth.demo-users` deprecated and replaced with `auth.local-users`. (support both for now to avoid breaking change)
+
+  
 ## 1.3.1 (2022-11-03)
 
 ### **Features** 

@@ -15,7 +15,7 @@ clusters:
     labels: {}
 
 auth:
-  demo-users:
+  local-users:
     - email: admin@conduktor.io
       password: admin
       groups:
