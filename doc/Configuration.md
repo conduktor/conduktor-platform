@@ -58,7 +58,7 @@ clusters:
     bootstrapServers: "some-host:9092"
 
 auth:
-  demo-users:
+  local-users:
     - email: admin@demo.dev
       password: adminpwd
       groups:
@@ -101,7 +101,7 @@ clusters:
       env: default
 envs : []
 auth:
-  demo-users: 
+  local-users: 
     - email: admin@conduktor.io
       password: admin
       groups:

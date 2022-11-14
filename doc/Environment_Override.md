@@ -40,9 +40,9 @@ You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to c
 | `database.username`    | `CDK_DATABASE_USERNAME`  |
 | `database.password`    | `CDK_DATABASE_PASSWORD`  |
 | `database.connection_timeout`    | `CDK_DATABASE_CONNECTIONTIMEOUT`  |
-| `auth.demo_users[0].email` | `CDK_AUTH_DEMOUSERS_0_email` | 
-| `auth.demo_users[0].password` | `CDK_AUTH_DEMOUSERS_0_password` |
-| `auth.demo_users[0].groups[0]` | `CDK_AUTH_DEMOUSERS_0_groups_0` |
+| `auth.local-users[0].email` | `CDK_AUTH_LOCALUSERS_0_email` | 
+| `auth.local-users[0].password` | `CDK_AUTH_LOCALUSERS_0_password` |
+| `auth.local-users[0].groups[0]` | `CDK_AUTH_LOCALUSERS_0_groups_0` |
 
 > **Note** : In environment variables, lists start at index 0 and are provided using `_idx_` syntax. 
 
@@ -81,8 +81,9 @@ You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to c
 - `database.username` : Database login role   
 - `database.password` : Database login password   
 - `database.connection_timeout` : Connection timeout option in seconds 
-- `auth.demo_users` : List of local platform users 
-- `auth.demo_users[].email` : User login
-- `auth.demo_users[].password` : User password
-- `auth.demo_users[].groups[]` : User groups list (optional)
+- `auth.demo-users` : Deprecated list of local platform users since 1.4.0. See `auth.local-users` instead.
+- `auth.local-users` : List of local platform users
+- `auth.local-users[].email` : User login
+- `auth.local-users[].password` : User password
+- `auth.local-users[].groups[]` : User groups list (optional)
 
