@@ -21,6 +21,7 @@ Jump to:
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
+You can use this [website helper](https://conduktor.github.io/yaml-to-env/) to convert configuration yaml to environment variables list.
 
 ### Global properties
 - **`organization.name`** :  Your organizations name     
