@@ -59,6 +59,7 @@ properties: |
   - Fix agent connectivity hanging when using multiple instances of an agent
   - Fix menu tooltips being displayed behind the canvas
   - Fix loader not being centered
+  - Fix Text4Shell CVE from org.apache.commons.commons-text-1.9
 
 - **Data Masking**
   - Fix the creation rule form when a lot of field are added. The "create button" stay accessible now.
