@@ -18,8 +18,6 @@ auth:
   local-users:
     - email: admin@conduktor.io
       password: admin
-      groups:
-        - ADMIN
 
 sso:
   ldap:

@@ -61,8 +61,6 @@ auth:
   local-users:
     - email: admin@demo.dev
       password: adminpwd
-      groups:
-        - ADMIN
 
 license: "<you license key>"
 ```
@@ -104,8 +102,6 @@ auth:
   local-users: 
     - email: admin@conduktor.io
       password: admin
-      groups:
-        - ADMIN
 license: ${LICENSE_KEY:-~} # Fallback to null (~)
 ```
 
