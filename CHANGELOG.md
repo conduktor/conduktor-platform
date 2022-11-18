@@ -30,6 +30,20 @@ properties: |
   sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
 ```
 
+-----
+
+> **why use our class, over aws' native library?**
+
+Our `io.conduktor.aws.IAMClientCallbackHandler` is enriching the behaviour of the AWS class. 
+
+In the SaaS we provide, it's the only solution you'll have to configure your MSK cluster.
+
+In the on-premise Docker image we provive, using our class gives you the maximum simplicity and flexibility.    
+It ensures you to have the same behaviour of the AWS `software.amazon.msk.auth.iam.IAMClientCallbackHandler` class, plus our additional ways for you to pass your credentials, as documented in our [documentation](./doc/Configuration.md#amazon-msk-with-iam-authentication-example).      
+So that you can pass your credentials in the properties of your cluster when you test the Docker image locally for example, and then use the same configuration in your server environment containing the AWS IAM role.
+
+-----
+
 - **Testing**
   - Added a structured summary in console at the end of executions
   - AWS IAM : default credential chain compliance
