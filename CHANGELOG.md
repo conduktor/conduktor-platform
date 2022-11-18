@@ -20,8 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Consumer Groups: You can now duplicate a Consumer Group
   - Topics configuration: You can now update your Topics configuration
   - Topics configuration: You can now reset your Topics configuration
-  - IAM support: Our io.conduktor.aws.IAMClientCallbackHandler class used to configure IAM in the Platform now complies with the "credentials provider chain" mechanism of AWS. It'll first try to find your credentials/role on your machine, as `software.amazon.msk.auth.iam.IAMClientCallbackHandler` would do. If nothing is found, then it'll use our mechanism. For more info, see [documentation](./doc/Configuration.md#amazon-msk-with-iam-authentication-example)
-  Our `io.conduktor.aws.IAMClientCallbackHandler` class can now be used as a drop-in replacement of `software.amazon.msk.auth.iam.IAMClientCallbackHandler` in your Kafka properties:
+  - IAM support: Our io.conduktor.aws.IAMClientCallbackHandler class used to configure IAM in the Platform now complies with the "credentials provider chain" mechanism of AWS. It'll first try to find your credentials/role on your machine, as `software.amazon.msk.auth.iam.IAMClientCallbackHandler` would do. If nothing is found, then it'll use our mechanism. For more info, see [documentation](./doc/Configuration.md#amazon-msk-with-iam-authentication-example).     
+  To summarize, our `io.conduktor.aws.IAMClientCallbackHandler` class can now be used as a drop-in replacement of `software.amazon.msk.auth.iam.IAMClientCallbackHandler` in your Kafka properties:
 ```yaml
 properties: |
   security.protocol=SASL_SSL
