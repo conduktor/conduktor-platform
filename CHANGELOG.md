@@ -6,6 +6,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.5.1 (2022-11-18)
+
+### **Features** 
+
+- **Platform**
+  - Add support of external S3 storage for monitoring data. see [documentation](./doc/Environment_Override.md#monitoring-properties)
+  - Add support of custom Truststore configuration for SSL/TLS connections. see [documentation](./doc/Environment_Override.md#docker-image-environment-variables)
+  - SSO : Add more configuration parameters for LDAP connection. see [documentation](./doc/Environment_Override.md#ldap-properties)
+
+- **Console**
+  - Consumer Groups - Reset Offsets: New "datetime" strategy to choose when to reset the offsets to
+  - Consumer Groups: You can now duplicate a Consumer Group
+  - Topics configuration: You can now update your Topics configuration
+  - Topics configuration: You can now reset your Topics configuration
+  - IAM support: Our io.conduktor.aws.IAMClientCallbackHandler class used to configure IAM in the Platform now complies with the "credentials provider chain" mechanism of AWS. It'll first try to find your credentials/role on your machine, as `software.amazon.msk.auth.iam.IAMClientCallbackHandler` would do. If nothing is found, then it'll use our mechanism. For more info, see [documentation](./doc/Configuration.md#amazon-msk-with-iam-authentication-example)
+  Our `io.conduktor.aws.IAMClientCallbackHandler` class can now be used as a drop-in replacement of `software.amazon.msk.auth.iam.IAMClientCallbackHandler` in your Kafka properties:
+```yaml
+properties: |
+  security.protocol=SASL_SSL
+  sasl.mechanism=AWS_MSK_IAM
+  sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+  sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+```
+
+- **Testing**
+  - Added a structured summary in console at the end of executions
+  - AWS IAM : default credential chain compliance
+
+- **Monitoring**
+  - It's now possible to select a custom date/time range
+  - Number of messages in / s is also available when you don't configure a jmx agent
+
+- **Admin**
+  - The clusters UI now supports read/write/delete (cluster, schema registry, kafka connect)
+  - The clusters configuration int the configuration file can be used as a 1st initialization but is not mandatory anymore to create clusters
+
+### **Fixes**
+
+- **Platform**
+  - Remove unused configuration fields (`auth.local-users[].groups` and `slack-token` )
+
+- **Console**
+  - Create Topic form: The replication factor was not aligned with the Cluster configuration
+  - Create Topic form: Improve error handling
+  - CTRL+F is now working in the data viewers
+  - Consumer Group: When "Overall Lag" and/or "Members" values were 0, they were displayed as N/A
+  - Sometimes, in the top-level bar of the app, your Clusters were reported as "Not connected" while they were connected
+  - Sometimes, when producing Avro data, an "Invalid JSON returned. Please try again" error was incorrectly displayed, and the produced data was not correctly displayed
+
+- **Testing**
+  - Fix agent connectivity hanging when using multiple instances of an agent
+  - Fix menu tooltips being displayed behind the canvas
+  - Fix loader not being centered
+
+- **Data Masking**
+  - Fix the creation rule form when a lot of field are added. The "create button" stay accessible now.
+
+
 ## 1.4.0 (2022-11-10)
 
 ### **Features** 
@@ -21,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Admin**
   - Clusters now have technical id
 
-### **Fix**
+### **Fixes**
 - **Platform**
   - Fix authentication with SSO when no local user definition is provided
   - Fix `clusters[].schemaRegistry` parsing from env
@@ -64,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New sidebar design
 - Clusters have a human friendly "technical id" to ease url sharing
 
-### **Fix**
+### **Fixes**
 - **Console**
   - Fix: Kafka Connect - The connectors data table is now refreshed when an action is performed on a connector
 - **Testing**
@@ -91,7 +149,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Add support of S3 in LoadCSV
     - Add Comparison data node
 
-### **Fix**
+### **Fixes**
 - **Platform** 
     - Fix help menu items
     - Enable solutions in product switcher to open in new tab
@@ -128,7 +186,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test connection on Schema Registry
 - Admin: support users with uppercases in the emails
 
-### **Fix**:
+### **Fixes**:
 - Group search was using "startWith", now it uses "contains"
 - Admin: clusters sort by date
 
