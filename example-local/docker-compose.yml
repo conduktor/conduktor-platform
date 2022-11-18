@@ -43,7 +43,7 @@ services:
       - "zookeeper_datalog:/datalog"
 
   kafka:
-    image: conduktor/kafka:3.2.0
+    image: conduktor/kafka:3.3.1
     hostname: kafka
     ports:
       - "9092:9092"
