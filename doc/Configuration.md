@@ -200,6 +200,7 @@ clusters:
       sasl.mechanism=AWS_MSK_IAM
       sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
       sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      # Conduktor-specific properties
       aws_access_key_id=<access-key-id>
       aws_secret_access_key=<secret-access-key>
 ```
@@ -214,7 +215,7 @@ clusters:
       security.protocol=SASL_SSL
       sasl.mechanism=AWS_MSK_IAM
       sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
-      sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
 ```
 On top of that, you can override either the `default` profile or the role to assume.
 Override Profile
