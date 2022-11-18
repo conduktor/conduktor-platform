@@ -18,6 +18,4 @@ auth:
   local-users:
     - email: "${ADMIN_EMAIL}"
       password: "${ADMIN_PSW}"
-      groups:
-        - ADMIN
 license: "$LICENSE_KEY"

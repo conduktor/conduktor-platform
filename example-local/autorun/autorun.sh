@@ -28,7 +28,7 @@ FORCE_CONFIG=${FORCE_CONFIG:-"false"}
 # This array of images is needed in order to prune and save
 # some disk usage when shutting down platform. This behavior
 # can be cancelled by injecting NO_PRUNE=true
-COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.2.0"
+COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.3.1"
 NO_PRUNE=${NO_PRUNE:-"true"}
 
 # Platform variables

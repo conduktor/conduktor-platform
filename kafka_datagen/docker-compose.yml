@@ -10,7 +10,7 @@ services:
       - "zookeeper_datalog:/datalog"
 
   kafka:
-    image: conduktor/kafka:3.2.0
+    image: conduktor/kafka:3.3.1
     hostname: kafka
     ports:
       - "9092:9092"
@@ -37,7 +37,6 @@ services:
       - JMX_EXPORTER_CONFIG=/etc/jmx-exporter.yml
     depends_on:
       - zookeeper
-
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.2.1

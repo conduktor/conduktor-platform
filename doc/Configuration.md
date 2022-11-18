@@ -61,8 +61,6 @@ auth:
   local-users:
     - email: admin@demo.dev
       password: adminpwd
-      groups:
-        - ADMIN
 
 license: "<you license key>"
 ```
@@ -72,7 +70,7 @@ run with :
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.4.0
+  conduktor/conduktor-platform:1.5.1
 ```
 
 OR using `CDK_IN_CONF_FILE` env :
@@ -81,7 +79,7 @@ OR using `CDK_IN_CONF_FILE` env :
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
   -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.4.0
+  conduktor/conduktor-platform:1.5.1
 ```
 
 If no configuration file is provided, a default one is used containing
@@ -104,8 +102,6 @@ auth:
   local-users: 
     - email: admin@conduktor.io
       password: admin
-      groups:
-        - ADMIN
 license: ${LICENSE_KEY:-~} # Fallback to null (~)
 ```
 
