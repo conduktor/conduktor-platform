@@ -25,3 +25,8 @@ Conduktor platform requires two network paths, one to your Apache Kafka cluster(
 For connection to your Apache Kafka cluster you will need to open network rules to allow connections on the same ports your existing clients use, most commmonly  tcp/9092.
 
 Client access is done over port 80 or 443, utilizing the HTTP(S) protocol.
+
+### AWS diagram
+A suggested diagram for an AWS deployment looks like:
+
+![AWS Diagram](https://github.com/conduktor/conduktor-platform/tree/main/doc/images/aws_diagram.png)
