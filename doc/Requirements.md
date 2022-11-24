@@ -15,7 +15,7 @@ The suggest resources for Conduktor Platform is at least:
 | Disk  |   100Gb   |
 
 ### Database
-Conduktor platform utilizes a [Postgres](https://www.postgresql.org/) database for stateful storage of things like RBAC configurations as well as metrics for monitoring and topic analyizer.  By default a Postgres database is built into the Conduktor Platform container.  
+Conduktor platform utilizes a [Postgres](https://www.postgresql.org/) database for stateful storage of things like services and RBAC configurations as well as audit log events.  By default a Postgres database is built into the Conduktor Platform container.  
 
 If required for scaling reasons, or other reasons there is the ability to externalize the database.  [This document](https://github.com/conduktor/conduktor-platform/blob/main/doc/Environment_Override.md#database-properties) describes the configuration required to configure Conduktor platform to use a stand alone database.
 
