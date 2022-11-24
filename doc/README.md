@@ -24,7 +24,7 @@ Conduktor platform can be setup using a yaml file that provides configuration fo
 - sso (ldap/oauth2)
 - license
 
-[Learn how](Configuration.md) to use the configuration file and more [advanced](Advanced_settings.md) settings of the platform.
+[Learn how](Configuration.md) to use the configuration file and more [advanced](Advanced_settings.md) settings of the platform.  For most deployments and orginizations the setup and configuration of Conduktor Platform takes about an hour.
 
 
 #### Using platform public apis
