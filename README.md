@@ -46,15 +46,16 @@ Start docker-compose on your side, with an embedded Apache Kafka, Schema Registr
 
 You have your own Apache Kafka clusters and you want to connect them to Conduktor Platform?
 
-- [Connect my clusters to Conduktor Platform](./doc/Custom.md)
-- [I need more advanced settings](./doc/Advanced_settings.md)
+- [Connect my clusters to Conduktor Platform](https://docs.conduktor.io/platform/configuration/configuration-snippets)
+- [I need more advanced settings](https://docs.conduktor.io/platform/installation/hardware)
+- [Environments variables and configuration list](https://docs.conduktor.io/platform/configuration/env-variables)
 
 ---
 
 # 🆘 Looking for help?
 
-* [Our Platform Changelog](CHANGELOG.md)
-* [Our Platform Documentation](doc/)
+* [Our Platform Changelog](https://www.conduktor.io/changelog)
+* [Our Platform Documentation](https://docs.conduktor.io/)
 * Contact us for anything else: support@conduktor.io
 
 ---
@@ -73,18 +74,13 @@ Recommended :
 - 16+ GB of RAM (`RUN_MODE=small`)
 - 10+ GB of disk space
 
-## Platforms ACLs are supported on
-
-* Open Source Apache Kafka
-* MSK
-
 ## Where does Monitoring work?
 
 Some aspects of Conduktor Monitoring support all flavours of Kafka. Specifically, you will have insight into consumer lag of your applications out-of-the-box.
 
-To use Monitoring at full capacity you must [setup the Monitoring agent](doc/monitoring/monitoring.md). This currently supports open-source Apache Kafka.
+To use Monitoring at full capacity you must [setup the Monitoring agent](https://docs.conduktor.io/platform/monitoring/getting-started/agent-setup). This currently supports open-source Apache Kafka.
 
-[See documentation](doc/monitoring/monitoring.md).
+[See documentation](https://docs.conduktor.io/platform/monitoring).
 
 ---
 
