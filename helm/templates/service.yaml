@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "conduktor.platform.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  {{- if .Values.platform.service.annotations }}
+  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.platform.service.annotations "context" $) | nindent 4 }}
+  {{- end }}
+  labels:
+    app: {{ include "conduktor.platform.fullname" . }}
+spec:
+  ports:
+    - name: http
+      port: {{ .Values.platform.service.http.port }}
+      targetPort: http
+  selector:
+    app: {{ include "conduktor.platform.fullname" . }}

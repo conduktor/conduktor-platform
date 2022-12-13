@@ -1,0 +1,12 @@
+{{- if and .Values.platform.config ( not .Values.platform.configMapRef ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "conduktor.platform.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+data:
+  platform.yml: |
+    {{- include ("platform.config") . | nindent 4 }}
+{{- end }}

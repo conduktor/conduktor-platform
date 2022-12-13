@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "conduktor.platform.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  {{- if or .Values.platform.deployment.annotations }}
+  annotations:
+    {{- if .Values.platform.deployment.annotations }}
+    {{-   include "common.tplvalues.render" (dict "value" .Values.platform.deployment.annotations "context" $) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+  labels: 
+    {{- include "platform.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.platform.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "platform.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- if or .Values.platform.deployment.annotations .Values.platform.config }}
+      annotations:
+        {{- if .Values.platform.config }}
+        checksum/config: {{ include (tpl "platform.config" $) . | sha256sum }}
+        {{- end }}
+        {{- if .Values.platform.ingress.annotations }}
+        {{-   include "common.tplvalues.render" (dict "value" .Values.platform.deployment.annotations "context" $) | nindent 4 }}
+        {{- end }}
+    {{- end }}
+      labels: 
+      {{- include "platform.labels" . | nindent 4 }}
+    spec:
+      {{- if .Values.global.imagePullSecrets }}
+      imagePullSecrets: {{- toYaml .Values.global.imagePullSecrets | nindent 6 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: platform
+        image: {{ include "platform.deployment.image" . }}
+        imagePullPolicy: {{ .Values.platform.deployment.image.pullPolicy}}
+        ports:
+          - containerPort: {{ .Values.platform.containerPort }}
+            protocol: TCP
+            name: http
+        env:
+          - name: KAFKA_BOOTSTRAP_SERVER
+            value: {{ include "conduktor.platform.kafka-bootstrap-server" . }}
+          {{- if or .Values.platform.configMapRef .Values.platform.config }}
+          - name: CDK_IN_CONF_FILE
+            value: /etc/conduktor-platform/platform.yml
+          {{- end}}
+          {{- if .Values.platform.deployment.env }}
+          {{-   include "common.tplvalues.render" (dict "value" .Values.platform.deployment.env "context" $) | nindent 10 }}
+          {{- end}}
+          {{- if .Values.platform.deployment.extraEnv }}
+          {{-   include "common.tplvalues.render" (dict "value" .Values.platform.deployment.extraEnv "context" $) | nindent 10 }}
+          {{- end}}
+        envFrom:
+          {{- if .Values.platform.secretRef }}
+          - secretRef:
+              name: {{ .Values.platform.secretRef }}
+          {{- end }}
+        startupProbe:
+          httpGet:
+            path: /platform/api/modules/health/ready
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /platform/api/modules/health/live
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /platform/api/modules/health/ready
+            port: http
+        {{- if .Values.platform.deployment.resources }}
+        resources: {{- include "common.tplvalues.render" (dict "value" .Values.platform.deployment.resources "context" $) | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.platform.deployment.extraVolumeMounts }}
+        {{-   toYaml .Values.platform.deployment.extraVolumeMounts | nindent 10 }}
+        {{- end }}
+          {{- if or .Values.platform.configMapRef .Values.platform.config }}
+          - name: config-volume
+            mountPath: /etc/conduktor-platform
+          {{- end }}
+          - name: logs
+            mountPath: /var/conduktor/logs
+      volumes:
+        {{- if .Values.platform.deployment.extraVolumes }}
+        {{-   toYaml .Values.platform.deployment.extraVolumes | nindent 8 }}
+        {{- end }}
+        {{- if or .Values.platform.config .Values.platform.configMapRef }}
+        - name: config-volume
+          configMap:
+            {{- if .Values.platform.configMapRef }}
+            name:  {{ .Values.platform.configMapRef }}
+            {{- else }}
+            name: {{ include "conduktor.platform.fullname" . }}
+            {{- end }}
+        {{- end }}
+        - name: logs
+          emptyDir: {}

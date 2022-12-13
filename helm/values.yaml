@@ -1,0 +1,63 @@
+global: {}
+  # imagePullSecrets:
+  #   - name: ghcr
+
+platform:
+  deployment:
+    env:
+    - name: DATA_MASKING_ENABLED
+      value: "true"
+    - name: DEVTOOLS_ENABLED
+      value: "true"
+    - name: MONITORING_ENABLED
+      value: "true"
+    - name: PLATFORM_LISTENING_PORT
+      value: 8080
+    - name: SCANNER_ENABLED
+      value: "true"
+    - name: TESTING_ENABLED
+      value: "true"
+    - name: TOPIC_PROMOTE_ENABLED
+      value: "true"
+    image:
+      repository: conduktor/conduktor-platform
+      pullPolicy: IfNotPresent
+      tag: 1.7.2
+    replicas: 1
+    resources:
+      requests:
+        memory: 6Gi
+      limits:
+        memory: 6Gi
+  service:
+    http:
+      port: 8080
+    annotations: {}
+    labels: {}
+  containerPort: 8080
+  ingress:
+    # class: 
+    enabled: false
+    # hosts: 
+    # - platform.my-domain.com
+    nginx:
+      enabled: false
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    tls:
+      enabled: false
+      # secretRef: my-platform-tls-secret
+    annotations: {}
+  embeddedPostgres:
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 5G
+      storageClass: ""
+
+kafka:
+  enabled: false
+  startupProbe:
+    enabled: true

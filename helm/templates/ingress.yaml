@@ -1,0 +1,43 @@
+{{- if .Values.platform.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "conduktor.platform.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  {{- if or .Values.platform.ingress.annotations .Values.platform.ingress.nginx.enabled }}
+  annotations:
+    {{- if .Values.platform.ingress.annotations }}
+    {{-   include "common.tplvalues.render" (dict "value" .Values.platform.ingress.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.platform.ingress.nginx.enabled }}
+    {{-   include "common.tplvalues.render" (dict "value" .Values.platform.ingress.nginx.annotations "context" $) | nindent 4 }}
+    {{- end}}
+  {{- end }}
+  labels:
+    app: {{ include "conduktor.platform.fullname" . }}
+spec:
+  {{- if .Values.platform.ingress.class }}
+  ingressClassName: {{ .Values.platform.ingress.class }}
+  {{- end }}
+  rules:
+    {{- range $i, $v := ( required "value platform.ingress.hosts is required when ingress is enabled " .Values.platform.ingress.hosts ) }}
+    - host: {{ $v | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "conduktor.platform.fullname" $ }}
+                port:
+                  number: {{ $.Values.platform.service.http.port }}
+    {{- end }}
+  {{- if .Values.platform.ingress.tls.enabled }}
+  tls:
+  - hosts:
+    {{- range $i, $v := ( required "value platform platform.ingress.hosts is required" .Values.platform.ingress.hosts ) }}
+    - {{ $v }}
+    {{- end }}
+    secretName: {{ required "value platform ingress.tls.secretRef is required" .Values.platform.ingress.tls.secretRef }}
+  {{- end }}
+{{- end }}
