@@ -28,7 +28,7 @@ spec:
         {{- end }}
     {{- end }}
       labels: 
-      {{- include "platform.labels" . | nindent 4 }}
+        {{- include "platform.labels" . | nindent 8 }}
     spec:
       {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets: {{- toYaml .Values.global.imagePullSecrets | nindent 6 }}
