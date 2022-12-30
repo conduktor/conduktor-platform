@@ -12,7 +12,7 @@ platform:
     - name: MONITORING_ENABLED
       value: "true"
     - name: PLATFORM_LISTENING_PORT
-      value: 8080
+      value: "8080"
     - name: SCANNER_ENABLED
       value: "true"
     - name: TESTING_ENABLED
