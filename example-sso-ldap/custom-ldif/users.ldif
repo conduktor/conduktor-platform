@@ -24,7 +24,7 @@ homeDirectory: /home/user01
 sn: Bar1
 uid: user01
 uidNumber: 1000
-mail: user02@example.org
+mail: user01@example.org
 userPassword:: cGFzc3dvcmQx
 
 dn: cn=user02,ou=users,dc=example,dc=org
