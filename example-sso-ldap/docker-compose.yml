@@ -2,6 +2,22 @@ version: '3.8'
 
 services:
 
+  openldap:
+    image: bitnami/openldap:2.4.59
+    hostname: openldap
+    ports:
+      - '1389:1389'
+      - '1636:1636'
+    environment:
+      - LDAP_ROOT=dc=example,dc=org
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=adminpassword
+      - LDAP_CUSTOM_LDIF_DIR=/opt/bitnami/openldap/custom-ldif
+      - BITNAMI_DEBUG=true
+    volumes:
+      - 'openldap_data:/bitnami/openldap'
+      - './custom-ldif:/opt/bitnami/openldap/custom-ldif'
+
   conduktor-platform:
     image: conduktor/conduktor-platform:1.9.1
     ports:
@@ -15,6 +31,7 @@ services:
     depends_on:
       - kafka
       - schema-registry
+      - openldap
     environment:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
       KAFKA_BOOTSTRAP_SERVER: kafka:9093
@@ -83,3 +100,4 @@ volumes:
   zookeeper_data: {}
   kafka_data: {}
   conduktor_data: {}
+  openldap_data: {}

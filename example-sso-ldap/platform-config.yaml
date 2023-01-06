@@ -22,11 +22,16 @@ auth:
 sso:
   ldap:
     - name: "default"
-      server: "ldap://www.zflexldap.com:389"
-      managerDn: "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
-      managerPassword: "zflexpass"
-      search-base: "ou=users,ou=guests,dc=zflexsoftware,dc=com"
-      groups-base: "ou=groups,ou=guests,dc=zflexsoftware,dc=com"
-
+      server: "ldap://openldap:1389"
+      managerDn: "cn=admin,dc=example,dc=org"
+      managerPassword: "adminpassword"
+      search-subtree: true
+      search-base: "ou=users,dc=example,dc=org"
+      search-filter: "(uid={0})" # or "(cn={0})"
+      search-attributes: ["uid", "cn", "mail", "email", "givenName", "sn", "displayName"]
+      groups-enabled: true
+      groups-base: "ou=groups,dc=example,dc=org"
+      groups-filter: "(member={0})"
+      groups-attribute: "cn"
 
 license: "$LICENSE_KEY"
