@@ -14,7 +14,7 @@ platform:
     - name: PLATFORM_LISTENING_PORT
       value: "8080"
     - name: SCANNER_ENABLED
-      value: "true"
+      value: "false"
     - name: TESTING_ENABLED
       value: "true"
     - name: TOPIC_PROMOTE_ENABLED
