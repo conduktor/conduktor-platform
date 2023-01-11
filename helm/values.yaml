@@ -22,7 +22,7 @@ platform:
     image:
       repository: conduktor/conduktor-platform
       pullPolicy: IfNotPresent
-      tag: 1.7.2
+      tag: 1.9.1
     replicas: 1
     resources:
       requests:
