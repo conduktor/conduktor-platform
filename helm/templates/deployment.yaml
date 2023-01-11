@@ -29,6 +29,8 @@ spec:
     {{- end }}
       labels: 
         {{- include "platform.labels" . | nindent 8 }}
+        app: {{ include "conduktor.platform.fullname" . }} 
+
     spec:
       {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets: {{- toYaml .Values.global.imagePullSecrets | nindent 6 }}
