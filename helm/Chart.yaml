@@ -33,7 +33,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-kafka
-    version: 18.1.x
+    version: 20.0.x
     condition: kafka.enabled
   - name: postgresql
     condition: postgresql.enabled
