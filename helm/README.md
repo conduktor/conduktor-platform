@@ -14,7 +14,9 @@ This will run :
  * a postgres (unused at the stage, but will be used as an example of external db config)
  * Condutkor Platform
 
-Open http://localhost and login with admin@foobar.io / password and you should you should be up & running.
+Open http://localhost and login with the follinwg credentials and you should access to a local Conduktor Platform demo environment in your k8s environement:
+* Login: `admin@foobar.io`
+* Password: `password`
 
 # Using nginx as an ingress
 
