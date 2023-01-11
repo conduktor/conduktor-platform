@@ -1,3 +1,9 @@
+# Disable the embeded kafka Cluster to be able to use the one provided as a dependency
+# otherwise You'll get Error: INSTALLATION FAILED: execution error at (platform/templates/deployment.yaml:49:22): value .kafka.boostrapServers is required
+
+kafka:
+  enabled: true
+
 platform: 
   config:
     organization:
