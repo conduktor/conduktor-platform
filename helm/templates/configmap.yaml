@@ -8,5 +8,5 @@ metadata:
     {{- include "platform.labels" . | nindent 4 }}
 data:
   platform.yml: |
-    {{- include ("platform.config") . | nindent 4 }}
+    {{- toYaml .Values.platform.config | nindent 4 }}
 {{- end }}
