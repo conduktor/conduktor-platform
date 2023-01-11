@@ -1,0 +1,28 @@
+platform: 
+  config:
+    organization:
+      name: "Demo"
+      
+    clusters:
+      - id: default
+        name: Demo Kafka cluster from k8s
+        color: "#0013E7"
+        ignoreUntrustedCertificate: false
+        bootstrapServers: "platform-kafka-0.platform-kafka-headless:9092"
+        properties:
+        #schemaRegistry:
+        #  url: "$SR_SERVER"
+        #  ignoreUntrustedCertificate: false
+        #  properties:
+        labels: {}
+
+    auth:
+      local-users:
+        - email: "admin@foobar.io"
+          password: "password"
+    #license: "$LICENSE_KEY"
+
+  ingress:
+    enabled: true
+    hosts: 
+    - "localhost"
