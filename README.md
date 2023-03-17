@@ -1,6 +1,6 @@
 # <img src="https://user-images.githubusercontent.com/2573301/192741305-0e1441a4-308b-4308-947a-656a1dc53577.png" width="25"> Conduktor Platform
 
-[![version](https://img.shields.io/badge/version-1.13.0-blue)](https://www.conduktor.io/changelog)
+[![version](https://img.shields.io/badge/version-1.13.1-blue)](https://www.conduktor.io/changelog)
 [![discord](https://img.shields.io/badge/chat-on%20discord-yellowgreen)](https://discord.com/channels/861899833970262046/861899833970262049)
 [![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
 [![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
