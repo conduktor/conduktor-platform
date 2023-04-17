@@ -3,13 +3,13 @@ version: '3.8'
 services:
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.13.2
+    image: ghcr.io/conduktor/conduktor-platform:1.14.0-rc1
     ports:
       - 8080:8080
     volumes:
       - conduktor_data:/var/conduktor
       - type: bind
-        source: "./${CONF_NAME:-platform-config}.yaml"
+        source: "./platform-config.yaml"
         target: /opt/conduktor/platform-config.yaml
         read_only: true
     depends_on:
@@ -19,8 +19,8 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
       KAFKA_BOOTSTRAP_SERVER: kafka:9093
       SR_SERVER: "http://schema-registry:8081"
-      LICENSE_KEY: "${LICENSE_KEY}"
-      ORGANISATION_NAME: "${ORGANISATION_NAME}"
+      CDK_LICENSE: "${LICENSE_TOKEN:-}"
+      ORGANIZATION_NAME: "${ORGANIZATION_NAME}"
       ADMIN_EMAIL: "${ADMIN_EMAIL}"
       ADMIN_PSW: "${ADMIN_PSW}"
     healthcheck:

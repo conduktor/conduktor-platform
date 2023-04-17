@@ -1,6 +1,10 @@
 organization:
-  name: "${ORGANISATION_NAME}"
-  
+  name: "${ORGANIZATION_NAME}"
+
+admin:
+  email: "${ADMIN_EMAIL}"
+  password: "${ADMIN_PSW}"
+
 clusters:
   - id: default
     name: My Local Kafka Cluster
@@ -11,11 +15,3 @@ clusters:
     schemaRegistry:
       url: "$SR_SERVER"
       ignoreUntrustedCertificate: false
-      properties:
-    labels: {}
-
-auth:
-  local-users:
-    - email: "${ADMIN_EMAIL}"
-      password: "${ADMIN_PSW}"
-license: "$LICENSE_KEY"

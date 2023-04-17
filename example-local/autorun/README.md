@@ -6,14 +6,14 @@ Run Conduktor Platform without installing any file, replace `<your-license>` by 
 
 ```sh
 curl -sS https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/autorun/autorun.sh | \
- LICENSE_KEY="<your-license>" bash -s setup
+ LICENSE_TOKEN="<your-license>" bash -s setup
 ```
 
 For local run, it will ask for inputs (like your license). You can also provide variables: 
 
 ```
-LICENSE_KEY=""
-ORGANISATION_NAME=""
+LICENSE_TOKEN=""
+ORGANIZATION_NAME=""
 ADMIN_EMAIL=""
 ADMIN_PSW=""
 ```
