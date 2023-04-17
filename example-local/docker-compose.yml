@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   conduktor-platform:
-    image: ghcr.io/conduktor/conduktor-platform:1.14.0-rc1
+    image: conduktor/conduktor-platform:1.14.0
     ports:
       - 8080:8080
     volumes:
