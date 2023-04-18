@@ -32,8 +32,8 @@ COMPOSE_IMAGES="conduktor/conduktor-platform conduktor/kafka:3.3.1"
 NO_PRUNE=${NO_PRUNE:-"true"}
 
 # Platform variables
-LICENSE_KEY=${LICENSE_KEY:-}
-ORGANISATION_NAME=${ORGANISATION_NAME:-}
+LICENSE_TOKEN=${LICENSE_TOKEN:-}
+ORGANIZATION_NAME=${ORGANIZATION_NAME:-}
 ADMIN_EMAIL=${ADMIN_EMAIL:-}
 ADMIN_PSW=${ADMIN_PSW:-}
 
@@ -61,7 +61,6 @@ function downloadFiles() {
     # cp ../docker-compose.yml ${CACHE_DIR}/
     # cp ../jmx-exporter.yml ${CACHE_DIR}/
     # cp ../platform-config.yaml ${CACHE_DIR}/
-    # cp ../platform-config-no-license.yaml ${CACHE_DIR}/
     download "${CACHE_DIR}/docker-compose.yml" "${CURL_PATH}/example-local/docker-compose.yml"
     download "${CACHE_DIR}/jmx-exporter.yml" "${CURL_PATH}/example-local/jmx-exporter.yml"
     download "${CACHE_DIR}/platform-config-no-license.yaml" "${CURL_PATH}/example-local/platform-config-no-license.yaml"
@@ -195,19 +194,10 @@ function run() {
     check_docker_compose_version
 
     info "To provide you with the best possible user experience, we need some information:"
-    notEmptyOrInput ORGANISATION_NAME "Organisation name: "
+    notEmptyOrInput ORGANIZATION_NAME "Organisation name: "
     notEmptyOrInput ADMIN_EMAIL "Admin email 📧: "
     notEmptyOrInput ADMIN_PSW "Admin password 🔒: "
-    notEmptyOrInput LICENSE_KEY "License key [OPTIONAL]: " true
-
-    if [ "${LICENSE_KEY}" == "" ]; then
-        export CONF_NAME=platform-config-no-license
-        sed "s/^.*LICENSE_KEY.*$//" "${CACHE_DIR}/docker-compose.yml" | tee -a "${CACHE_DIR}/docker-compose.yml" > /dev/null
-    else 
-      export CONF_NAME=platform-config
-      echo "LICENSE_KEY=${LICENSE_KEY}" > "${CACHE_DIR}/.env"
-      composeOpts="${composeOpts} --env-file ${CACHE_DIR}/.env"
-    fi
+    notEmptyOrInput LICENSE_TOKEN "License key [OPTIONAL]: " true
 
     pushd ${CACHE_DIR}
     info "Pulling Conduktor Platform docker images..."

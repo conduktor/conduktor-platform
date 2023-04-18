@@ -14,10 +14,9 @@ clusters:
       properties:
     labels: {}
 
-auth:
-  local-users:
-    - email: admin@conduktor.io
-      password: admin
+admin:
+  email: "admin@example.io"
+  password: "admin"
 
 sso:
   ldap:

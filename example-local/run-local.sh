@@ -1,24 +1,23 @@
 #!/usr/bin/env bash
 set -eu
 echo "First, let's init your organisation : "
-read -p 'Organisation name: ' ORGANISATION_NAME
+read -p 'Organisation name: ' ORGANIZATION_NAME
 echo "done ✅"
 echo "Now, let's create your admin account : "
 read -p 'Admin email 📧: ' ADMIN_EMAIL
 read -p 'Admin password 🔒: ' ADMIN_PSW
 echo "done ✅"
+echo "Now, do you have a conduktor platform license : "
+read -p 'Platform license [optional]: ' LICENSE_TOKEN
+echo "done ✅"
 echo "Conduktor platform is starting..."
 
-
-export ORGANISATION_NAME
+export ORGANIZATION_NAME
 export ADMIN_EMAIL
 export ADMIN_PSW
+export LICENSE_TOKEN
 
 SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-
-if [[ "$#" == 0 ]]; then
-    echo "No license key provided, run platform in free mode"
-fi
 
 $SCRIPT_DIR/utils-local.sh start "$@"
 

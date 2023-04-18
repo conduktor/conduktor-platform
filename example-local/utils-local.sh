@@ -6,7 +6,10 @@ SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 DOCKER_COMPOSE="docker compose" && [[ -x "$(command -v 'docker-compose')" ]] && DOCKER_COMPOSE="docker-compose"
 
 start() {
-  export LICENSE_KEY="${1:-}"
+  echo "ORGANIZATION_NAME : ${ORGANIZATION_NAME:? missing organization name}"
+  echo "ADMIN_EMAIL : ${ADMIN_EMAIL:? missing admin email}"
+  echo "ADMIN_PSW : ${ADMIN_PSW:? missing admin password}"
+  echo "LICENSE_TOKEN : ${LICENSE_TOKEN:-}"
 
   $DOCKER_COMPOSE up -d
 }
