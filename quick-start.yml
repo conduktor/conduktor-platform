@@ -31,7 +31,38 @@ services:
       CDK_ADMIN_EMAIL: "admin@admin.io"
       CDK_ADMIN_PASSWORD: "admin"
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "redpanda-0:9092"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
+
+  redpanda-0:
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda-0:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      # Address the broker advertises to clients that connect to the HTTP Proxy.
+      - --advertise-pandaproxy-addr internal://redpanda-0:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      # Redpanda brokers use the RPC API to communicate with eachother internally.
+      - --rpc-addr redpanda-0:33145
+      - --advertise-rpc-addr redpanda-0:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=info
+    image: docker.redpanda.com/redpandadata/redpanda:v23.1.11
+    container_name: redpanda-0
+    volumes:
+      - redpanda-0:/var/lib/redpanda/data
+    ports:
+      - 18081:18081
+      - 18082:18082
+      - 19092:19092
+      - 19644:9644
+
 
 volumes:
   pg_data: {}
   conduktor_data: {}
+  redpanda-0: {}
