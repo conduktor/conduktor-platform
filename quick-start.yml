@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_DB: "conduktor-platform"
       POSTGRES_USER: "conduktor"
-      POSTGRES_PASSWORD: "some_password"
+      POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-platform:
@@ -27,7 +27,7 @@ services:
       CDK_ORGANIZATION_NAME: "demo"
       CDK_ADMIN_EMAIL: "admin@admin.io"
       CDK_ADMIN_PASSWORD: "admin"
-      CDK_DATABASE_URL: "postgresql://conduktor:some_password@postgresql:5432/conduktor-platform"
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
 
 volumes:
   pg_data: {}
