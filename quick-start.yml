@@ -26,7 +26,6 @@ services:
       timeout: 5s
       retries: 3
     environment:
-      CDK_ONBOARDING_MODE: "always"
       CDK_ORGANIZATION_NAME: "demo"
       CDK_ADMIN_EMAIL: "admin@admin.io"
       CDK_ADMIN_PASSWORD: "admin"
