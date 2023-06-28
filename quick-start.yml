@@ -31,6 +31,8 @@ services:
       CDK_ADMIN_EMAIL: "admin@admin.io"
       CDK_ADMIN_PASSWORD: "admin"
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_CLUSTERS_0_ID: "local"
+      CDK_CLUSTERS_0_NAME: "local"
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "redpanda-0:9092"
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
 
