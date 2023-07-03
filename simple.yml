@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-platform:
+    image: conduktor/conduktor-platform:latest
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
