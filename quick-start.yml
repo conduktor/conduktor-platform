@@ -15,6 +15,9 @@ services:
 
   conduktor-platform:
     image: conduktor/conduktor-platform:latest
+    depends_on:
+      - postgresql
+      - redpanda-0
     ports:
       - "8080:8080"
     volumes:
