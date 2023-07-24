@@ -20,6 +20,9 @@ services:
       - "8080:8080"
     volumes:
       - conduktor_data:/var/conduktor
+    environment:
+      CDK_ONBOARDING_MODE: "always"
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
     healthcheck:
       test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
       interval: 10s
