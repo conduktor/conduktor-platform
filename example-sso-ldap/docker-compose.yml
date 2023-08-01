@@ -31,7 +31,7 @@ services:
       - './custom-ldif:/opt/bitnami/openldap/custom-ldif'
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.16.1
+    image: conduktor/conduktor-platform:1.17.0
     ports:
       - 8080:8080
     volumes:
