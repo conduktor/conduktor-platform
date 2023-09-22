@@ -35,14 +35,39 @@ services:
       CDK_CLUSTERS_0_NAME: "local"
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "redpanda-0:9092"
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
+      CDK_CLUSTERS_1_ID: "gateway"
+      CDK_CLUSTERS_1_NAME: "gateway"
+      CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
+      CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
+      CDK_CLUSTERS_1_kafkaFlavor_URL: "http://conduktor-gateway:8888"
+      CDK_CLUSTERS_1_kafkaFlavor_USER: "admin"
+      CDK_CLUSTERS_1_kafkaFlavor_PASSWORD: "conduktor"
+      CDK_CLUSTERS_1_kafkaFlavor_VIRTUALCLUSTER: "passthrough"
+      CDK_CLUSTERS_1_kafkaFlavor_TYPE: "Gateway"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+
+  conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.1.5
+    hostname: conduktor-gateway
+    container_name: conduktor-gateway
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+    depends_on:
+      redpanda-0:
+        condition: service_healthy
+
   conduktor-monitoring:
     image: conduktor/conduktor-platform-cortex:1.18.0
     environment:
       CDK_CONSOLE-URL: "conduktor-platform:8080"
+
   redpanda-0:
     command:
       - redpanda
@@ -69,6 +94,12 @@ services:
       - 18082:18082
       - 19092:19092
       - 19644:9644
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true' || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
 
 
 volumes:
