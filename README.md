@@ -8,6 +8,8 @@
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
 
+# 👩‍💻 Get Started
+
 ```` shell
 # Start Conduktor in seconds, powered with Redpanda
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up
@@ -22,33 +24,6 @@ We really want our community to be part of our evolution.
 Please upvote or comment everything we're doing. WE. ARE. LISTENING.
 
 [I want Conduktor to implement what I need](https://product.conduktor.help/tabs/1-in-development)
-
----
-
-# 👩‍💻 Get Started
-
-We offer you 3 simple ways to experience Conduktor Platform.
-
-## Online Demo: 1-click away!
-
-Go to https://demo.conduktor.io to experience Conduktor Platform in 1-click, nothing to setup on you side.
-
-A dedicated Kafka cluster is running alongside a few Kafka applications to provide some life and demo everything easily.
-
-## Start with a built-in Apache Kafka cluster
-
-Start docker-compose on your side, with an embedded Apache Kafka, Schema Registry and Kafka Connect.
-
-- [Quick start without cloning the repository](/example-local/autorun/README.md)
-- [Take me to the docker-compose](/example-local)
-
-## Connect to your own Apache Kafka cluster
-
-You have your own Apache Kafka clusters and you want to connect them to Conduktor Platform?
-
-- [Connect my clusters to Conduktor Platform](https://docs.conduktor.io/platform/configuration/configuration-snippets)
-- [I need more advanced settings](https://docs.conduktor.io/platform/installation/hardware)
-- [Environments variables and configuration list](https://docs.conduktor.io/platform/configuration/env-variables)
 
 ---
 
