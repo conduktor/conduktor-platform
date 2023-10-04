@@ -7,11 +7,11 @@
 
 We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
 Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
-<p align="center">
-  <a href="https://www.conduktor.io">
-    <img src="https://staging.conduktor.io/images/hero/explorer1.png" alt="Conduktor Platform" height="400"/>
-  </a>
-</p>
+
+```` shell
+# Start Conduktor in seconds, powered with Redpanda
+curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up
+````
 
 ---
 
