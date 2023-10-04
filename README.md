@@ -1,6 +1,6 @@
 # <img src="https://user-images.githubusercontent.com/2573301/192741305-0e1441a4-308b-4308-947a-656a1dc53577.png" width="25"> Conduktor Platform
 
-[![version](https://img.shields.io/badge/version-1.17.3-blue)](https://www.conduktor.io/changelog)
+[![version](https://img.shields.io/badge/version-1.18.2-blue)](https://www.conduktor.io/changelog)
 [![discord](https://img.shields.io/badge/chat-on%20discord-yellowgreen)](https://discord.com/channels/861899833970262046/861899833970262049)
 [![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
 [![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
@@ -57,30 +57,6 @@ You have your own Apache Kafka clusters and you want to connect them to Condukto
 * [Our Platform Changelog](https://www.conduktor.io/changelog)
 * [Our Platform Documentation](https://docs.conduktor.io/)
 * Contact us for anything else: support@conduktor.io
-
----
-
-# Specs
-
-## Hardware requirements
-
-Minimal : 
-- 4 CPU cores
-- 8 GB of RAM (`RUN_MODE=nano`)
-- 5 GB of disk space
-
-Recommended : 
-- 4+ CPU cores
-- 16+ GB of RAM (`RUN_MODE=small`)
-- 10+ GB of disk space
-
-## Where does Monitoring work?
-
-Some aspects of Conduktor Monitoring support all flavours of Kafka. Specifically, you will have insight into consumer lag of your applications out-of-the-box.
-
-To use Monitoring at full capacity you must [setup the Monitoring agent](https://docs.conduktor.io/platform/monitoring/getting-started/agent-setup). This currently supports open-source Apache Kafka.
-
-[See documentation](https://docs.conduktor.io/platform/monitoring).
 
 ---
 
