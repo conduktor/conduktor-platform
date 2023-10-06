@@ -42,7 +42,7 @@ services:
   conduktor-monitoring:
     image: conduktor/conduktor-platform-cortex:1.18.2
     environment:
-      CDK_CONSOLE-URL: "conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
   redpanda-0:
     command:
       - redpanda
