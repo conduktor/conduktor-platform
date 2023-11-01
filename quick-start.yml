@@ -15,7 +15,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.2
+    image: conduktor/conduktor-platform:1.19.0
     depends_on:
       - postgresql
       - redpanda-0
@@ -40,7 +40,7 @@ services:
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.18.2
+    image: conduktor/conduktor-platform-cortex:1.19.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
   redpanda-0:
