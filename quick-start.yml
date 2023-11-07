@@ -23,12 +23,6 @@ services:
       - "8080:8080"
     volumes:
       - conduktor_data:/var/conduktor
-    healthcheck:
-      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 3
     environment:
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
       CDK_CLUSTERS_0_ID: "local"
@@ -39,10 +33,12 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+
   conduktor-monitoring:
     image: conduktor/conduktor-platform-cortex:1.19.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
+
   redpanda-0:
     command:
       - redpanda
@@ -70,6 +66,12 @@ services:
       - 19092:19092
       - 19644:9644
 
+  generator:
+    image: "haianh1233/generator:latest"
+    container_name: generator
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: "redpanda-0:9092"
+      KAFKA_SCHEMA_REGISTRY_URL: "http://redpanda-0:8081"
 
 volumes:
   pg_data: {}
