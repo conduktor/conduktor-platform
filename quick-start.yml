@@ -104,16 +104,15 @@ services:
   data-generator:
     image: "data-generator:0.1"
     container_name: data-generator
-    volumes:
-      - ./tmp/interceptors.json:/config/interceptors.json
     environment:
       KAFKA_BOOTSTRAP_SERVERS: "conduktor-gateway:6969"
       KAFKA_SCHEMA_REGISTRY_URL: "http://redpanda-0:8081"
+      GATEWAY_ADMIN_API: "http://conduktor-gateway:8888"
     restart: on-failure
     healthcheck:
       test: curl conduktor-gateway:8888/health
       interval: 5s
-      retries: 50
+      retries: 25
     depends_on:
       - redpanda-0
       - conduktor-gateway
