@@ -102,12 +102,12 @@ services:
         condition: service_healthy
   
   conduktor-data-generator:
-    image: "conduktor/conduktor-data-generator:0.1"
+    image: conduktor/conduktor-data-generator:0.1
     container_name: conduktor-data-generator
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: "conduktor-gateway:6969"
-      KAFKA_SCHEMA_REGISTRY_URL: "http://redpanda-0:8081"
-      GATEWAY_ADMIN_API: "http://conduktor-gateway:8888"
+      KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
+      KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
+      GATEWAY_ADMIN_API: http://conduktor-gateway:8888
     restart: on-failure
     depends_on:
       redpanda-0:
