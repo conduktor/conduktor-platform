@@ -1,19 +1,40 @@
-# <img src="https://user-images.githubusercontent.com/2573301/192741305-0e1441a4-308b-4308-947a-656a1dc53577.png" width="25"> Conduktor Platform
+# <img src="images/console-icon.png" width="25"> Conduktor Console
 
-[![version](https://img.shields.io/badge/version-1.18.2-blue)](https://www.conduktor.io/changelog)
+[![version](https://img.shields.io/badge/version-1.19.2-blue)](https://www.conduktor.io/changelog)
 [![discord](https://img.shields.io/badge/chat-on%20discord-yellowgreen)](https://discord.com/channels/861899833970262046/861899833970262049)
 [![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
 [![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
 
-We take the complexity out of Kafka. We give you a platform to build, explore, test, monitor, and collaborate with confidence. 
-Simplifying the complexity of real-time data streaming, Conduktor Platform enables leading organizations to improve team productivity and unlock true business value.
+We take the complexity out of Kafka. Conduktor Console gives you visibility into your Kafka ecosystem and concentrates the multitude of Kafka APIs into a single interface. Troubleshoot and debug Kafka, drill-down into topic data, and continuously monitor your streaming applications. 
+
+Conduktor supports all Kafka providers (Apache Kafka, MSK, Confluent, Aiven, Redpanda, Strimzi etc.)
+
+![image](https://repository-images.githubusercontent.com/530997875/bd058e18-34c8-434d-a844-92303767167d)
+
 
 # 👩‍💻 Get Started
 
+You have two options for getting started:
+
+1. Quick-Start: Preconfigured with embedded Redpanda + Datagen
 ```` shell
 # Start Conduktor in seconds, powered with Redpanda
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up
 ````
+
+2. Console Only: Start Conduktor and connect your own Kafka
+```` shell
+# Start Conduktor and connect it to your own Kafka
+curl -L https://releases.conduktor.io/console -o docker-compose.yml && docker compose up
+````
+
+Once started, you can access the console at **http://localhost:8080**
+
+See our [docs](https://docs.conduktor.io/) for more information on
+ - [Configuring your Kafka cluster](https://docs.conduktor.io/platform/installation/get-started/docker/#step-3-configure-your-existing-kafka-cluster)
+ - [User authentication (SSO, LDAP)](https://docs.conduktor.io/platform/category/user-authentication/)
+ - [Environment variables](https://docs.conduktor.io/platform/configuration/env-variables/) 
+ - [Deployment methods](https://docs.conduktor.io/platform/category/get-started/)
 
 ---
 
@@ -23,14 +44,14 @@ We really want our community to be part of our evolution.
 
 Please upvote or comment everything we're doing. WE. ARE. LISTENING.
 
-[I want Conduktor to implement what I need](https://product.conduktor.help/tabs/1-in-development)
+[View roadmap and provide feedback](https://product.conduktor.help/tabs/1-in-development)
 
 ---
 
 # 🆘 Looking for help?
 
-* [Our Platform Changelog](https://www.conduktor.io/changelog)
-* [Our Platform Documentation](https://docs.conduktor.io/)
+* [Console Changelog](https://www.conduktor.io/changelog)
+* [Console Documentation](https://docs.conduktor.io/)
 * Contact us for anything else: support@conduktor.io
 
 ---
