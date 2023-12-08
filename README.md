@@ -5,7 +5,7 @@
 [![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
 [![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
 
-We take the complexity out of Kafka. Conduktor Console gives you visibility into your Kafka ecosystem and concentrates the multitude of Kafka APIs into a single interface. Troubleshoot and debug Kafka, drill-down into topic data, and continuously monitor your streaming applications. 
+We take the complexity out of Kafka. Console gives you visibility into your Kafka ecosystem and concentrates all of the Kafka APIs into a single interface. Troubleshoot and debug Kafka, drill-down into topic data, and continuously monitor your streaming applications. 
 
 Conduktor supports all Kafka providers (Apache Kafka, MSK, Confluent, Aiven, Redpanda, Strimzi etc.)
 
