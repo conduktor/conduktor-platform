@@ -7,6 +7,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     environment:
+      PGDATA: "/var/lib/postgresql/data"
       POSTGRES_DB: "conduktor-platform"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
