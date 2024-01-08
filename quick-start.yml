@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:  
-  
+
   postgresql:
     image: postgres:14
     hostname: postgresql
@@ -84,13 +84,13 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5s
-  
+
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
+      KAFKA_BOOTSTRAP_SERVERS: "redpanda-0:9092"
     ports:
       - "8888:8888"
     healthcheck:
@@ -100,20 +100,21 @@ services:
     depends_on:
       redpanda-0:
         condition: service_healthy
-  
+
   conduktor-data-generator:
     image: conduktor/conduktor-data-generator:0.2
     container_name: conduktor-data-generator
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
-      KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
-      GATEWAY_ADMIN_API: http://conduktor-gateway:8888
+      KAFKA_BOOTSTRAP_SERVERS: "conduktor-gateway:6969"
+      KAFKA_SCHEMA_REGISTRY_URL: "http://redpanda-0:8081"
+      GATEWAY_ADMIN_API: "http://conduktor-gateway:8888"
     restart: on-failure
     depends_on:
       redpanda-0:
         condition: service_healthy
       conduktor-gateway:
         condition: service_healthy
+
 volumes:
   pg_data: {}
   conduktor_data: {}
