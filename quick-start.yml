@@ -86,7 +86,7 @@ services:
       start_period: 5s
   
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.4.0
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
