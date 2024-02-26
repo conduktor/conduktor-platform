@@ -9,13 +9,13 @@ services:
       - pg_data:/var/lib/postgresql/data
     environment:
       PGDATA: "/var/lib/postgresql/data"
-      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_DB: "conduktor-console"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.21.0
+  conduktor-console:
+    image: conduktor/conduktor-console:1.21.0
     depends_on:
       - postgresql
       - redpanda-0
@@ -24,7 +24,7 @@ services:
     volumes:
       - conduktor_data:/var/conduktor
     environment:
-      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       CDK_CLUSTERS_0_ID: "local-kafka"
       CDK_CLUSTERS_0_NAME: "local-kafka"
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "redpanda-0:9092"
@@ -44,13 +44,13 @@ services:
       CDK_CLUSTERS_1_ICON: "dog"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
-      CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.20.0
+    image: conduktor/conduktor-console-cortex:1.20.0
     environment:
-      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
   redpanda-0:
     command:
