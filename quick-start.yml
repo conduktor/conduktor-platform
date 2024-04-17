@@ -102,7 +102,7 @@ services:
         condition: service_healthy
   
   conduktor-data-generator:
-    image: conduktor/conduktor-data-generator:0.3
+    image: conduktor/conduktor-data-generator:0.4
     container_name: conduktor-data-generator
     environment:
       KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
