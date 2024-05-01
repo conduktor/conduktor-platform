@@ -1,11 +1,14 @@
 # This docker-compose is only to get started with Conduktor.
 # It is starting Conduktor, a Redpanda cluster (Kafka), and a fake app to generate traffic.
 
-#
+# Go to http://localhost:8080 when started
+
+####################################################################################################
 # DO NOT USE IT IN PRODUCTION
 #
 # For production, please check: https://docs.conduktor.io/platform/category/deployment-options/
 #   to deploy on Kubernetes via Helm, or AWS using Cloudformation.
+####################################################################################################
 
 version: '3.8'
 
