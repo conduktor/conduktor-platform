@@ -1,19 +1,19 @@
+# This docker-compose is only to get started with Conduktor.
+# It is starting Conduktor, a Redpanda cluster (Kafka), and a fake app to generate traffic.
+
+#
+# DO NOT USE IT IN PRODUCTION
+#
+# For production, please check: https://docs.conduktor.io/platform/category/deployment-options/
+#   to deploy on Kubernetes via Helm, or AWS using Cloudformation.
+
 version: '3.8'
 
 services:  
-  
-  postgresql:
-    image: postgres:14
-    hostname: postgresql
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-    environment:
-      PGDATA: "/var/lib/postgresql/data"
-      POSTGRES_DB: "conduktor-console"
-      POSTGRES_USER: "conduktor"
-      POSTGRES_PASSWORD: "change_me"
-      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
+  # Conduktor Console, the enterprise UI.
+  # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
+  # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
     image: conduktor/conduktor-console:1.22.0
     depends_on:
@@ -46,12 +46,32 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+      
+  # Conduktor stores its metadata in PostgreSQL.
+  # Consider using an external managed database for production usage.
+  # https://docs.conduktor.io/platform/get-started/configuration/database/
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "conduktor-console"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
+  # Conduktor uses Cortex to store Kafka and applications metrics as well as alerting.
+  # It is optional. 
+  # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
     image: conduktor/conduktor-console-cortex:1.22.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
+  # We use Redpanda to get started with Kafka as it's small and efficient.
+  # This is an example here. For production, connect Conduktor to your own Kafka clusters.
   redpanda-0:
     command:
       - redpanda
@@ -84,7 +104,10 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5s
-  
+
+  # Conduktor comes with its Gateway, a Kafka proxy bringing many security and governance features.
+  # In this get started, Gateway uses Redpanda as its backend Kafka cluster.
+  # https://docs.conduktor.io/gateway/
   conduktor-gateway:
     image: conduktor/conduktor-gateway:3.0.1
     hostname: conduktor-gateway
@@ -100,7 +123,9 @@ services:
     depends_on:
       redpanda-0:
         condition: service_healthy
-  
+
+  # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
+  # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
     image: conduktor/conduktor-data-generator:0.4
     container_name: conduktor-data-generator
@@ -114,6 +139,7 @@ services:
         condition: service_healthy
       conduktor-gateway:
         condition: service_healthy
+
 volumes:
   pg_data: {}
   conduktor_data: {}
