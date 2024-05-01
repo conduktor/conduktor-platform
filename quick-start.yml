@@ -62,7 +62,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
-  # Conduktor uses Cortex to store Kafka and applications metrics and alerting.
+  # Conduktor uses Cortex to store Kafka and applications metrics as well as alerting.
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
@@ -124,7 +124,7 @@ services:
       redpanda-0:
         condition: service_healthy
 
-  # As this is a get started, we want to bring some life in the cluster to demonstrate the value of Conduktor.
+  # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
   # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
     image: conduktor/conduktor-data-generator:0.4
