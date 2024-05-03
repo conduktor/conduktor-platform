@@ -1,0 +1,18 @@
+<clickhouse>
+    <http_authentication_servers>
+        <conduktor_authenticator>
+            <uri from_env="CDK_LOGIN_URL"/>
+            <connection_timeout_ms>1000</connection_timeout_ms>
+            <receive_timeout_ms>1000</receive_timeout_ms>
+            <send_timeout_ms>1000</send_timeout_ms>
+            <max_tries>3</max_tries>
+            <retry_initial_backoff_ms>50</retry_initial_backoff_ms>
+            <retry_max_backoff_ms>1000</retry_max_backoff_ms>
+        </conduktor_authenticator>
+    </http_authentication_servers>
+<!--
+    <kafka>
+        <debug>all</debug>
+    </kafka>
+-->
+</clickhouse>
