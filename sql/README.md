@@ -34,6 +34,10 @@ Run a `DESCRIBE <table>` query to view the underlying schema, note that you can 
 
 To access your Kafka data via SQL outside Conduktor, you can use either clickhouse, mysql or postgres connections.
 
+<img width="1719" alt="Clickhouse conduktor" src="https://github.com/conduktor/kafka-security-manager/assets/2573301/a0fce8a9-01f7-4cc7-b30e-c72be3568032">
+
+### Connection details
+
 **Host**: `conduktor-sql`
 
 **Ports**:
