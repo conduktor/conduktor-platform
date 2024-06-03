@@ -92,7 +92,7 @@ services:
       - --memory 1G
       - --mode dev-container
       - --default-log-level=info
-    image: docker.redpanda.com/redpandadata/redpanda:v23.1.11
+    image: docker.redpanda.com/redpandadata/redpanda:v24.1.6
     container_name: redpanda-0
     volumes:
       - redpanda-0:/var/lib/redpanda/data
