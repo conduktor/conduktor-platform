@@ -18,7 +18,7 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.24.0
+    image: conduktor/conduktor-console:1.24.1
     depends_on:
       - postgresql
       - redpanda-0
@@ -69,7 +69,7 @@ services:
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.24.0
+    image: conduktor/conduktor-console-cortex:1.24.1
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
