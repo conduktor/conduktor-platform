@@ -18,7 +18,7 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.25.0
+    image: conduktor/conduktor-console:1.25.1
     depends_on:
       - postgresql
       - redpanda-0
