@@ -10,7 +10,6 @@
 #   to deploy on Kubernetes via Helm, or AWS using Cloudformation.
 ####################################################################################################
 
-version: '3.8'
 
 services:  
 
