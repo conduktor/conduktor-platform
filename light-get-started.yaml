@@ -33,17 +33,6 @@ services:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
-      CDK_CLUSTERS_1_ID: "cdk-gateway"
-      CDK_CLUSTERS_1_NAME: "cdk-gateway"
-      CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
-      CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_TYPE: "Gateway"
-      CDK_CLUSTERS_1_COLOR: "#6A57C8"
-      CDK_CLUSTERS_1_ICON: "dog"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
