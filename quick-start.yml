@@ -17,7 +17,7 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.26.0
+    image: conduktor/conduktor-console:1.27.0
     depends_on:
       - postgresql
       - redpanda-0
@@ -68,7 +68,7 @@ services:
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.26.0
+    image: conduktor/conduktor-console-cortex:1.27.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
@@ -111,7 +111,7 @@ services:
   # In this get started, Gateway uses Redpanda as its backend Kafka cluster.
   # https://docs.conduktor.io/gateway/
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.2.0
+    image: conduktor/conduktor-gateway:3.3.0
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
