@@ -1,6 +1,6 @@
 # <img src="images/console-icon.png" width="25"> Conduktor Console
 
-[![version](https://img.shields.io/badge/version-1.22.0-blue)](https://www.conduktor.io/changelog)
+[![Docker Image Version](https://img.shields.io/docker/v/conduktor/conduktor-console?sort=semver)](https://www.conduktor.io/changelog)
 [![discord](https://img.shields.io/badge/chat-on%20discord-yellowgreen)](https://discord.com/channels/861899833970262046/861899833970262049)
 [![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
 [![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
