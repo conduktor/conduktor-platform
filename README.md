@@ -1,9 +1,24 @@
-# <img src="images/console-icon.png" width="25"> Conduktor Console
+<a name="readme-top" id="readme-top"></a>
 
-[![Docker Image Version](https://img.shields.io/docker/v/conduktor/conduktor-console?sort=semver)](https://www.conduktor.io/changelog)
-[![discord](https://img.shields.io/badge/chat-on%20discord-yellowgreen)](https://discord.com/channels/861899833970262046/861899833970262049)
-[![roadmap](https://img.shields.io/badge/roadmap-click%20here-blueviolet)](https://product.conduktor.help/tabs/1-in-development)
-[![twitter](https://img.shields.io/twitter/follow/getconduktor.svg?style=social)](https://twitter.com/getconduktor)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/transparent.png" width="256px" />
+</p>
+<h1 align="center">
+    <strong>Conduktor Console</strong>
+</h1>
+
+<p align="center">
+    <a href="https://docs.conduktor.io/"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://www.conduktor.io/changelog"><img alt="GitHub Release" src="https://img.shields.io/docker/v/conduktor/conduktor-console?sort=semver&color=BCFE68"></a>
+    ·
+    <a href="https://conduktor.io/"><img src="https://img.shields.io/badge/Website-conduktor.io-192A4E?color=BCFE68" alt="Scale Data Streaming With Security and Control"></a>
+    ·
+    <a href="https://twitter.com/getconduktor"><img alt="X (formerly Twitter) Follow" src="https://img.shields.io/twitter/follow/getconduktor?color=BCFE68"></a>
+    ·
+    <a href="https://conduktor.io/slack"><img src="https://img.shields.io/badge/Slack-Join%20Community-BCFE68?logo=slack" alt="Slack"></a>
+</p>
 
 We take the complexity out of Kafka. Console gives you visibility into your Kafka ecosystem and concentrates all of the Kafka APIs into a single interface. Troubleshoot and debug Kafka, drill-down into topic data, and continuously monitor your streaming applications. 
 
