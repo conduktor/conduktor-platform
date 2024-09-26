@@ -129,7 +129,7 @@ services:
   # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
   # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
-    image: conduktor/conduktor-data-generator:0.5
+    image: conduktor/conduktor-data-generator:0.6
     container_name: conduktor-data-generator
     environment:
       KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
