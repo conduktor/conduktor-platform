@@ -21,6 +21,7 @@ services:
     volumes:
       - conduktor_data:/var/conduktor
     environment:
+      CDK_ORGANIZATION_NAME: "getting-started"
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/

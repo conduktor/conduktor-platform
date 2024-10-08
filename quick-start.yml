@@ -27,6 +27,7 @@ services:
       - conduktor_data:/var/conduktor
     environment:
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
+      CDK_ORGANIZATION_NAME: "getting-started"
       CDK_CLUSTERS_0_ID: "local-kafka"
       CDK_CLUSTERS_0_NAME: "local-kafka"
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "redpanda-0:9092"
