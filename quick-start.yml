@@ -17,9 +17,10 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.27.0
+    image: conduktor/conduktor-console:1.28.0
     depends_on:
       - postgresql
+      - postgresql-2
       - redpanda-0
     ports:
       - "8080:8080"
@@ -27,6 +28,7 @@ services:
       - conduktor_data:/var/conduktor
     environment:
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
+      CDK_KAFKASQL_DATABASE_URL: "postgresql://conduktor:change_me@postgresql-sql:5432/conduktor-sql"
       CDK_ORGANIZATION_NAME: "getting-started"
       CDK_CLUSTERS_0_ID: "local-kafka"
       CDK_CLUSTERS_0_NAME: "local-kafka"
@@ -65,11 +67,27 @@ services:
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
+  # Conduktor depends on a separate db for storing Kafka data for SQL querying
+  # It is optional, but required if you wish to use SQL functionality
+  # Separate db ensures continued operation of the core Console experience if the SQL db becomes unavailable
+  # https://docs.conduktor.io/platform/guides/configure-sql/
+  postgresql-2:
+    image: postgres:14
+    hostname: postgresql-sql
+    volumes:
+      - pg_data_sql:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "conduktor-sql"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
   # Conduktor uses Cortex to store Kafka and applications metrics as well as alerting.
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.27.0
+    image: conduktor/conduktor-console-cortex:1.28.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
@@ -145,5 +163,6 @@ services:
 
 volumes:
   pg_data: {}
+  pg_data_sql: {}
   conduktor_data: {}
   redpanda-0: {}
