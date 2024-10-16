@@ -1,5 +1,5 @@
 # This docker-compose is only to get started with Conduktor.
-# It is starting Conduktor, a Redpanda cluster (Kafka), and a fake app to generate traffic.
+# It is starting Conduktor Console and a Redpanda cluster (Kafka).
 
 # Go to http://localhost:8080 when started
 
@@ -61,8 +61,8 @@ services:
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
-  # We use Redpanda to get started with Kafka as it's small and efficient.
-  # This is an example here. For production, connect Conduktor to your own Kafka clusters.
+  # We use Redpanda to start with Kafka as it's small and efficient.
+  # This is an example here. For production, connect Conduktor Console to your own Kafka clusters.
   redpanda-0:
     command:
       - redpanda
