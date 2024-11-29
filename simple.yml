@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:  
   postgresql:
     image: postgres:14
@@ -13,7 +11,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.28.0
+    image: conduktor/conduktor-console:1.29.1
     depends_on:
       - postgresql
     ports:
@@ -29,7 +27,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
       
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.28.0
+    image: conduktor/conduktor-console-cortex:1.29.1
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 volumes:
