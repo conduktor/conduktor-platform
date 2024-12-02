@@ -18,13 +18,6 @@ services:
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
     image: conduktor/conduktor-console:1.29.1
-    depends_on:
-      redpanda-0:
-        condition: service_healthy
-      postgresql:
-        condition: service_healthy
-      postgresql-2:
-        condition: service_healthy
     ports:
       - "8080:8080"
     volumes:
@@ -54,6 +47,13 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+    depends_on:
+      redpanda-0:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      postgresql-2:
+        condition: service_healthy
       
   # Conduktor stores its metadata in PostgreSQL.
   # Consider using an external managed database for production usage.
