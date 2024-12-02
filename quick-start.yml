@@ -17,11 +17,7 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.28.0
-    depends_on:
-      - postgresql
-      - postgresql-2
-      - redpanda-0
+    image: conduktor/conduktor-console:1.29.1
     ports:
       - "8080:8080"
     volumes:
@@ -36,8 +32,8 @@ services:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
-      CDK_CLUSTERS_1_ID: "conduktor-kafka"
-      CDK_CLUSTERS_1_NAME: "conduktor-kafka"
+      CDK_CLUSTERS_1_ID: "cdk-gateway"
+      CDK_CLUSTERS_1_NAME: "cdk-gateway"
       CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
       CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
@@ -51,6 +47,13 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+    depends_on:
+      redpanda-0:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      postgresql-2:
+        condition: service_healthy
       
   # Conduktor stores its metadata in PostgreSQL.
   # Consider using an external managed database for production usage.
@@ -66,6 +69,11 @@ services:
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Conduktor depends on a separate db for storing Kafka data for SQL querying
   # It is optional, but required if you wish to use SQL functionality
@@ -82,12 +90,17 @@ services:
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Conduktor uses Cortex to store Kafka and applications metrics as well as alerting.
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.28.0
+    image: conduktor/conduktor-console-cortex:1.29.1
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
@@ -130,7 +143,7 @@ services:
   # In this get started, Gateway uses Redpanda as its backend Kafka cluster.
   # https://docs.conduktor.io/gateway/
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.3.0
+    image: conduktor/conduktor-gateway:3.4.0
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
