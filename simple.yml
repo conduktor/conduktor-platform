@@ -16,7 +16,7 @@ services:
       retries: 5
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.29.1
+    image: conduktor/conduktor-console:1.30.0
     ports:
       - "8080:8080"
     volumes:
@@ -33,7 +33,7 @@ services:
         condition: service_healthy
       
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.29.1
+    image: conduktor/conduktor-console-cortex:1.30.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 volumes:
