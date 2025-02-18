@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  conduktor-console:
+    environment:
+      CONSOLE_JAVA_OPTS: "-XX:UseSVE=0"
+  conduktor-gateway:
+    environment:
+      JAVA_OPTS: "-XX:UseSVE=0"
+  conduktor-data-generator:
+    environment:
+      JAVA_OPTS: "-XX:UseSVE=0"

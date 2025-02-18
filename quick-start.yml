@@ -143,7 +143,7 @@ services:
   # In this get started, Gateway uses Redpanda as its backend Kafka cluster.
   # https://docs.conduktor.io/gateway/
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.5.0
+    image: conduktor/conduktor-gateway:3.6.0
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
@@ -161,7 +161,7 @@ services:
   # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
   # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
-    image: conduktor/conduktor-data-generator:0.8
+    image: conduktor/conduktor-data-generator:0.9
     container_name: conduktor-data-generator
     environment:
       KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
