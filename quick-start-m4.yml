@@ -47,6 +47,7 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+      CONSOLE_JAVA_OPTS: "-XX:UseSVE=0"
     depends_on:
       redpanda-0:
         condition: service_healthy
@@ -148,6 +149,7 @@ services:
     container_name: conduktor-gateway
     environment:
       KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
+      JAVA_OPTS: "-XX:UseSVE=0"
     ports:
       - "8888:8888"
     healthcheck:
@@ -167,6 +169,7 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
       KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
       GATEWAY_ADMIN_API: http://conduktor-gateway:8888
+      JAVA_OPTS: "-XX:UseSVE=0"
     restart: on-failure
     depends_on:
       redpanda-0:
