@@ -169,6 +169,8 @@ services:
         condition: service_healthy
       conduktor-gateway:
         condition: service_healthy
+  conduktor-conduktor-gateway:
+    image: conduktor/conduktor-conduktor-gateway:3.8.1
 volumes:
   pg_data: {}
   pg_data_sql: {}
