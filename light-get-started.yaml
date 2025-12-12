@@ -16,7 +16,7 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.40.0
+    image: conduktor/conduktor-console:1.41.0
     ports:
       - "8080:8080"
     volumes:
@@ -61,7 +61,7 @@ services:
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.40.0
+    image: conduktor/conduktor-console-cortex:1.41.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
   # We use Redpanda to start with Kafka as it's small and efficient.
