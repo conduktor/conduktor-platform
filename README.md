@@ -51,29 +51,20 @@ See our [docs](https://docs.conduktor.io/) for more information on
  - [Environment variables](https://docs.conduktor.io/platform/configuration/env-variables/) 
  - [Deployment methods](https://docs.conduktor.io/platform/category/get-started/)
 
----
-
-# 📢 Our Roadmap
-
-We really want our community to be part of our evolution.
-
-Please upvote or comment everything we're doing. WE. ARE. LISTENING.
-
-[View roadmap and provide feedback](https://product.conduktor.help/tabs/1-in-development)
-
----
-
 # 🆘 Looking for help?
 
 * [Console Changelog](https://www.conduktor.io/changelog)
 * [Console Documentation](https://docs.conduktor.io/)
 * Contact us for anything else: support@conduktor.io
 
----
+# Going further
+
+For deeper exploration, take a look at these curated lists:
+- Kafka Connect connectors: https://github.com/conduktor/awesome-kafka-connect
+- Apache Kafka resources, tools, libraries, and applications: https://github.com/conduktor/awesome-kafka
 
 # Get Involved
 
-* [Our Roadmap](https://product.conduktor.help/tabs/1-in-development)
 * Follow <a href="https://twitter.com/getconduktor">@getconduktor on Twitter</a>
 * Read the Conduktor <a href="https://www.conduktor.io/blog">blog</a>
 * Looking for a job? <a href="https://www.conduktor.io/careers">careers</a>
