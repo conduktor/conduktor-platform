@@ -31,17 +31,6 @@ services:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
-      CDK_CLUSTERS_1_ID: "cdk-gateway"
-      CDK_CLUSTERS_1_NAME: "cdk-gateway"
-      CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
-      CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
-      CDK_CLUSTERS_1_KAFKAFLAVOR_TYPE: "Gateway"
-      CDK_CLUSTERS_1_COLOR: "#6A57C8"
-      CDK_CLUSTERS_1_ICON: "dog"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
@@ -133,39 +122,17 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5s
-  # Conduktor comes with its Gateway, a Kafka proxy bringing many security and governance features.
-  # In this get started, Gateway uses Redpanda as its backend Kafka cluster.
-  # https://docs.conduktor.io/gateway/
-  conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.17.0
-    hostname: conduktor-gateway
-    container_name: conduktor-gateway
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
-      GATEWAY_ACL_ENABLED: false
-    ports:
-      - "8888:8888"
-    healthcheck:
-      test: curl localhost:8888/health
-      interval: 5s
-      retries: 25
-    depends_on:
-      redpanda-0:
-        condition: service_healthy
   # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
   # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
-    image: conduktor/conduktor-data-generator:0.9
+    image: conduktor/conduktor-data-generator:0.10.0
     container_name: conduktor-data-generator
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: conduktor-gateway:6969
+      KAFKA_BOOTSTRAP_SERVERS: redpanda-0:9092
       KAFKA_SCHEMA_REGISTRY_URL: http://redpanda-0:8081
-      GATEWAY_ADMIN_API: http://conduktor-gateway:8888
     restart: on-failure
     depends_on:
       redpanda-0:
-        condition: service_healthy
-      conduktor-gateway:
         condition: service_healthy
 volumes:
   pg_data: {}
