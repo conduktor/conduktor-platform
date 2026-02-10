@@ -134,6 +134,8 @@ services:
     depends_on:
       redpanda-0:
         condition: service_healthy
+  conduktor-gateway:
+    image: conduktor/conduktor-gateway:3.17.1
 volumes:
   pg_data: {}
   pg_data_sql: {}
