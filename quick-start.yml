@@ -32,7 +32,7 @@ services:
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
-      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
     depends_on:
