@@ -24,7 +24,7 @@ services:
       CDK_ORGANIZATION_NAME: "getting-started"
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
-      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
     depends_on:
