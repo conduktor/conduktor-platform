@@ -1,0 +1,26 @@
+{
+  "realm": "conduktor",
+  "enabled": true,
+  "sslRequired": "none",
+  "accessTokenLifespan": 300,
+  "clients": [
+    {
+      "clientId": "app-a",
+      "name": "Example application A",
+      "secret": "app-a-secret",
+      "publicClient": false,
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    },
+    {
+      "clientId": "app-b",
+      "name": "Example application B",
+      "secret": "app-b-secret",
+      "publicClient": false,
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    }
+  ]
+}

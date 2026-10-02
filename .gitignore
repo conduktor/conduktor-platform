@@ -4,3 +4,5 @@ platform_data/
 .idea/
 *.iml
 .vscode
+# local secrets, e.g. the Conduktor license for full-stack/
+.env
