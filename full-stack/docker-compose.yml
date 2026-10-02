@@ -12,9 +12,15 @@
 ####################################################################################################
 # DO NOT USE IT IN PRODUCTION
 #
-# All credentials below are deliberately weak defaults, and Kafka runs without authentication.
+# All credentials below are deliberately weak defaults, and all traffic is unencrypted.
 # For production, please check: https://docs.conduktor.io/platform/category/deployment-options/
 ####################################################################################################
+
+# Kafka client settings for the "admin" super user, shared by every Conduktor component.
+x-kafka-admin-client: &kafka-admin-client
+  KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+  KAFKA_SASL_MECHANISM: PLAIN
+  KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
 
 services:
   # Conduktor Console, the enterprise UI.
@@ -36,7 +42,14 @@ services:
       CDK_CLUSTERS_0_ID: "local-kafka"
       CDK_CLUSTERS_0_NAME: "local-kafka"
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:29092"
+      CDK_CLUSTERS_0_PROPERTIES: &console-kafka-properties |
+        security.protocol=SASL_PLAINTEXT
+        sasl.mechanism=PLAIN
+        sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://schema-registry:8081"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES: &console-sr-properties |
+        basic.auth.credentials.source=USER_INFO
+        basic.auth.user.info=admin-sr:sr-secret
       CDK_CLUSTERS_0_SCHEMAREGISTRY_SCHEMAREGISTRYPROXYCLUSTERNAME: "schema-registry-proxy"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
@@ -44,7 +57,9 @@ services:
       CDK_CLUSTERS_1_ID: "cdk-gateway"
       CDK_CLUSTERS_1_NAME: "cdk-gateway"
       CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
+      CDK_CLUSTERS_1_PROPERTIES: *console-kafka-properties
       CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://schema-registry:8081"
+      CDK_CLUSTERS_1_SCHEMAREGISTRY_PROPERTIES: *console-sr-properties
       CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
       CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
       CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
@@ -99,6 +114,8 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
   # Conduktor Gateway, a Kafka protocol proxy in front of the cluster.
+  # Clients authenticate with their Kafka SASL/PLAIN credentials, which Gateway checks against
+  # Kafka (KAFKA_MANAGED), so Kafka ACLs apply to traffic through Gateway too.
   # https://docs.conduktor.io/gateway/
   conduktor-gateway:
     image: conduktor/conduktor-gateway:3.21.1
@@ -106,9 +123,11 @@ services:
     ports:
       - "8888:8888"
     environment:
+      <<: *kafka-admin-client
       GATEWAY_LICENSE_KEY: "${CONDUKTOR_LICENSE:?Set CONDUKTOR_LICENSE in .env}"
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      GATEWAY_ACL_ENABLED: "false"
+      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_MODE: KAFKA_MANAGED
       GATEWAY_ADMIN_API_USERS: "[{username: admin, password: conduktor, admin: true}]"
     depends_on:
       kafka:
@@ -129,15 +148,19 @@ services:
       - "7070:7070" # Schema registry API
       - "9464:9464" # Prometheus metrics
     environment:
+      <<: *kafka-admin-client
       CDK_LICENSE: "${CONDUKTOR_LICENSE:?Set CONDUKTOR_LICENSE in .env}"
       PORT: "7070"
       CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      SCHEMA_REGISTRY_BASIC_AUTH_CREDENTIALS_SOURCE: USER_INFO
+      SCHEMA_REGISTRY_BASIC_AUTH_USER_INFO: "admin-sr:sr-secret"
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       KAFKA_CONFIG_COMMAND_REPLICATION_FACTOR: "1"
       AUTHORIZATION_MODE: reactive
       AUTH_PROVIDER: jwt
       JWT_JWKS_URL: http://keycloak:8080/realms/conduktor/protocol/openid-connect/certs
-      JWT_SUBJECT_CLAIM_NAME: preferred_username
+      # "azp" is the Keycloak client ID (e.g. app-a), matching the client's Kafka username.
+      JWT_SUBJECT_CLAIM_NAME: azp
     depends_on:
       kafka:
         condition: service_healthy
@@ -167,7 +190,9 @@ services:
       start_period: 30s
       retries: 10
 
-  # Apache Kafka, single node in KRaft mode, without authentication.
+  # Apache Kafka, single node in KRaft mode, with SASL/PLAIN authentication and ACLs.
+  # Users: admin (super user), app-a and app-b. app-a and app-b have no access until it is
+  # granted through Console self-service (or ACLs). Client configs are in ./clients.
   kafka:
     image: confluentinc/cp-kafka:8.0.8
     hostname: kafka
@@ -175,6 +200,7 @@ services:
       - "19092:19092"
     volumes:
       - kafka_data:/var/lib/kafka/data
+      - ./clients:/clients:ro
     environment:
       CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
       KAFKA_NODE_ID: "1"
@@ -183,37 +209,52 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,CONTROLLER://kafka:29093,EXTERNAL://0.0.0.0:19092
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:SASL_PLAINTEXT,INTERNAL:SASL_PLAINTEXT,EXTERNAL:SASL_PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: PLAIN
+      KAFKA_SASL_MECHANISM_CONTROLLER_PROTOCOL: PLAIN
+      KAFKA_LISTENER_NAME_CONTROLLER_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_LISTENER_NAME_CONTROLLER_PLAIN_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret" user_admin="admin-secret";
+      KAFKA_LISTENER_NAME_INTERNAL_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_LISTENER_NAME_INTERNAL_PLAIN_SASL_JAAS_CONFIG: &kafka-users org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret" user_admin="admin-secret" user_app-a="app-a-secret" user_app-b="app-b-secret";
+      KAFKA_LISTENER_NAME_EXTERNAL_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_LISTENER_NAME_EXTERNAL_PLAIN_SASL_JAAS_CONFIG: *kafka-users
+      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
+      KAFKA_SUPER_USERS: "User:admin"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
-      # Console self-service manages Kafka ACLs, which needs an authorizer. Every client is
-      # unauthenticated (User:ANONYMOUS) and a super user, so the ACLs are recorded but not enforced.
-      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
-      KAFKA_SUPER_USERS: "User:ANONYMOUS"
     healthcheck:
-      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:29092 > /dev/null 2>&1"]
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:29092 --command-config /clients/admin.properties > /dev/null 2>&1"]
       interval: 10s
       start_period: 15s
       retries: 10
 
   # Confluent Schema Registry, the backend behind the Schema Registry Proxy.
-  # It is also exposed directly so the proxy's controls can be compared with the unprotected API.
+  # It is also exposed directly, protected by HTTP basic auth (admin-sr / sr-secret).
   schema-registry:
     image: confluentinc/cp-schema-registry:8.0.8
     hostname: schema-registry
     ports:
       - "8081:8081"
+    volumes:
+      - ./schema-registry:/etc/schema-registry/auth:ro
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:29092
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: PLAIN
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
+      SCHEMA_REGISTRY_AUTHENTICATION_METHOD: BASIC
+      SCHEMA_REGISTRY_AUTHENTICATION_REALM: SchemaRegistry-Props
+      SCHEMA_REGISTRY_AUTHENTICATION_ROLES: admin
+      SCHEMA_REGISTRY_OPTS: -Djava.security.auth.login.config=/etc/schema-registry/auth/jaas.conf
     depends_on:
       kafka:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -fs http://localhost:8081/subjects > /dev/null"]
+      test: ["CMD-SHELL", "curl -fs -u admin-sr:sr-secret http://localhost:8081/subjects > /dev/null"]
       interval: 10s
       retries: 10
 

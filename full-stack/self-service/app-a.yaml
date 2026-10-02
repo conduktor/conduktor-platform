@@ -1,5 +1,5 @@
-# Grants Keycloak client "app-a" (principal service-account-app-a) ownership of the
-# "orders" topic and schema subject prefix, via Console self-service.
+# Grants "app-a" (both its Kafka user and its Keycloak client) ownership of the "orders"
+# topic, consumer group and schema subject prefix, via Console self-service.
 # Console publishes the permissions to the Schema Registry Proxy over Kafka.
 #
 #   conduktor apply -f self-service/app-a.yaml
@@ -19,11 +19,14 @@ metadata:
   name: "app-a"
 spec:
   cluster: "local-kafka"
-  serviceAccount: "service-account-app-a"
+  serviceAccount: "app-a"
   resources:
     - type: TOPIC
       patternType: PREFIXED
       name: "orders"
     - type: SUBJECT
+      patternType: PREFIXED
+      name: "orders"
+    - type: CONSUMER_GROUP
       patternType: PREFIXED
       name: "orders"
