@@ -1,0 +1,223 @@
+# Full Conduktor stack: Console, Gateway, Schema Registry Proxy and Cortex,
+# backed by Apache Kafka, Confluent Schema Registry, PostgreSQL and Keycloak.
+#
+# Requires a Conduktor license. Copy .env.example to .env and set CONDUKTOR_LICENSE.
+# The license is read from the environment and must never be committed.
+#
+#   cp .env.example .env    # then edit .env
+#   docker compose up -d
+#
+# See README.md for endpoints and credentials.
+
+####################################################################################################
+# DO NOT USE IT IN PRODUCTION
+#
+# All credentials below are deliberately weak defaults, and Kafka runs without authentication.
+# For production, please check: https://docs.conduktor.io/platform/category/deployment-options/
+####################################################################################################
+
+services:
+  # Conduktor Console, the enterprise UI.
+  # https://docs.conduktor.io/platform/get-started/configuration/introduction/
+  conduktor-console:
+    image: conduktor/conduktor-console:1.47.2
+    hostname: conduktor-console
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    environment:
+      CDK_LICENSE: "${CONDUKTOR_LICENSE:?Set CONDUKTOR_LICENSE in .env}"
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
+      CDK_ORGANIZATION_NAME: "full-stack"
+      CDK_ADMIN_EMAIL: "admin@conduktor.io"
+      CDK_ADMIN_PASSWORD: "adminP4ss!"
+      # Kafka, accessed directly. Its schema registry is fronted by the Schema Registry Proxy.
+      CDK_CLUSTERS_0_ID: "local-kafka"
+      CDK_CLUSTERS_0_NAME: "local-kafka"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:29092"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://schema-registry:8081"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_SCHEMAREGISTRYPROXYCLUSTERNAME: "schema-registry-proxy"
+      CDK_CLUSTERS_0_COLOR: "#6A57C8"
+      CDK_CLUSTERS_0_ICON: "kafka"
+      # The same Kafka, accessed through Conduktor Gateway.
+      CDK_CLUSTERS_1_ID: "cdk-gateway"
+      CDK_CLUSTERS_1_NAME: "cdk-gateway"
+      CDK_CLUSTERS_1_BOOTSTRAPSERVERS: "conduktor-gateway:6969"
+      CDK_CLUSTERS_1_SCHEMAREGISTRY_URL: "http://schema-registry:8081"
+      CDK_CLUSTERS_1_KAFKAFLAVOR_URL: "http://conduktor-gateway:8888"
+      CDK_CLUSTERS_1_KAFKAFLAVOR_USER: "admin"
+      CDK_CLUSTERS_1_KAFKAFLAVOR_PASSWORD: "conduktor"
+      CDK_CLUSTERS_1_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
+      CDK_CLUSTERS_1_KAFKAFLAVOR_TYPE: "Gateway"
+      CDK_CLUSTERS_1_COLOR: "#BCFE68"
+      CDK_CLUSTERS_1_ICON: "dog"
+      # Discover Schema Registry Proxy instances via their heartbeats on Kafka.
+      CDK_SCHEMAREGISTRYPROXY_ENABLED: "true"
+      CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9009/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+    depends_on:
+      kafka:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8080/platform/api/modules/health/live || exit 1"]
+      interval: 10s
+      start_period: 30s
+      retries: 10
+
+  # Conduktor stores its metadata in PostgreSQL.
+  # https://docs.conduktor.io/platform/get-started/configuration/database/
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "conduktor-console"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U conduktor -d conduktor-console"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Conduktor uses Cortex to store Kafka and application metrics, and for alerting.
+  # https://docs.conduktor.io/platform/get-started/configuration/cortex/
+  conduktor-monitoring:
+    image: conduktor/conduktor-console-cortex:1.47.2
+    hostname: conduktor-monitoring
+    environment:
+      CDK_CONSOLE-URL: "http://conduktor-console:8080"
+
+  # Conduktor Gateway, a Kafka protocol proxy in front of the cluster.
+  # https://docs.conduktor.io/gateway/
+  conduktor-gateway:
+    image: conduktor/conduktor-gateway:3.21.1
+    hostname: conduktor-gateway
+    ports:
+      - "8888:8888"
+    environment:
+      GATEWAY_LICENSE_KEY: "${CONDUKTOR_LICENSE:?Set CONDUKTOR_LICENSE in .env}"
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      GATEWAY_ACL_ENABLED: "false"
+      GATEWAY_ADMIN_API_USERS: "[{username: admin, password: conduktor, admin: true}]"
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs localhost:8888/health/ready || exit 1"]
+      interval: 5s
+      retries: 25
+
+  # Conduktor Schema Registry Proxy, an authenticating and authorizing proxy in front of the
+  # schema registry. Clients authenticate with a JWT from Keycloak. Permissions are managed in
+  # Console (self-service) and pushed to the proxy over Kafka ("reactive" authorization mode).
+  schema-registry-proxy:
+    # TODO: pin to the first GA release before distributing this file.
+    image: conduktor/conduktor-schema-registry-proxy:nightly
+    hostname: schema-registry-proxy
+    ports:
+      - "7070:7070" # Schema registry API
+      - "9464:9464" # Prometheus metrics
+    environment:
+      CDK_LICENSE: "${CONDUKTOR_LICENSE:?Set CONDUKTOR_LICENSE in .env}"
+      PORT: "7070"
+      CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_CONFIG_COMMAND_REPLICATION_FACTOR: "1"
+      AUTHORIZATION_MODE: reactive
+      AUTH_PROVIDER: jwt
+      JWT_JWKS_URL: http://keycloak:8080/realms/conduktor/protocol/openid-connect/certs
+      JWT_SUBJECT_CLAIM_NAME: preferred_username
+    depends_on:
+      kafka:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+
+  # Keycloak issues the JWTs that clients present to the Schema Registry Proxy.
+  # The realm and its client accounts are imported from ./keycloak/conduktor-realm.json.
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.0
+    hostname: keycloak
+    command: ["start-dev", "--import-realm"]
+    ports:
+      - "8180:8080"
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import:ro
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+    healthcheck:
+      # The image has no curl, so speak HTTP over bash's /dev/tcp.
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q UP <&3"]
+      interval: 10s
+      start_period: 30s
+      retries: 10
+
+  # Apache Kafka, single node in KRaft mode, without authentication.
+  kafka:
+    image: confluentinc/cp-kafka:8.0.8
+    hostname: kafka
+    ports:
+      - "19092:19092"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    environment:
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,CONTROLLER://kafka:29093,EXTERNAL://0.0.0.0:19092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      # Console self-service manages Kafka ACLs, which needs an authorizer. Every client is
+      # unauthenticated (User:ANONYMOUS) and a super user, so the ACLs are recorded but not enforced.
+      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
+      KAFKA_SUPER_USERS: "User:ANONYMOUS"
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:29092 > /dev/null 2>&1"]
+      interval: 10s
+      start_period: 15s
+      retries: 10
+
+  # Confluent Schema Registry, the backend behind the Schema Registry Proxy.
+  # It is also exposed directly so the proxy's controls can be compared with the unprotected API.
+  schema-registry:
+    image: confluentinc/cp-schema-registry:8.0.8
+    hostname: schema-registry
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:29092
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8081/subjects > /dev/null"]
+      interval: 10s
+      retries: 10
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
+  kafka_data: {}
