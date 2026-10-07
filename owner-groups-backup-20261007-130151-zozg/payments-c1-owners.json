@@ -1,0 +1,85 @@
+{
+  "apiVersion": "v1",
+  "kind": "ApplicationGroup",
+  "metadata": {
+    "application": "payments-c1",
+    "name": "payments-c1-owners"
+  },
+  "spec": {
+    "displayName": "payments-c1 Owners",
+    "description": "[Default Owner] Default application group for payments-c1 application, containing all the users of the owner group payments-order and used to give them permissions on the application",
+    "instancePermissions": [
+      {
+        "appInstance": "payments-c1-dev",
+        "permissions": [
+          "applicationInstanceApiKeyManage",
+          "applicationInstancePermissionGrantAccess",
+          "applicationInstancePermissionProposeAccess",
+          "applicationInstancePermissionRequestAccess",
+          "serviceAccountManage"
+        ]
+      }
+    ],
+    "permissions": [
+      {
+        "appInstance": "payments-c1-dev",
+        "patternType": "LITERAL",
+        "connectCluster": "kafka-connect-2",
+        "name": "*",
+        "permissions": [
+          "kafkaConnectPauseResume",
+          "kafkaConnectRestart",
+          "kafkaConnectorCreate",
+          "kafkaConnectorDelete",
+          "kafkaConnectorEditConfig",
+          "kafkaConnectorStatus",
+          "kafkaConnectorViewConfig"
+        ],
+        "resourceType": "CONNECTOR"
+      },
+      {
+        "appInstance": "payments-c1-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "consumerGroupCreate",
+          "consumerGroupDelete",
+          "consumerGroupReset",
+          "consumerGroupView"
+        ],
+        "resourceType": "CONSUMER_GROUP"
+      },
+      {
+        "appInstance": "payments-c1-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "subjectCreateUpdate",
+          "subjectDelete",
+          "subjectEditCompatibility",
+          "subjectView"
+        ],
+        "resourceType": "SUBJECT"
+      },
+      {
+        "appInstance": "payments-c1-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "topicAddPartition",
+          "topicConsume",
+          "topicCreate",
+          "topicDelete",
+          "topicEditConfig",
+          "topicEmpty",
+          "topicProduce",
+          "topicViewConfig"
+        ],
+        "resourceType": "TOPIC"
+      }
+    ],
+    "members": [
+      "payments@conduktor.io"
+    ]
+  }
+}

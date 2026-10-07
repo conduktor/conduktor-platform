@@ -1,0 +1,108 @@
+# Two payments applications, each with one instance that owns a connector
+# on a separate Kafka Connect cluster:
+#   payments-c1 -> kafka-connect-1
+#   payments-c2 -> kafka-connect-2
+# Both applications are owned by the "payments" Console group.
+#
+# The connectors use the MirrorHeartbeatConnector plugin, which is bundled with
+# the cp-kafka-connect image and requires no external system to run.
+
+# ---------- payments-c1 ----------
+---
+apiVersion: self-serve/v1
+kind: Application
+metadata:
+  name: payments-c1
+spec:
+  title: "Payments C1"
+  description: "Payments application on Kafka Connect cluster 1"
+  owner: "payments-order" # technical-id of the Conduktor Console Group
+---
+apiVersion: self-serve/v1
+kind: ApplicationInstance
+metadata:
+  application: "payments-c1"
+  name: "payments-c1-dev"
+spec:
+  cluster: "local-kafka"
+  defaultCatalogVisibility: PUBLIC
+  resources:
+    - type: TOPIC
+      patternType: PREFIXED
+      name: "payments-c1."
+    - type: CONSUMER_GROUP
+      patternType: PREFIXED
+      name: "payments-c1."
+    - type: SUBJECT
+      patternType: PREFIXED
+      name: "payments-c1."
+    - type: CONNECTOR
+      connectCluster: "kafka-connect-1"
+      patternType: PREFIXED
+      name: "payments-c1."
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  name: payments-c1.heartbeat
+  cluster: local-kafka
+  connectCluster: kafka-connect-1
+spec:
+  config:
+    connector.class: org.apache.kafka.connect.mirror.MirrorHeartbeatConnector
+    tasks.max: '1'
+    source.cluster.alias: local-kafka
+    target.cluster.alias: local-kafka
+    source.cluster.bootstrap.servers: redpanda-0:9092
+    target.cluster.bootstrap.servers: redpanda-0:9092
+    heartbeats.topic.replication.factor: '1'
+
+# ---------- payments-c2 ----------
+---
+apiVersion: self-serve/v1
+kind: Application
+metadata:
+  name: payments-c2
+spec:
+  title: "Payments C2"
+  description: "Payments application on Kafka Connect cluster 2"
+  owner: "payments-order" # technical-id of the Conduktor Console Group
+---
+apiVersion: self-serve/v1
+kind: ApplicationInstance
+metadata:
+  application: "payments-c2"
+  name: "payments-c2-dev"
+spec:
+  cluster: "local-kafka"
+  defaultCatalogVisibility: PUBLIC
+  resources:
+    - type: TOPIC
+      patternType: PREFIXED
+      name: "payments-c2."
+    - type: CONSUMER_GROUP
+      patternType: PREFIXED
+      name: "payments-c2."
+    - type: SUBJECT
+      patternType: PREFIXED
+      name: "payments-c2."
+    - type: CONNECTOR
+      connectCluster: "kafka-connect-2"
+      patternType: PREFIXED
+      name: "payments-c2."
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  name: payments-c2.heartbeat
+  cluster: local-kafka
+  connectCluster: kafka-connect-2
+spec:
+  config:
+    connector.class: org.apache.kafka.connect.mirror.MirrorHeartbeatConnector
+    tasks.max: '1'
+    source.cluster.alias: local-kafka
+    target.cluster.alias: local-kafka
+    source.cluster.bootstrap.servers: redpanda-0:9092
+    target.cluster.bootstrap.servers: redpanda-0:9092
+    heartbeats.topic.replication.factor: '1'
