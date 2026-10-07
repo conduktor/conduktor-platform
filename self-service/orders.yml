@@ -1,0 +1,76 @@
+---
+apiVersion: self-serve/v1
+kind: Application
+metadata:
+  name: orders
+spec:
+  title: "Orders"
+  description: "Orders streaming application"
+  owner: "orders-owner" # technical-id of the Conduktor Console Group
+---
+apiVersion: self-serve/v1
+kind: ApplicationInstance
+metadata:
+  application: "orders"
+  name: "orders-dev"
+spec:
+  cluster: "local-kafka"
+  defaultCatalogVisibility: PUBLIC
+  resources:
+    - type: TOPIC
+      patternType: PREFIXED
+      name: "orders."
+    - type: CONSUMER_GROUP
+      patternType: PREFIXED
+      name: "orders."
+    - type: SUBJECT
+      patternType: PREFIXED
+      name: "orders."
+    # Connectors owned on the first Kafka Connect cluster
+    - type: CONNECTOR
+      connectCluster: "kafka-connect-1"
+      patternType: PREFIXED
+      name: "orders."
+    # Connectors owned on the second Kafka Connect cluster
+    - type: CONNECTOR
+      connectCluster: "kafka-connect-2"
+      patternType: PREFIXED
+      name: "orders."
+# Two connectors for the orders application instance, one per Kafka Connect cluster.
+# Both connector names use the "orders." prefix so they fall within the
+# ApplicationInstance's CONNECTOR ownership boundary.
+#
+# They use the MirrorHeartbeatConnector plugin, which is bundled with the
+# cp-kafka-connect image and requires no external system to run.
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  name: orders.heartbeat-1
+  cluster: local-kafka
+  connectCluster: kafka-connect-1
+spec:
+  config:
+    connector.class: org.apache.kafka.connect.mirror.MirrorHeartbeatConnector
+    tasks.max: '1'
+    source.cluster.alias: local-kafka
+    target.cluster.alias: local-kafka
+    source.cluster.bootstrap.servers: redpanda-0:9092
+    target.cluster.bootstrap.servers: redpanda-0:9092
+    heartbeats.topic.replication.factor: '1'
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  name: orders.heartbeat-2
+  cluster: local-kafka
+  connectCluster: kafka-connect-2
+spec:
+  config:
+    connector.class: org.apache.kafka.connect.mirror.MirrorHeartbeatConnector
+    tasks.max: '1'
+    source.cluster.alias: local-kafka
+    target.cluster.alias: local-kafka
+    source.cluster.bootstrap.servers: redpanda-0:9092
+    target.cluster.bootstrap.servers: redpanda-0:9092
+    heartbeats.topic.replication.factor: '1'

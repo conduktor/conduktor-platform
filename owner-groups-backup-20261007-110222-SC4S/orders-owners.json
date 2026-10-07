@@ -1,0 +1,85 @@
+{
+  "apiVersion": "v1",
+  "kind": "ApplicationGroup",
+  "metadata": {
+    "application": "orders",
+    "name": "orders-owners"
+  },
+  "spec": {
+    "displayName": "orders Owners",
+    "description": "[Default Owner] Default application group for orders application, containing all the users of the owner group orders-owner and used to give them permissions on the application",
+    "instancePermissions": [
+      {
+        "appInstance": "orders-dev",
+        "permissions": [
+          "applicationInstanceApiKeyManage",
+          "applicationInstancePermissionGrantAccess",
+          "applicationInstancePermissionProposeAccess",
+          "applicationInstancePermissionRequestAccess",
+          "serviceAccountManage"
+        ]
+      }
+    ],
+    "permissions": [
+      {
+        "appInstance": "orders-dev",
+        "patternType": "LITERAL",
+        "connectCluster": "kafka-connect-2",
+        "name": "*",
+        "permissions": [
+          "kafkaConnectPauseResume",
+          "kafkaConnectRestart",
+          "kafkaConnectorCreate",
+          "kafkaConnectorDelete",
+          "kafkaConnectorEditConfig",
+          "kafkaConnectorStatus",
+          "kafkaConnectorViewConfig"
+        ],
+        "resourceType": "CONNECTOR"
+      },
+      {
+        "appInstance": "orders-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "consumerGroupCreate",
+          "consumerGroupDelete",
+          "consumerGroupReset",
+          "consumerGroupView"
+        ],
+        "resourceType": "CONSUMER_GROUP"
+      },
+      {
+        "appInstance": "orders-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "subjectCreateUpdate",
+          "subjectDelete",
+          "subjectEditCompatibility",
+          "subjectView"
+        ],
+        "resourceType": "SUBJECT"
+      },
+      {
+        "appInstance": "orders-dev",
+        "patternType": "LITERAL",
+        "name": "*",
+        "permissions": [
+          "topicAddPartition",
+          "topicConsume",
+          "topicCreate",
+          "topicDelete",
+          "topicEditConfig",
+          "topicEmpty",
+          "topicProduce",
+          "topicViewConfig"
+        ],
+        "resourceType": "TOPIC"
+      }
+    ],
+    "members": [
+      "someone@conduktor.io"
+    ]
+  }
+}

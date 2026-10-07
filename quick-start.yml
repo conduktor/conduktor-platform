@@ -16,12 +16,13 @@ services:
   # It depends on PostgreSQL. Here, we depend on Redpanda only for our get-started.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.44.0
+    image: conduktor/conduktor-console:1.45.0
     ports:
       - "8080:8080"
     volumes:
       - conduktor_data:/var/conduktor
     environment:
+      CDK_LICENSE: "<your-license-key>"
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       CDK_KAFKASQL_DATABASE_URL: "postgresql://conduktor:change_me@postgresql-sql:5432/conduktor-sql"
       CDK_ORGANIZATION_NAME: "getting-started"
@@ -31,6 +32,12 @@ services:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "http://redpanda-0:18081"
       CDK_CLUSTERS_0_COLOR: "#6A57C8"
       CDK_CLUSTERS_0_ICON: "kafka"
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_ID: "kafka-connect-1"
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME: "kafka-connect-1"
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_URL: "http://kafka-connect-1:8083"
+      CDK_CLUSTERS_0_KAFKACONNECTS_1_ID: "kafka-connect-2"
+      CDK_CLUSTERS_0_KAFKACONNECTS_1_NAME: "kafka-connect-2"
+      CDK_CLUSTERS_0_KAFKACONNECTS_1_URL: "http://kafka-connect-2:8083"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
@@ -85,7 +92,7 @@ services:
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.44.0
+    image: conduktor/conduktor-console-cortex:1.45.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
   # We use Redpanda to get started with Kafka as it's small and efficient.
@@ -122,6 +129,68 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5s
+  # Two Kafka Connect clusters, both attached to the Redpanda cluster above.
+  # They are registered in Conduktor Console via the CDK_CLUSTERS_0_KAFKACONNECTS_* variables.
+  kafka-connect-1:
+    image: confluentinc/cp-kafka-connect:7.7.0
+    hostname: kafka-connect-1
+    container_name: kafka-connect-1
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: "redpanda-0:9092"
+      CONNECT_REST_PORT: "8083"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect-1"
+      CONNECT_GROUP_ID: "kafka-connect-1"
+      CONNECT_CONFIG_STORAGE_TOPIC: "_connect-1-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "_connect-1-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "_connect-1-status"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8083/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      redpanda-0:
+        condition: service_healthy
+  kafka-connect-2:
+    image: confluentinc/cp-kafka-connect:7.7.0
+    hostname: kafka-connect-2
+    container_name: kafka-connect-2
+    ports:
+      - "8084:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: "redpanda-0:9092"
+      CONNECT_REST_PORT: "8083"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect-2"
+      CONNECT_GROUP_ID: "kafka-connect-2"
+      CONNECT_CONFIG_STORAGE_TOPIC: "_connect-2-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "_connect-2-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "_connect-2-status"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8083/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      redpanda-0:
+        condition: service_healthy
   # As this is a get started, we want to bring some life to the cluster to demonstrate the value of Conduktor.
   # This is totally optional and only used for this purpose. Do not use it in production.
   conduktor-data-generator:
