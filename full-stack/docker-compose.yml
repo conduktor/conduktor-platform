@@ -26,7 +26,7 @@ services:
   # Conduktor Console, the enterprise UI.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.47.2
+    image: conduktor/conduktor-console:1.48.1
     hostname: conduktor-console
     ports:
       - "8080:8080"
@@ -108,7 +108,7 @@ services:
   # Conduktor uses Cortex to store Kafka and application metrics, and for alerting.
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.47.2
+    image: conduktor/conduktor-console-cortex:1.48.1
     hostname: conduktor-monitoring
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
@@ -118,7 +118,7 @@ services:
   # Kafka (KAFKA_MANAGED), so Kafka ACLs apply to traffic through Gateway too.
   # https://docs.conduktor.io/gateway/
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.21.1
+    image: conduktor/conduktor-gateway:3.22.3
     hostname: conduktor-gateway
     ports:
       - "8888:8888"
@@ -141,8 +141,7 @@ services:
   # schema registry. Clients authenticate with a JWT from Keycloak. Permissions are managed in
   # Console (self-service) and pushed to the proxy over Kafka ("reactive" authorization mode).
   schema-registry-proxy:
-    # TODO: pin to the first GA release before distributing this file.
-    image: conduktor/conduktor-schema-registry-proxy:nightly
+    image: conduktor/conduktor-schema-registry-proxy:1.0.1
     hostname: schema-registry-proxy
     ports:
       - "7070:7070" # Schema registry API
@@ -172,7 +171,7 @@ services:
   # Keycloak issues the JWTs that clients present to the Schema Registry Proxy.
   # The realm and its client accounts are imported from ./keycloak/conduktor-realm.json.
   keycloak:
-    image: quay.io/keycloak/keycloak:26.8.0
+    image: quay.io/keycloak/keycloak:26.8.1
     hostname: keycloak
     command: ["start-dev", "--import-realm"]
     ports:
@@ -194,7 +193,7 @@ services:
   # Users: admin (super user), app-a and app-b. app-a and app-b have no access until it is
   # granted through Console self-service (or ACLs). Client configs are in ./clients.
   kafka:
-    image: confluentinc/cp-kafka:8.0.8
+    image: confluentinc/cp-kafka:8.4.0
     hostname: kafka
     ports:
       - "19092:19092"
@@ -233,7 +232,7 @@ services:
   # Confluent Schema Registry, the backend behind the Schema Registry Proxy.
   # It is also exposed directly, protected by HTTP basic auth (admin-sr / sr-secret).
   schema-registry:
-    image: confluentinc/cp-schema-registry:8.0.8
+    image: confluentinc/cp-schema-registry:8.4.0
     hostname: schema-registry
     ports:
       - "8081:8081"
@@ -254,7 +253,8 @@ services:
       kafka:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -fs -u admin-sr:sr-secret http://localhost:8081/subjects > /dev/null"]
+      # The image has no curl, so speak HTTP over bash's /dev/tcp.
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8081 && printf 'GET /subjects HTTP/1.1\\r\\nHost: localhost\\r\\nAuthorization: Basic %s\\r\\nConnection: close\\r\\n\\r\\n' \"$$(printf admin-sr:sr-secret | base64)\" >&3 && head -1 <&3 | grep -q ' 200 '"]
       interval: 10s
       retries: 10
 
