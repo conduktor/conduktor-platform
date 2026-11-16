@@ -36,6 +36,8 @@ cp .env.example .env    # then set CONDUKTOR_LICENSE in .env
 docker compose up -d --wait
 ```
 
+[Conduktor Agents](https://docs.conduktor.io/guide/conduktor-in-production/automate/agents/configure) are enabled in Console. To run them, also set `ANTHROPIC_API_KEY` in `.env`. Without it the stack starts normally, but agent runs fail.
+
 Stop with `docker compose down`, or `docker compose down -v` to also delete all data.
 
 ## Credentials

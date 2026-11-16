@@ -45,11 +45,23 @@ curl -L https://releases.conduktor.io/console -o docker-compose.yml && docker co
 
 Once started, you can access the console at **http://localhost:8080**
 
+## Conduktor Agents
+
+[Conduktor Agents](https://docs.conduktor.io/guide/conduktor-in-production/automate/agents/configure) are enabled in these compose files. Agents run on an Anthropic model, so set your API key before starting:
+
+```` shell
+export ANTHROPIC_API_KEY=sk-ant-...
+docker compose up
+````
+
+Without a key, Console starts normally and the **Agentic** view is available, but agent runs fail. Console must be able to reach `https://api.anthropic.com`. To turn agents off, set `CDK_ENABLE_AGENTS` to `"false"`.
+
 See our [docs](https://docs.conduktor.io/) for more information on
  - [Configuring your Kafka cluster](https://docs.conduktor.io/platform/installation/get-started/docker/#step-3-configure-your-existing-kafka-cluster)
  - [User authentication (SSO, LDAP)](https://docs.conduktor.io/platform/category/user-authentication/)
  - [Environment variables](https://docs.conduktor.io/platform/configuration/env-variables/) 
  - [Deployment methods](https://docs.conduktor.io/platform/category/get-started/)
+ - [Setting up Conduktor Agents](https://docs.conduktor.io/guide/conduktor-in-production/automate/agents/configure)
 
 # 🆘 Looking for help?
 
