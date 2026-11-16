@@ -27,6 +27,11 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+      # Conduktor Agents (needs an Anthropic API key: export ANTHROPIC_API_KEY or set it in .env)
+      CDK_ENABLE_AGENTS: "true"
+      CDK_MODELS_0_ID: "anthropic"
+      CDK_MODELS_0_NAME: "Anthropic"
+      CDK_MODELS_0_APIKEY: "${ANTHROPIC_API_KEY:-change_me}"
     depends_on:
       postgresql:
         condition: service_healthy
