@@ -56,6 +56,8 @@ docker compose up
 
 Without a key, Console starts normally and the **Agentic** view is available, but agent runs fail. Console must be able to reach `https://api.anthropic.com`. To turn agents off, set `CDK_ENABLE_AGENTS` to `"false"`.
 
+Ask, the in-app assistant (Preview), is also enabled and runs on the same model connection. In Console 1.49 only Console administrators can use it. To turn it off, set `CDK_INTERACTIVEAGENTS_ENABLED` to `"false"`.
+
 See our [docs](https://docs.conduktor.io/) for more information on
  - [Configuring your Kafka cluster](https://docs.conduktor.io/platform/installation/get-started/docker/#step-3-configure-your-existing-kafka-cluster)
  - [User authentication (SSO, LDAP)](https://docs.conduktor.io/platform/category/user-authentication/)

@@ -26,7 +26,7 @@ services:
   # Conduktor Console, the enterprise UI.
   # https://docs.conduktor.io/platform/get-started/configuration/introduction/
   conduktor-console:
-    image: conduktor/conduktor-console:1.48.1
+    image: conduktor/conduktor-console:1.49.0
     hostname: conduktor-console
     ports:
       - "8080:8080"
@@ -78,6 +78,8 @@ services:
       CDK_MODELS_0_ID: "anthropic"
       CDK_MODELS_0_NAME: "Anthropic"
       CDK_MODELS_0_APIKEY: "${ANTHROPIC_API_KEY:-change_me}"
+      # Ask, the in-app assistant (Preview). Needs agents enabled and a model connection.
+      CDK_INTERACTIVEAGENTS_ENABLED: "true"
     depends_on:
       kafka:
         condition: service_healthy
@@ -113,7 +115,7 @@ services:
   # Conduktor uses Cortex to store Kafka and application metrics, and for alerting.
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.48.1
+    image: conduktor/conduktor-console-cortex:1.49.0
     hostname: conduktor-monitoring
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
