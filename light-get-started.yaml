@@ -38,6 +38,8 @@ services:
       CDK_MODELS_0_ID: "anthropic"
       CDK_MODELS_0_NAME: "Anthropic"
       CDK_MODELS_0_APIKEY: "${ANTHROPIC_API_KEY:-change_me}"
+      # Ask, the in-app assistant (Preview). Needs agents enabled and a model connection.
+      CDK_INTERACTIVEAGENTS_ENABLED: "true"
     depends_on:
       redpanda-0:
         condition: service_healthy
